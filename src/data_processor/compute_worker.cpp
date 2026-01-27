@@ -5,9 +5,7 @@
 #include <QMetaType>
 #include <QDebug>
 
-ComputeWorker::ComputeWorker(DataProcessor* ownerDp,
-                             Dataset* dataset,
-                             QObject* parent)
+ComputeWorker::ComputeWorker(DataProcessor* ownerDp, Dataset* dataset, QObject* parent)
     : QObject(parent),
       dp_(ownerDp),
       dataset_(dataset),

@@ -378,6 +378,18 @@ public:
         return NAN;
     }
 
+    QVector<double> vec_CSV_;
+    void setDistProcesing_CSV(double depth){
+        vec_CSV_.append(depth);
+    }
+    double distProccesing_CSV(int index){
+        if(index >= vec_CSV_.size()) {
+            return 0.0;
+        }
+        return vec_CSV_.at(index);
+    }
+
+
     float rangeFinder() const {
         if(rangefinders_.size() > 0) {
             return rangefinders_.first();

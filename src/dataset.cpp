@@ -117,12 +117,11 @@ Dataset::LlaRefState Dataset::getCurrentLlaRefState() const
 }
 
 void Dataset::addEvent(int timestamp, int id, int unixt) {
+    qDebug() << "Dataset::addEvent................";
     lastEventTimestamp = timestamp;
     lastEventId = id;
 
-    //    if(poolLastIndex() < 0) {
     addNewEpoch();
-    //    }
 
     {
         QWriteLocker wl(&poolMtx_);
@@ -201,6 +200,7 @@ void Dataset::addChart(const ChannelId& channelId, const ChartParameters& chartP
     uint8_t numSubChannels = data.size();
 
     if (shouldAddNewEpoch(channelId, numSubChannels)) {
+        qDebug() << "Dataset::addChart........................";
         addNewEpoch();
     }
 
@@ -384,6 +384,7 @@ void Dataset::addDist(const ChannelId& channelId, int dist)
     int pool_index = endIndex();
 
     if (pool_index < 0 || pool_[pool_index].distAvail() == true) {
+        qDebug() << "Dataset::addDist...................";
         addNewEpoch();
         pool_index = endIndex();
     }
@@ -577,7 +578,6 @@ void Dataset::addPosition(double lat, double lon, uint32_t unix_time, int32_t na
 
     if (pos.lla.isCoordinatesValid()) {
         if (lastEp->getPositionGNSS().lla.isCoordinatesValid()) {
-            //qDebug() << "pos add new epoch" << _pool.size();
             lastEp = addNewEpoch();
         }
         uint64_t lastIndx = pool_.size() - 1;
@@ -589,7 +589,7 @@ void Dataset::addPosition(double lat, double lon, uint32_t unix_time, int32_t na
         lastEp->setPositionLLA(pos);
         lastEp->setPositionRef(&_llaRef);
         // qDebug() << "_llaRef: longitude:" << _llaRef.refLla.longitude << "  latitude:" <<
-        //             _llaRef.refLla.latitude << "  " << _llaRef.refLla.altitude;
+        //     _llaRef.refLla.latitude << "  " << _llaRef.refLla.altitude;
 
         lastEp->setPositionDataType(DataType::kRaw);
         interpolator_.interpolatePos(false);
@@ -614,7 +614,6 @@ void Dataset::addPosition(double lat, double lon, uint32_t unix_time, int32_t na
                     }
 
                     double dt = double(dsec) + double(dnano) * 1e-9;
-
                     if (dt <= 0.0) {
                         dt = 1.0;
                     }
@@ -635,9 +634,8 @@ void Dataset::addPosition(double lat, double lon, uint32_t unix_time, int32_t na
             if (auto* ep = fromIndex(activeContactIndx_); ep) {
                 const double latTarget = ep->contact_.lat;
                 const double lonTarget = ep->contact_.lon;
-                const double latBoat = pos.lla.latitude;
-                const double lonBoat = pos.lla.longitude;
-
+                const double latBoat   = pos.lla.latitude;
+                const double lonBoat   = pos.lla.longitude;
                 distToActiveContact_ = distanceMetersLLA(latBoat, lonBoat, latTarget, lonTarget);
 
                 const double yawDeg = _lastYaw;
@@ -646,10 +644,50 @@ void Dataset::addPosition(double lat, double lon, uint32_t unix_time, int32_t na
                 }
             }
         }
-
         emit positionAdded(lastIndx);
         emit dataUpdate();
         emit lastPositionChanged();
+    }
+}
+
+
+void Dataset::addPosition_CSV(double lat, double lon, int depth)
+{
+    // qDebug() << "Dataset::addPosition_CSV1111111111111111111111111...........................";
+    Epoch* lastEp = last();
+    if (!lastEp) {
+        return;
+    }
+
+    Position pos;
+    pos.lla = LLA(lat, lon);
+
+    if (pos.lla.isCoordinatesValid()) {
+        if (lastEp->getPositionGNSS().lla.isCoordinatesValid()) {
+            lastEp = addNewEpoch();//不断累加帧数的下标index
+            lastEp->setDistProcesing_CSV(depth);
+        }
+
+        uint64_t lastIndx = pool_.size() - 1;
+        if (!getLlaRef().isInit) {
+            LlaRefState llaState = state_ == DatasetState::kUndefined ? LlaRefState::kFile :
+                                    (state_ == DatasetState::kFile ? LlaRefState::kFile :  LlaRefState::kConnection);
+            setLlaRef(LLARef(pos.lla), llaState);
+        }
+        lastEp->setPositionLLA(pos);
+        lastEp->setPositionRef(&_llaRef); //在这里将LLA坐标转化成本地NED坐标
+
+        lastEp->setPositionDataType(DataType::kRaw);
+
+        boatLatitute_ = pos.lla.latitude;
+        boatLongitude_ = pos.lla.longitude;
+
+        // qDebug() << "Dataset::addPosition_CSV2222222222222222222222222...........................";
+        emit positionAdded(lastIndx);
+
+        //nir:testCSV注释暂时没有影响
+        // emit dataUpdate();
+        // emit lastPositionChanged();
     }
 }
 
@@ -676,6 +714,7 @@ void Dataset::addDepth(float depth) {
 }
 
 void Dataset::addGnssVelocity(double h_speed, double course) {
+    qDebug() << "Dataset::addGnssVelocity............";
     int pool_index = endIndex();
     if(pool_index < 0) {
         addNewEpoch();
@@ -915,17 +954,20 @@ void Dataset::usblProcessing() {
 }
 
 void Dataset::setRefPosition(int epoch_index) {
+    qDebug() << "Dataset::setRefPosition00000000000.................";
     Epoch*  ref_epoch = fromIndex(epoch_index);
     setRefPosition(ref_epoch);
 }
 
 void Dataset::setRefPosition(Epoch* epoch) {
+    qDebug() << "Dataset::setRefPosition1111111111111...............";
     if(epoch == NULL) { return; }
 
     setRefPosition(epoch->getPositionGNSS());
 }
 
 void Dataset::setRefPosition(Position ref_pos) {
+    qDebug() << "Dataset::setRefPosition2222222222222222...............";
     if(ref_pos.lla.isCoordinatesValid()) {
         setLlaRef(LLARef(ref_pos.lla), getCurrentLlaRefState());
         qDebug() << "Dataset::setRefPosition.size() " << size();
@@ -941,6 +983,7 @@ void Dataset::setRefPosition(Position ref_pos) {
 }
 
 void Dataset::setRefPositionByFirstValid() {
+    qDebug() << "Dataset::setRefPositionByFirstValid..................";
     Epoch* epoch = getFirstEpochByValidPosition();
     if(epoch == NULL) { return; }
 
@@ -999,14 +1042,8 @@ void Dataset::interpolateData(bool fromStart)
 }
 
 
-#include <random>
 void Dataset::onDistCompleted(int epIndx, const ChannelId& channelId, float dist)
 {
-    //测试：
-    // std::random_device rd;
-    // std::mt19937 gen(rd());
-    // std::uniform_int_distribution<> dis(0, 50);
-    // dist = dis(gen);
     // qDebug() << "dist1 is " << dist;
     Epoch* epPtr = fromIndex(epIndx);
     if (!epPtr) {

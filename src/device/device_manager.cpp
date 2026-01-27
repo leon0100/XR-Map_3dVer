@@ -176,146 +176,146 @@ void DeviceManager::frameInput(QUuid uuid, Link* link, Parsers::FrameParser fram
         }
 
 
-//         if (frame.isCompleteAsNMEA()) {
-//             ProtoNMEA& prot_nmea = (ProtoNMEA&)frame;
-//             QString str_data = QByteArray((char*)prot_nmea.frame(), prot_nmea.frameLen() - 2);
-// #ifndef SEPARATE_READING
-//             core.consoleInfo(QString(">> NMEA: %5").arg(str_data));
-// #endif
-//             if (prot_nmea.isEqualId("DBT")) {
-//                 prot_nmea.skip();
-//                 prot_nmea.skip();
-//                 double depth_m = prot_nmea.readDouble();
-//                 if (isfinite(depth_m)) {
-//                     if (auto* dev = getDevice(uuid, link, frame.route()); dev) { // work?
-//                         qDebug() << "isfinite(depth_m)...." << depth_m;
-//                         emit rangefinderComplete(dev->getChannelId(), depth_m);
-//                     }
-//                 }
-//             }
+        if (frame.isCompleteAsNMEA()) {
+            ProtoNMEA& prot_nmea = (ProtoNMEA&)frame;
+            QString str_data = QByteArray((char*)prot_nmea.frame(), prot_nmea.frameLen() - 2);
+#ifndef SEPARATE_READING
+            core.consoleInfo(QString(">> NMEA: %5").arg(str_data));
+#endif
+            if (prot_nmea.isEqualId("DBT")) {
+                prot_nmea.skip();
+                prot_nmea.skip();
+                double depth_m = prot_nmea.readDouble();
+                if (isfinite(depth_m)) {
+                    if (auto* dev = getDevice(uuid, link, frame.route()); dev) { // work?
+                        qDebug() << "isfinite(depth_m)...." << depth_m;
+                        emit rangefinderComplete(dev->getChannelId(), depth_m);
+                    }
+                }
+            }
 
-//             if (prot_nmea.isEqualId("RMC")) {
-//                 uint8_t h = 0, m = 0, s = 0;
-//                 uint16_t ms = 0;
+            if (prot_nmea.isEqualId("RMC")) {
+                uint8_t h = 0, m = 0, s = 0;
+                uint16_t ms = 0;
 
-//                 bool isCorrect =  prot_nmea.readTime(&h, &m, &s, &ms);
-//                 prot_nmea.skip();//nie:test
-//                 Q_UNUSED(isCorrect);
+                bool isCorrect =  prot_nmea.readTime(&h, &m, &s, &ms);
+                prot_nmea.skip();//nie:test
+                Q_UNUSED(isCorrect);
 
-//                 char c = prot_nmea.readChar();
-//                 if (c == 'A' || c == 'D') {
-//                     double lat = prot_nmea.readLatitude();
-//                     double lon = prot_nmea.readLongitude();
+                char c = prot_nmea.readChar();
+                if (c == 'A' || c == 'D') {
+                    double lat = prot_nmea.readLatitude();
+                    double lon = prot_nmea.readLongitude();
 
-//                     prot_nmea.skip();
-//                     prot_nmea.skip();
+                    prot_nmea.skip();
+                    prot_nmea.skip();
 
-//                     uint16_t year = 0;
-//                     uint8_t month = 0, day = 0;
-//                     prot_nmea.readDate(&year, &month, & day);
+                    uint16_t year = 0;
+                    uint8_t month = 0, day = 0;
+                    prot_nmea.readDate(&year, &month, & day);
 
-//                     QDate date(year, month, day);
-//                     QTime time(h, m, s);
+                    QDate date(year, month, day);
+                    QTime time(h, m, s);
 
-//                     QDateTime dt(date, time, QTimeZone::utc());
-//                     uint32_t unix_time = static_cast<uint32_t>(dt.toSecsSinceEpoch());
+                    QDateTime dt(date, time, QTimeZone::utc());
+                    uint32_t unix_time = static_cast<uint32_t>(dt.toSecsSinceEpoch());
 
-//                     qDebug() << "if (c == 'A' || c == 'D') ";
-//                     emit positionComplete(lat, lon, unix_time, (uint32_t)ms*1000*1000);
-//                 }
-//             }
+                    qDebug() << "if (c == 'A' || c == 'D') ";
+                    emit positionComplete(lat, lon, unix_time, (uint32_t)ms*1000*1000);
+                }
+            }
 
-//             if (prot_nmea.isEqualId("GGA")) {
-//                 uint8_t h = 0, m = 0, s = 0;
-//                 uint16_t ms = 0;
+            if (prot_nmea.isEqualId("GGA")) {
+                uint8_t h = 0, m = 0, s = 0;
+                uint16_t ms = 0;
 
-//                 bool isCorrect =  prot_nmea.readTime(&h, &m, &s, &ms);
-//                 Q_UNUSED(isCorrect);
+                bool isCorrect =  prot_nmea.readTime(&h, &m, &s, &ms);
+                Q_UNUSED(isCorrect);
 
-//                 double lat = prot_nmea.readLatitude();
-//                 double lon = prot_nmea.readLongitude();
+                double lat = prot_nmea.readLatitude();
+                double lon = prot_nmea.readLongitude();
 
-//                 char q = prot_nmea.readChar();
+                char q = prot_nmea.readChar();
 
-//                 prot_nmea.skip(); // sv
-//                 prot_nmea.skip(); // HDOP
+                prot_nmea.skip(); // sv
+                prot_nmea.skip(); // HDOP
 
-//                 float height_msl = prot_nmea.readDouble(); // Orthometric height (MSL reference)
+                float height_msl = prot_nmea.readDouble(); // Orthometric height (MSL reference)
 
-//                 if (q == '1' || q == '2' || q == '4' || q == '5') {
-//                     uint16_t year = 1971;
-//                     uint8_t month = 1, day = 1;
+                if (q == '1' || q == '2' || q == '4' || q == '5') {
+                    uint16_t year = 1971;
+                    uint8_t month = 1, day = 1;
 
-//                     Position pos;
-//                     pos.lla.latitude = lat;
-//                     pos.lla.longitude = lon;
-//                     pos.lla.altitude = height_msl;
-//                     pos.lla.source = PositionSourceRTK;
-//                     pos.lla.altSource = AltitudeSourceRTK;
-//                     pos.time = DateTime(year, month, day, h, m, s, int64_t(ms)*1000*1000);
+                    Position pos;
+                    pos.lla.latitude = lat;
+                    pos.lla.longitude = lon;
+                    pos.lla.altitude = height_msl;
+                    pos.lla.source = PositionSourceRTK;
+                    pos.lla.altSource = AltitudeSourceRTK;
+                    pos.time = DateTime(year, month, day, h, m, s, int64_t(ms)*1000*1000);
 
-//                     if(q == '4') {
-//                         qDebug() << " (q == '1' || q == '2' || q == '4' || q == '5') ";
-//                         emit positionCompleteRTK(pos);
-//                     }
-//                 }
-//             }
-//         }
+                    if(q == '4') {
+                        qDebug() << " (q == '1' || q == '2' || q == '4' || q == '5') ";
+                        emit positionCompleteRTK(pos);
+                    }
+                }
+            }
+        }
 
-//         if (frame.isCompleteAsUBX()) {
-//             ProtoUBX& ubx_frame = (ProtoUBX&)frame;
+        if (frame.isCompleteAsUBX()) {
+            ProtoUBX& ubx_frame = (ProtoUBX&)frame;
 
-//             if (ubx_frame.msgClass() == 1 && ubx_frame.msgId() == 7) {
+            if (ubx_frame.msgClass() == 1 && ubx_frame.msgId() == 7) {
 
-//                 uint8_t h = 0, m = 0, s = 0;
-//                 uint16_t year = 0;
-//                 uint8_t month = 0, day = 0;
-//                 int32_t nanosec = 0;
+                uint8_t h = 0, m = 0, s = 0;
+                uint16_t year = 0;
+                uint8_t month = 0, day = 0;
+                int32_t nanosec = 0;
 
-//                 ubx_frame.readSkip(4);
-//                 year = ubx_frame.read<U2>();
-//                 month = ubx_frame.read<U1>();
-//                 day = ubx_frame.read<U1>();
-//                 h = ubx_frame.read<U1>();
-//                 m = ubx_frame.read<U1>();
-//                 s = ubx_frame.read<U1>();
-//                 ubx_frame.read<U1>(); // Validity flags
-//                 ubx_frame.readSkip(4); // Time accuracy estimate (UTC)
-//                 nanosec = ubx_frame.read<S4>();
+                ubx_frame.readSkip(4);
+                year = ubx_frame.read<U2>();
+                month = ubx_frame.read<U1>();
+                day = ubx_frame.read<U1>();
+                h = ubx_frame.read<U1>();
+                m = ubx_frame.read<U1>();
+                s = ubx_frame.read<U1>();
+                ubx_frame.read<U1>(); // Validity flags
+                ubx_frame.readSkip(4); // Time accuracy estimate (UTC)
+                nanosec = ubx_frame.read<S4>();
 
-//                 uint8_t fix_type = ubx_frame.read<U1>();
-//                 uint8_t fix_flags = ubx_frame.read<U1>();
-//                 Q_UNUSED(fix_flags);
+                uint8_t fix_type = ubx_frame.read<U1>();
+                uint8_t fix_flags = ubx_frame.read<U1>();
+                Q_UNUSED(fix_flags);
 
-//                 ubx_frame.read<U1>();
-//                 uint8_t satellites_in_used = ubx_frame.read<U1>();
-//                 Q_UNUSED(satellites_in_used)
+                ubx_frame.read<U1>();
+                uint8_t satellites_in_used = ubx_frame.read<U1>();
+                Q_UNUSED(satellites_in_used)
 
-//                 int32_t lon_int = ubx_frame.read<S4>();
-//                 int32_t lat_int = ubx_frame.read<S4>();
+                int32_t lon_int = ubx_frame.read<S4>();
+                int32_t lat_int = ubx_frame.read<S4>();
 
-//                 QDate date(year, month, day);
-//                 QTime time(h, m, s);
+                QDate date(year, month, day);
+                QTime time(h, m, s);
 
-//                 QDateTime dt(date, time, QTimeZone::utc());
-//                 uint32_t unix_time = static_cast<uint32_t>(dt.toSecsSinceEpoch());
+                QDateTime dt(date, time, QTimeZone::utc());
+                uint32_t unix_time = static_cast<uint32_t>(dt.toSecsSinceEpoch());
 
-//                 if (fix_type > 1 && fix_type < 5) {
-//                     qDebug() << " (fix_type > 1 && fix_type < 5) ";
-//                     emit positionComplete(double(lat_int)*0.0000001, double(lon_int)*0.0000001, unix_time, nanosec);
-//                 }
+                if (fix_type > 1 && fix_type < 5) {
+                    qDebug() << " (fix_type > 1 && fix_type < 5) ";
+                    emit positionComplete(double(lat_int)*0.0000001, double(lon_int)*0.0000001, unix_time, nanosec);
+                }
 
-// #ifndef SEPARATE_READING
-//                 core.consoleInfo(QString(">> UBX: NAV_PVT, fix %1, sats %2, lat %3, lon %4, time %5:%6:%7.%8")
-//                     .arg(fix_type).arg(satellites_in_used).arg(double(lat_int)*0.0000001).arg(double(lon_int)*0.0000001).arg(h).arg(m).arg(s).arg(nanosec/1000));
-// #endif
-//             }
-//             else {
-// #ifndef SEPARATE_READING
-//                 core.consoleInfo(QString(">> UBX: class/id 0x%1 0x%2, len %3").arg(ubx_frame.msgClass(), 2, 16, QLatin1Char('0')).arg(ubx_frame.msgId(), 2, 16, QLatin1Char('0')).arg(ubx_frame.frameLen()));
-// #endif
-//             }
-//         }
+#ifndef SEPARATE_READING
+                core.consoleInfo(QString(">> UBX: NAV_PVT, fix %1, sats %2, lat %3, lon %4, time %5:%6:%7.%8")
+                    .arg(fix_type).arg(satellites_in_used).arg(double(lat_int)*0.0000001).arg(double(lon_int)*0.0000001).arg(h).arg(m).arg(s).arg(nanosec/1000));
+#endif
+            }
+            else {
+#ifndef SEPARATE_READING
+                core.consoleInfo(QString(">> UBX: class/id 0x%1 0x%2, len %3").arg(ubx_frame.msgClass(), 2, 16, QLatin1Char('0')).arg(ubx_frame.msgId(), 2, 16, QLatin1Char('0')).arg(ubx_frame.frameLen()));
+#endif
+            }
+        }
 
         //klf文件是从这里打开的
         if (frame.isCompleteAsMAVLink()) {
@@ -517,53 +517,18 @@ void DeviceManager::openFile_CSV(QString filePath)
         return;
     }
 
-    const qint64 totalSize = file.size();
-    qint64 bytesRead = 0;
+
     Parsers::FrameParser frameParser;
     const QUuid someUuid(kFileUuidStr);
 
     delAllDev();
-
-    // while (true) {
-    //     if (break_) {
-    //         file.close();
-    //         return;
-    //     }
-
-    //     QByteArray chunk = file.read(1024 * 1024);
-    //     const qint64 chunkSize = chunk.size();
-    //     if (chunkSize == 0)  break;
-    //     bytesRead += chunkSize;
-
-    //     auto currProgress = static_cast<int>((static_cast<float>(bytesRead) / static_cast<float>(totalSize)) * 100.0f);
-    //     currProgress = std::max(0, currProgress);
-    //     currProgress = std::min(100, currProgress);
-    //     if (progress_ != currProgress) {
-    //         progress_ = currProgress;
-    //     }
-
-    //     frameParser.setContext((uint8_t*)chunk.data(), chunk.size());
-
-
-    //     while (frameParser.availContext() > 0) {
-    //         frameParser.process();//处理文件内容
-    //         if (frameParser.isComplete()) {
-    //             frameInput(someUuid, NULL, frameParser);
-    //         }
-    //     }
-
-    //     chunk.clear();
-    // }
-
-
-
-
 
     QList<Position> track;
 
     QTextStream in(&file);
     int skip_rows = 2;
 
+    QVector<float> vec_CSV;
     while (!in.atEnd()) {
         QString row = in.readLine();
         if (skip_rows > 0) {
@@ -575,52 +540,6 @@ void DeviceManager::openFile_CSV(QString filePath)
         QStringList columns = row.split(",");
         track.append(Position());
 
-        // if (colTime > 0 && (colTime-1 < columns.size())) {
-        //     int year = -1, month = -1, day = -1, hour = -1, minute = -1;
-        //     double sec = -1;
-        //     columns[colTime-1].replace(QLatin1Char('/'), QLatin1Char('-'));
-        //     QStringList date_time = columns[colTime-1].split(' ');
-        //     QString date, time;
-
-        //     if (date_time.size() > 0) {
-        //         if (date_time[0].contains('-'))
-        //             date = date_time[0];
-        //     }
-        //     if (date_time.size() == 2) {
-        //         if (date_time[1].contains(':'))
-        //             time = date_time[1];
-        //     }
-        //     else if (date_time.size() == 1) {
-        //         if (colTime < columns.size()) {
-        //             if (columns[colTime].contains(':')) {
-        //                 time = columns[colTime];
-        //             }
-        //         }
-        //     }
-
-        //     QStringList data_sep = date.split('-');
-        //     if (data_sep.size() >= 3) {
-        //         year = data_sep[0].toInt();
-        //         month = data_sep[1].toInt();
-        //         day = data_sep[2].toInt();
-        //     }
-        //     QStringList time_sep = time.split(':');
-        //     if (time_sep.size() >= 3) {
-        //         hour = time_sep[0].toInt();
-        //         minute = time_sep[1].toInt();
-        //         sec = time_sep[2].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
-        //     }
-        //     if (year >= 0 && month >= 0 && day >= 0 && hour >= 0 && minute >= 0 && sec >= 0) {
-        //         int sec_int = (int)sec;
-        //         double nano_sec = (sec - sec_int)*1e9;
-        //         track.last().time = DateTime(year, month, day, hour, minute, sec_int, round(nano_sec));
-        //         if (!isUtcTime) {
-        //             track.last().time.addSecs(-18);
-        //         }
-
-        //     }
-        // }
-
 
             track.last().lla.latitude = columns[5].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
             track.last().lla.longitude = columns[4].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
@@ -630,8 +549,9 @@ void DeviceManager::openFile_CSV(QString filePath)
             // track.last().ned.e = columns[2].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
             // track.last().ned.d = -columns[3].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
 
+            vec_CSV.append(track.last().lla.altitude);
         // qDebug() << " track.last().lla.longitude:" << track.last().lla.longitude << "   latitude:" << track.last().lla.latitude;
-        emit positionComplete(track.last().lla.latitude, track.last().lla.longitude, 0, 0);
+        emit positionComplete_CSV(track.last().lla.latitude, track.last().lla.longitude,track.last().lla.altitude);
 
     }
 
@@ -644,7 +564,8 @@ void DeviceManager::openFile_CSV(QString filePath)
     emit vruChanged();
 
     emit fileOpened();
-    emit fileStopsOpening(); //这一步使得最后将读取到的轨迹内容绘制到scene3d_view上
+    // emit fileStopsOpening(); //这一步使得最后将读取到的轨迹内容绘制到scene3d_view上
+    emit fileStopsOpening_CSV(vec_CSV);
 }
 
 

@@ -149,9 +149,7 @@ private:
     void clearMosaicProcessing();
     void clearSurfaceProcessing();
     void clearAllProcessings();
-    void scheduleLatest(WorkSet mask = WorkSet(WF_All),
-                        bool replace = false,
-                        bool clearUnrequestedPending = false) noexcept;
+    void scheduleLatest(WorkSet mask = WorkSet(WF_All), bool replace = false, bool clearUnrequestedPending = false) noexcept;
     bool isCanStartCalculations() const;
 
 private:

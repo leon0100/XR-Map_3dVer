@@ -60,6 +60,7 @@ void BoatTrack::onPositionAdded(uint64_t indx)
     }
 
     const int need = toIndx - fromIndx;
+    qDebug() << "need:" << need << "   fromIndx:" << fromIndx << "  toIndx:" << toIndx;
     QVector<QVector3D> prepData;
     prepData.reserve(need);
 

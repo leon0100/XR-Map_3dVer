@@ -275,8 +275,8 @@ void SceneObject::RenderImplementation::setData(const QVector<QVector3D> &data, 
 void SceneObject::RenderImplementation::appendData(const QVector<QVector3D>& data)
 {
     qDebug() << "RenderImplementation::appendData111111111111111111..............";
+    //处时已经把NED坐标传递到此处，但没有高度或深度值
     for (const auto& itm : data) {
-        // qDebug() << "itm::::......." << itm.x() << "  " << itm.y() << "  " << itm.z();
         m_data.append(itm);
     }
 

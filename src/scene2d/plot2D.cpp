@@ -219,13 +219,14 @@ void Plot2D::resetAim()
 
 void Plot2D::setTimelinePositionSec(float position)
 {
+    qDebug() << "Plot2D::setTimelinePositionSec.........";
     if (position > 1.0f) {
         position = 1.0f;
     }
     if (position < 0) {
         position = 0;
     }
-qDebug() << "Plot2D::setTimelinePositionSec.........";
+
     cursor_.position = position;
     plotUpdate();
 }

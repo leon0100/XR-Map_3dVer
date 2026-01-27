@@ -162,6 +162,7 @@ signals:
 
 private slots:
     void onFileStopsOpening();
+    void onFileStopsOpening_CSV(QVector<float>& depthVec);
     void onSendMapTextureIdByTileIndx(const map::TileIndex& tileIndx, GLuint textureId); // TODO: maybe store map texture id in mapView
     void onDataProcesstorStateChanged(const DataProcessorType& state);
     void onSendFrameInputToLogger(QUuid uuid, Link* link, const Parsers::FrameParser& frame);

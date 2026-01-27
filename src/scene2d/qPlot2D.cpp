@@ -158,8 +158,10 @@ int qPlot2D::getThemeId() const
     return Plot2D::getThemeId();
 }
 
+
+#include <QFile>
 void qPlot2D::doDistProcessing(int preset, int window_size, float vertical_gap, float range_min, float range_max, float gain_slope, float threshold, float offsetx, float offsety, float offsetz, bool manual) {
-    qDebug() << "qPlot2D::doDistProcessing......";
+    qDebug() << "开始处理绘制等高线 qPlot2D::doDistProcessing......";
     if (datasetPtr_ != nullptr) {
         if (auto btpPtr = datasetPtr_->getBottomTrackParamPtr(); btpPtr) {
             btpPtr->preset = static_cast<BottomTrackPreset>(preset);
@@ -171,10 +173,10 @@ void qPlot2D::doDistProcessing(int preset, int window_size, float vertical_gap, 
             btpPtr->maxDistance = range_max;
             btpPtr->indexFrom = 0;
             btpPtr->indexTo = datasetPtr_->size();
+            qDebug() << "datasetPtr_->size()........" << datasetPtr_->size();
             btpPtr->offset.x = offsetx;
             btpPtr->offset.y = offsety;
             btpPtr->offset.z = offsetz;
-
 
             QMetaObject::invokeMethod(dataProcessorPtr_, "bottomTrackProcessing", Qt::QueuedConnection,
                                     Q_ARG(DatasetChannel, DatasetChannel(cursor_.channel1, cursor_.subChannel1)),

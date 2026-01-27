@@ -392,6 +392,7 @@ void BottomTrack::keyPressEvent(Qt::Key key)
 
 
 #include <random>
+#include <QFile>
 void BottomTrack::updateRenderData(int lEpIndx, int rEpIndx, bool redraw, bool manually) //
 {
     qDebug() << "BottomTrack::updateRenderData...................";
@@ -427,6 +428,7 @@ void BottomTrack::updateRenderData(int lEpIndx, int rEpIndx, bool redraw, bool m
     epIndxUpdated.reserve(need);
     vertIndxUpdated.reserve(need);
 
+
     for (int epIndx = fromIndx; epIndx < toIndx; ++epIndx) {
         auto vIt = epoch2Vertex_.find(epIndx);
         if (vIt != epoch2Vertex_.end()) {
@@ -444,13 +446,9 @@ void BottomTrack::updateRenderData(int lEpIndx, int rEpIndx, bool redraw, bool m
         else {
             if (auto* ep = datasetPtr_->fromIndex(epIndx); ep) {
                 if (auto pos = ep->getSonarPosition().ned; pos.isCoordinatesValid()) {
-                    float dist = -1.f * static_cast<float>(ep->distProccesing(visibleChannel_.channelId_));
-
-                    //nie:test20260126
-                    std::random_device rd;
-                    std::mt19937 gen(rd());
-                    std::uniform_real_distribution<double> dis(0.0, 50.0);
-                    dist = dis(gen);
+                    // float dist = -1.f * static_cast<float>(ep->distProccesing(visibleChannel_.channelId_));
+                    float dist = datasetPtr_->getDistProccesing_CSV(epIndx);
+                    // qDebug() << "dist22222   ----------" << dist;
                     prepData.push_back(QVector3D(pos.n, pos.e, dist));
 
                     epIndxUpdated.push_back(epIndx);

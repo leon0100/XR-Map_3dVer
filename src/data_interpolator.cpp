@@ -11,6 +11,7 @@ DataInterpolator::DataInterpolator(Dataset *datasetPtr) :
 
 void DataInterpolator::interpolatePos(bool fromStart)
 {
+    // qDebug() << "DataInterpolator::interpolatePos.................................";
     if (!datasetPtr_) {
         return;
     }

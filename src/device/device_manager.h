@@ -103,6 +103,7 @@ signals:
     void eventComplete(int timestamp, int id, int unixt);
     void rangefinderComplete(const ChannelId& channelId, float distance);
     void positionComplete(double lat, double lon, uint32_t date, uint32_t time);
+    void positionComplete_CSV(double lat, double lon,int depth);
     void positionCompleteRTK(Position position);
     void depthComplete(float depth);
     void gnssVelocityComplete(double hSpeed, double course);
@@ -110,6 +111,7 @@ signals:
     void tempComplete(float val);
     void encoderComplete(float e1, float e2, float e3);
     void fileStopsOpening();
+    void fileStopsOpening_CSV(QVector<float>& depth);
     void chartLossesChanged();
 
     // logger

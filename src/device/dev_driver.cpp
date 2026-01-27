@@ -625,7 +625,7 @@ void DevDriver::protoComplete(Parsers::FrameParser& proto)
     if(_hashID.contains(proto.id())) {
         if(_hashID[proto.id()].instance != NULL) {
             IDBin* parse_instance = _hashID[proto.id()].instance;
-            parse_instance->parse(proto);//这句是解析深度的关键
+            parse_instance->parse(proto);
             lastAddress_ = proto.route();
 
             if(_hashID[proto.id()].callback != NULL) {

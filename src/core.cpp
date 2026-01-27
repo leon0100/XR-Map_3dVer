@@ -459,8 +459,10 @@ bool Core::openXTF(const QByteArray& data)
     return true;
 }
 
-bool Core::openCSV(QString name, int separatorType, int firstRow, int colTime, bool isUtcTime, int colLat, int colLon, int colAltitude, int colNorth, int colEast, int colUp)
+bool Core::openCSV(QString name, int separatorType, int firstRow, int colTime,
+                   bool isUtcTime, int colLat, int colLon, int colAltitude, int colNorth, int colEast, int colUp)
 {
+    qDebug() << "name:   " <<name;
     const QString& filePath = name;
     bool isAppend = false;
     bool onCustomEvent = false;
@@ -506,29 +508,19 @@ bool Core::openCSV(QString name, int separatorType, int firstRow, int colTime, b
         if (scene3dViewPtr_) {
             scene3dViewPtr_->fitAllInView();
         }
-        datasetPtr_->setRefPositionByFirstValid();
-        datasetPtr_->usblProcessing();
+        qDebug() << "datasetPtr_->setRefPositionByFirstValid()..................";
 
-        if (scene3dViewPtr_) {
-            scene3dViewPtr_->addPoints(datasetPtr_->beaconTrack(), QColor(255, 0, 0), 10);
-            scene3dViewPtr_->addPoints(datasetPtr_->beaconTrack1(), QColor(0, 255, 0), 10);
-        }
+        //nie:test暂时注释掉没有影响
+        // datasetPtr_->setRefPositionByFirstValid();
+        // datasetPtr_->usblProcessing();
 
-        onChannelsUpdated();
+        // if (scene3dViewPtr_) {
+        //     scene3dViewPtr_->addPoints(datasetPtr_->beaconTrack(), QColor(255, 0, 0), 10);
+        //     scene3dViewPtr_->addPoints(datasetPtr_->beaconTrack1(), QColor(0, 255, 0), 10);
+        // }
+
+        // onChannelsUpdated();
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1145,6 +1137,7 @@ void Core::UILoad(QObject* object, const QUrl& url)
 
 void Core::setMosaicChannels(const QString& firstChStr, const QString& secondChStr)
 {
+    qDebug() << "Core::setMosaicChannels..................";
     if (datasetPtr_ && dataProcessor_ && scene3dViewPtr_) {
         auto [ch1, sub1, name1] = datasetPtr_->channelIdFromName(firstChStr);
         auto [ch2, sub2, name2] = datasetPtr_->channelIdFromName(secondChStr);
@@ -1184,6 +1177,7 @@ bool Core::getIsSeparateReading() const
 
 void Core::onChannelsUpdated()
 {
+    qDebug() << "Core::onChannelsUpdated()...................";
     auto chs = datasetPtr_->channelsList();
     int chSize = chs.size();
 
@@ -1304,6 +1298,14 @@ void Core::onFileStopsOpening()
     dataHorizon_->setIsFileOpening(isFileOpening_);
 }
 
+void Core::onFileStopsOpening_CSV(QVector<float>& depthVec)
+{
+    datasetPtr_->vec_CSV_ = depthVec;
+    isFileOpening_ = false;
+    emit sendIsFileOpening();
+    dataHorizon_->setIsFileOpening(isFileOpening_);
+}
+
 void Core::onSendMapTextureIdByTileIndx(const map::TileIndex &tileIndx, GLuint textureId)
 {
     tileManager_->getTileSetPtr()->setTextureIdByTileIndx(tileIndx, textureId);
@@ -1406,6 +1408,7 @@ void Core::createDeviceManagerConnections()
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::eventComplete,          datasetPtr_, &Dataset::addEvent,        deviceManagerConnection);
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::rangefinderComplete,    datasetPtr_, &Dataset::addRangefinder,  deviceManagerConnection);
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionComplete,       datasetPtr_, &Dataset::addPosition,     deviceManagerConnection);
+     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionComplete_CSV,       datasetPtr_, &Dataset::addPosition_CSV,     deviceManagerConnection);
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionCompleteRTK,    datasetPtr_, &Dataset::addPositionRTK,  deviceManagerConnection);
 
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::depthComplete,          datasetPtr_, &Dataset::addDepth,        deviceManagerConnection);
@@ -1416,6 +1419,7 @@ void Core::createDeviceManagerConnections()
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileOpened,             this,        &Core::onFileOpened,       deviceManagerConnection);
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::encoderComplete,        datasetPtr_, &Dataset::addEncoder,      deviceManagerConnection);
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileStopsOpening,       this,        &Core::onFileStopsOpening, deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileStopsOpening_CSV,       this,        &Core::onFileStopsOpening_CSV, deviceManagerConnection);
     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendProtoFrame,         &logger_, &Logger::receiveProtoFrame, deviceManagerConnection);
     QObject::connect(&logger_, &Logger::loggingKlfStarted, deviceManagerWrapperPtr_->getWorker(), &DeviceManager::onLoggingKlfStarted, deviceManagerConnection);
 

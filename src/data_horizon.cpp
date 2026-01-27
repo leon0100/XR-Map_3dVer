@@ -122,7 +122,7 @@ void DataHorizon::onAddedAttitude(uint64_t indx)
 void DataHorizon::onAddedBottomTrack(uint64_t indx)
 {
     // qDebug() << "DataHorizon::onAddedBottomTrack" << indx;
-    emit bottomTrackAdded(indx);
+    // emit bottomTrackAdded(indx);//nie:test
 
     if (indx < bottomTrackIndx_) { // discard changes by editing bTr on plot
         return;
@@ -132,10 +132,11 @@ void DataHorizon::onAddedBottomTrack(uint64_t indx)
 
     bottomTrackIndx_ = indx;
 
-    if (canEmitHorizon(beenChanged)) {
-        emit bottomTrackAdded(bottomTrackIndx_);
-        tryCalcAndEmitMosaicIndx();
-    }
+    //nie:test
+    // if (canEmitHorizon(beenChanged)) {
+        // emit bottomTrackAdded(bottomTrackIndx_);
+        // tryCalcAndEmitMosaicIndx();
+    // }
 }
 
 void DataHorizon::onAddedBottomTrack3D(const QVector<int>& epIndxs, const QVector<int>& vertIndx, bool isManual)

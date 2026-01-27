@@ -221,6 +221,7 @@ public slots:
     void addDVLSolution(IDBinDVL::DVLSolution dvlSolution);
     void addAtt(float yaw, float pitch, float roll);
     void addPosition(double lat, double lon, uint32_t unix_time = 0, int32_t nanosec = 0);
+    void addPosition_CSV(double lat, double lon, int depth);
     void addPositionRTK(Position position);
 
     void addDepth(float depth);
@@ -350,4 +351,18 @@ private:
     float speed_                = 0.0f;
     QVector3D sonarOffset_;
     uint64_t sonarPosIndx_;
+
+
+
+public:
+    QVector<float> vec_CSV_;
+    void setDistProcesing_CSV(float depth){
+        vec_CSV_.append(depth);
+    }
+    double getDistProccesing_CSV(int index){
+        if(index >= vec_CSV_.size()) {
+            return 0.0;
+        }
+        return vec_CSV_.at(index);
+    }
 };
