@@ -31,6 +31,7 @@ inline void appendUnique(QVector<T>& dst, const QVector<T>& src)
     }
 }
 
+//规范化线段
 inline QPair<QVector3D, QVector3D> canonSeg(const QVector3D& p1, const QVector3D& p2)
 {
     if (p1.x() < p2.x()) return { p1, p2 };

@@ -94,21 +94,21 @@ void IsobathsProcessor::edgeIntersection(const QVector3D& a,const QVector3D& b, 
     QVector3D B = b;
     B.setZ(zB + zShift);
 
-    if (fabsf(zA - L) < kmath::fltEps && fabsf(zB - L) < kmath::fltEps) { // 二者均在…… 层面
+    if (fabsf(zA - L) < kmath::fltEps && fabsf(zB - L) < kmath::fltEps) {
         out << A << B;
         return;
     }
 
-    if ((zA - L) * (zB - L) > 0.f) { // 一方面，不存在交点
+    if ((zA - L) * (zB - L) > 0.f) {
         return;
     }
 
-    if (fabsf(zA - L) < kmath::fltEps) { // 而在…… 层面 / 而在…… 水平上
+    if (fabsf(zA - L) < kmath::fltEps) {
         out << A;
         return;
     }
 
-    if (fabsf(zB - L) < kmath::fltEps) { // 而在…… 层面 / 而在…… 水平上
+    if (fabsf(zB - L) < kmath::fltEps) {
         out << B;
         return;
     }
@@ -180,12 +180,12 @@ void IsobathsProcessor::fullRebuildLinesLabels()
     QHash<int, IsobathsSegVec> segsByLvl;
 
     for (const TrIndxs& t : tris_) { // 三角形的交点
-        const QVector3D A   = vertPool_[t.a];
-        const QVector3D B   = vertPool_[t.b];
-        const QVector3D C   = vertPool_[t.c];
-        const HeightType mA = vertMark_[t.a];
-        const HeightType mB = vertMark_[t.b];
-        const HeightType mC = vertMark_[t.c];
+        const QVector3D  A   = vertPool_[t.a];
+        const QVector3D  B   = vertPool_[t.b];
+        const QVector3D  C   = vertPool_[t.c];
+        const HeightType mA  = vertMark_[t.a];
+        const HeightType mB  = vertMark_[t.b];
+        const HeightType mC  = vertMark_[t.c];
 
         if (canceled()) {
             return;
@@ -335,7 +335,7 @@ void IsobathsProcessor::buildPolylines(const IsobathsSegVec& segs, IsobathsPolyl
         }
 
         // qDebug() << "poly.size()............" << poly.size();
-        if (poly.size() > 200) {
+        if (poly.size() > 20) {
             polys << QVector<QVector3D>(poly.begin(), poly.end());
         }
     }
