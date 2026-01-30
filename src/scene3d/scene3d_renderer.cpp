@@ -14,8 +14,7 @@
 //#include FT_FREETYPE_H
 
 
-GraphicsScene3dRenderer::GraphicsScene3dRenderer() :
-    scaleFactor_(1.0f)
+GraphicsScene3dRenderer::GraphicsScene3dRenderer() : scaleFactor_(1.0f)
 {
 #if defined(Q_OS_ANDROID) || defined(LINUX_ES)
     scaleFactor_ = 2.0f;
@@ -170,7 +169,7 @@ void GraphicsScene3dRenderer::drawObjects()
 
     glEnable(GL_DEPTH_TEST);
     surfaceViewRenderImpl_.render(this,      m_projection * view * m_model, m_shaderProgramMap);
-    isobathsViewRenderImpl_.render(this,     m_model, view, m_projection, m_shaderProgramMap);
+    // isobathsViewRenderImpl_.render(this,     m_model, view, m_projection, m_shaderProgramMap);
     m_bottomTrackRenderImpl.render(this,     m_model, view, m_projection, m_shaderProgramMap);
     m_boatTrackRenderImpl.render(this,       m_model, view, m_projection, m_shaderProgramMap);
 
@@ -212,8 +211,7 @@ void GraphicsScene3dRenderer::drawObjects()
     glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
 
     //-----------Draw selection rect-------------
-    if(!m_shaderProgramMap.contains("static_sec"))
-        return;
+    if(!m_shaderProgramMap.contains("static_sec")) return;
 
     auto shaderProgram = m_shaderProgramMap["static_sec"];
     if (!shaderProgram->bind()) {
@@ -242,11 +240,9 @@ void GraphicsScene3dRenderer::drawObjects()
 
     //-----------Draw scene bounding box-------------
     if (gridVisibility_) {
-        if(!m_shaderProgramMap.contains("static"))
-            return;
+        if(!m_shaderProgramMap.contains("static")) return;
 
         auto shaderProgram = m_shaderProgramMap["static"];
-
         if (!shaderProgram->bind()){
             qCritical() << "Error binding shader program.";
             return;

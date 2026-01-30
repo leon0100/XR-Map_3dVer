@@ -225,6 +225,7 @@ SceneObject::RenderImplementation::~RenderImplementation()
 void SceneObject::RenderImplementation::render(QOpenGLFunctions *ctx,  const QMatrix4x4 &mvp,
                                                const QMap<QString, std::shared_ptr<QOpenGLShaderProgram>> &shaderProgramMap) const
 {
+    qDebug() << "SceneObject::RenderImplementation::render.........";
     if(!m_isVisible) return;
 
     if(!shaderProgramMap.contains("static")) return;
@@ -255,14 +256,14 @@ void SceneObject::RenderImplementation::render(QOpenGLFunctions *ctx,  const QMa
 void SceneObject::RenderImplementation::render(QOpenGLFunctions *ctx, const QMatrix4x4 &model, const QMatrix4x4 &view,
                 const QMatrix4x4 &projection, const QMap<QString, std::shared_ptr<QOpenGLShaderProgram> > &shaderProgramMap) const
 {
+    qDebug() << "SceneObject::RenderImplementation::render............";
     render(ctx, projection * view * model, shaderProgramMap);
 }
 
 void SceneObject::RenderImplementation::setData(const QVector<QVector3D> &data, int primitiveType)
 {
     qDebug() << "SceneObject::RenderImplementation::setData.................";
-    if(m_primitiveType != primitiveType)
-        m_primitiveType = primitiveType;
+    if(m_primitiveType != primitiveType)  m_primitiveType = primitiveType;
 
     m_data = data;
 
@@ -326,7 +327,7 @@ QVector<QVector3D> SceneObject::RenderImplementation::data() const
 
 const QVector<QVector3D> &SceneObject::RenderImplementation::cdata() const
 {
-    qDebug() << "SceneObject::RenderImplementation................";
+    qDebug() << "SceneObject::RenderImplementation...........";
     return m_data;
 }
 
@@ -367,6 +368,7 @@ void SceneObject::RenderImplementation::removeVertex(int index)
 
 void SceneObject::RenderImplementation::updateBounds()
 {
+    qDebug() << "SceneObject::RenderImplementation::updateBounds....................";
     if (m_data.isEmpty()) {
         m_bounds = Cube();
         return;

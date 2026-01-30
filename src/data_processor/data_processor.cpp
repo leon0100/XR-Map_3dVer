@@ -503,6 +503,7 @@ void DataProcessor::postMosaicColorTable(const std::vector<uint8_t>& t)
 
 void DataProcessor::postIsobathsLineSegments(const QVector<QVector3D>& lineSegments)
 {
+    qDebug() << "DataProcessor::postIsobathsLineSegments lineSegments.size():" << lineSegments.size();
     emit sendIsobathsLineSegments(lineSegments);
 }
 

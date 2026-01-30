@@ -198,7 +198,6 @@ void Dataset::addChart(const ChannelId& channelId, const ChartParameters& chartP
 
     // ! we need all channels in data !
     uint8_t numSubChannels = data.size();
-
     if (shouldAddNewEpoch(channelId, numSubChannels)) {
         qDebug() << "Dataset::addChart........................";
         addNewEpoch();

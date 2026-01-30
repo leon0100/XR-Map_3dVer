@@ -800,6 +800,7 @@ void GraphicsScene3dView::setQmlAppEngine(QQmlApplicationEngine* engine)
 
 void GraphicsScene3dView::updateBounds()
 {
+    qDebug() << "GraphicsScene3dView::updateBounds........";
     m_bounds = boatTrack_->bounds()
                    .merge(isobathsView_->bounds())
                    .merge(m_bottomTrack->bounds())

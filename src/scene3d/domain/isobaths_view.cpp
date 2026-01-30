@@ -29,7 +29,7 @@ void IsobathsView::setCameraDistToFocusPoint(float val)
 
 void IsobathsView::setLabels(const QVector<IsobathUtils::LabelParameters> &labels)
 {
-    //qDebug() << "IsobathsView::setLabels" << labels.size();
+    qDebug() << "IsobathsView::setLabels" << labels.size();
     if (auto* r = RENDER_IMPL(IsobathsView); r) {
         r->labels_ = labels;
         Q_EMIT changed();
@@ -38,7 +38,8 @@ void IsobathsView::setLabels(const QVector<IsobathUtils::LabelParameters> &label
 
 void IsobathsView::setLineSegments(const QVector<QVector3D> &lineSegments)
 {
-    //qDebug() << "IsobathsView::setLineSegments" << lineSegments.size();
+    qDebug() << "IsobathsView::setLineSegments" << lineSegments.size();
+
     if (auto* r = RENDER_IMPL(IsobathsView); r) {
         r->lineSegments_ = lineSegments;
         Q_EMIT changed();
@@ -47,7 +48,7 @@ void IsobathsView::setLineSegments(const QVector<QVector3D> &lineSegments)
 
 void IsobathsView::setLineStepSize(float lineStepSize)
 {
-    //qDebug() << "IsobathsView::setLineStepSize" << lineStepSize;
+    qDebug() << "IsobathsView::setLineStepSize" << lineStepSize;
     if (auto* r = RENDER_IMPL(IsobathsView); r) {
         r->lineStepSize_ = lineStepSize;
         Q_EMIT changed();
@@ -59,13 +60,13 @@ IsobathsView::IsobathsViewRenderImplementation::IsobathsViewRenderImplementation
 {}
 
 void IsobathsView::IsobathsViewRenderImplementation::render(QOpenGLFunctions *ctx, const QMatrix4x4 &model,
-                        const QMatrix4x4 &view, const QMatrix4x4 &projection, const QMap<QString,
-                        std::shared_ptr<QOpenGLShaderProgram>> &spMap) const
+                 const QMatrix4x4 &view, const QMatrix4x4 &projection,  const QMap<QString,
+                 std::shared_ptr<QOpenGLShaderProgram>> &spMap) const
 {
+    qDebug() << "IsobathsView::IsobathsViewRenderImplementation::render...........";
     if (mVis_ || !m_isVisible || lineSegments_.isEmpty()) {
         return;
     }
-
     auto spIt = spMap.find("isobaths");
     if (spIt == spMap.end() || !spIt.value()->bind()) {
         qWarning() << "isobaths shader not found / bind failed";

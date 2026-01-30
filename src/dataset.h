@@ -357,7 +357,7 @@ private:
 public:
     QVector<float> vec_CSV_;
     void setDistProcesing_CSV(float depth){
-        vec_CSV_.append(depth);
+        vec_CSV_.append(-depth);
     }
     double getDistProccesing_CSV(int index){
         if(index >= vec_CSV_.size()) {

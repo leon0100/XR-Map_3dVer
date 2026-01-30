@@ -26,7 +26,6 @@ Themes theme;
 QTranslator translator;
 QVector<QString> availableLanguages{"en", "ru", "pl"};
 
-
 void loadLanguage(QGuiApplication &app)
 {
     QSettings settings;

@@ -38,8 +38,6 @@ void IsobathsProcessor::clear()
     vertPool_.clear();
     vertMark_.clear();
     tris_.clear();
-    //minZ_ = std::numeric_limits<float>::max();
-    //maxZ_ = std::numeric_limits<float>::lowest();
 }
 
 void IsobathsProcessor::setSurfaceMeshPtr(SurfaceMesh* surfaceMeshPtr)
@@ -231,6 +229,9 @@ void IsobathsProcessor::fullRebuildLinesLabels()
 
         // 线条
         for (const auto& p : polys) {
+            if(p.size() < 2000) {
+                continue;
+            }
             for (int i = 0; i + 1 < p.size(); ++i) {
                 resLines << p[i] << p[i + 1];
             }
@@ -239,6 +240,9 @@ void IsobathsProcessor::fullRebuildLinesLabels()
         // label
         float distNext = 0.0f;
         for (const auto& p : polys) {
+            if(p.size() < 2000) {
+                continue;
+            }
             if (canceled()) {
                 return;
             }
@@ -254,7 +258,7 @@ void IsobathsProcessor::fullRebuildLinesLabels()
             int cur = 0;
             float off = 0.0f;
 
-            while(distNext < polyLen - kmath::fltEps) {
+            while(distNext < (polyLen - kmath::fltEps)) {
                 while(cur < segLen.size() && (off + segLen[cur]) < (distNext - kmath::fltEps)) {
                     off += segLen[cur];
                     ++cur;
@@ -264,9 +268,9 @@ void IsobathsProcessor::fullRebuildLinesLabels()
                     break;
                 }
 
-                float t = (distNext  - off) / segLen[cur];
-                QVector3D pos = p[cur] + t * (p[cur + 1] - p[cur]);
-                QVector3D dir = (p[cur + 1] - p[cur]).normalized();
+                float t = (distNext-off) / segLen[cur];
+                QVector3D pos = p[cur] + t * (p[cur+1] - p[cur]);
+                QVector3D dir = (p[cur+1] - p[cur]).normalized();
                 dir.setZ(0.0f);
                 resLabels << LabelParameters{ pos, dir, fabsf(depth) };
                 distNext += labelStepSize_;
@@ -276,10 +280,11 @@ void IsobathsProcessor::fullRebuildLinesLabels()
         }
     }
 
+    qDebug() << "resLines.size() " << resLines.size();
+
     filterNearbyLabels(resLabels, labels_);
     lineSegments_ = std::move(resLines);
 
-    qDebug() << "IsobathsProcessor::fullRebuildLinesLabel...................";
     QMetaObject::invokeMethod(dataProcessor_, "postState", Qt::QueuedConnection, Q_ARG(DataProcessorType, DataProcessorType::kUndefined));
     QMetaObject::invokeMethod(dataProcessor_, "postIsobathsLineSegments", Qt::QueuedConnection, Q_ARG(QVector<QVector3D>, lineSegments_));
     QMetaObject::invokeMethod(dataProcessor_, "postIsobathsLabels", Qt::QueuedConnection, Q_ARG(QVector<IsobathUtils::LabelParameters>, labels_));
