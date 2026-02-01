@@ -11,7 +11,7 @@
 
 namespace delaunay {
 
-/// Brute‐force incremental Delaunay triangulation (Bowyer–Watson)
+// Brute‐force incremental Delaunay triangulation (Bowyer–Watson)   暴力增量式 Delaunay三角剖分
 class Delaunay {
 public:
     Delaunay(double super_size = SUPER_SIZE) {
@@ -28,7 +28,7 @@ public:
         insertTriangle(p0, p2, p3);
     }
 
-    /// Add a new point and update triangulation
+    // Add a new point and update triangulation
     TriResult addPoint(const Point &p) {
         // 1) Insert point and get its index
         size_t pi = insertPoint(p);

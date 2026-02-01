@@ -246,13 +246,13 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
         }
     };
 
-    auto paintTwoLinesManual = [&](const QVector3D& point, const QVector2D* dirVecPix, QSet<SurfaceTile*>& changed) {  // экстраполяция двумя линиями пятном
+    auto paintTwoLinesManual = [&](const QVector3D& point, const QVector2D* dirVecPix, QSet<SurfaceTile*>& changed) {  // 双线段光斑外推法
         if (!surfaceMeshPtr_->getIsInited() || extraWidth_ <= 0) {
             return;
         }
 
         const float radiusM = 0.5f * static_cast<float>(extraWidth_);
-        ensureMeshCoversDisk(point, radiusM);
+        ensureMeshCoversDisk(point, radiusM);  // 确保网格足够大，能包住我们要画的区域
 
         // 以像素为单位的中心与半径
         const QVector3D pointPix3D = surfaceMeshPtr_->convertPhToPixCoords(point);
@@ -467,11 +467,10 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
     }
 
      const bool zChanged = !qFuzzyCompare(1.0+minZ_, 1.0+lastMinZ) || !qFuzzyCompare(1.0+maxZ_, 1.0+lastMaxZ);
-//     // if (zChanged) {
-//         // minZ_ = -49.155;maxZ_ = -0.144;
-//         // QMetaObject::invokeMethod(dataProcessor_, "postMinZ", Qt::QueuedConnection, Q_ARG(float, minZ_));
-//         // QMetaObject::invokeMethod(dataProcessor_, "postMaxZ", Qt::QueuedConnection, Q_ARG(float, maxZ_));
-//     // }
+    if (zChanged) {
+        QMetaObject::invokeMethod(dataProcessor_, "postMinZ", Qt::QueuedConnection, Q_ARG(float, minZ_));
+        QMetaObject::invokeMethod(dataProcessor_, "postMaxZ", Qt::QueuedConnection, Q_ARG(float, maxZ_));
+    }
 
     TileMap res;
     res.reserve(changedTiles.size());

@@ -168,10 +168,10 @@ void GraphicsScene3dRenderer::drawObjects()
     }
 
     glEnable(GL_DEPTH_TEST);
-    surfaceViewRenderImpl_.render(this,      m_projection * view * m_model, m_shaderProgramMap);
-    // isobathsViewRenderImpl_.render(this,     m_model, view, m_projection, m_shaderProgramMap);
-    m_bottomTrackRenderImpl.render(this,     m_model, view, m_projection, m_shaderProgramMap);
-    m_boatTrackRenderImpl.render(this,       m_model, view, m_projection, m_shaderProgramMap);
+    surfaceViewRenderImpl_.render(this,      m_projection * view * m_model, m_shaderProgramMap);  //高度场
+    isobathsViewRenderImpl_.render(this,     m_model, view, m_projection, m_shaderProgramMap);   //等值线
+    m_bottomTrackRenderImpl.render(this,     m_model, view, m_projection, m_shaderProgramMap);   //原始底迹点
+    m_boatTrackRenderImpl.render(this,       m_model, view, m_projection, m_shaderProgramMap);   //船迹
 
     // navigation arrow
     {

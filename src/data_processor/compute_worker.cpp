@@ -182,10 +182,11 @@ void ComputeWorker::bottomTrackProcessing(const DatasetChannel& ch1, const Datas
 
 void ComputeWorker::processBundle(const WorkBundle& wb)
 {
+
     qDebug() << "ComputeWorker::processBundle: task" << wb.mosaicVec.size();
     // 依次地，传感器自行向外发送信号
     if (!wb.surfaceVec.isEmpty() && !isCanceled()) {
-        surface_.onUpdatedBottomTrackData(wb.surfaceVec);
+        surface_.onUpdatedBottomTrackData(wb.surfaceVec); //生成高度场，不负责等值线的绘制，但是却为等值线提供高度场网格
         surface_.rebuildColorIntervals();
     }
 
@@ -194,7 +195,7 @@ void ComputeWorker::processBundle(const WorkBundle& wb)
     }
 
     if (wb.doIsobaths && !isCanceled()) {
-        isobaths_.onUpdatedBottomTrackData();
+        isobaths_.onUpdatedBottomTrackData(); //只计算等值线 线。。，但她完全依赖于SurfaceProcessor生成的高度场网格。
     }
 
     // emit jobFinished();

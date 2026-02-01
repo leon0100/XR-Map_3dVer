@@ -172,7 +172,7 @@ void IsobathsProcessor::fullRebuildLinesLabels()
         return;
     }
 
-    lineStepSize_ = 10.0;
+    lineStepSize_ = 10.0;//nie:test
     const int levelCnt = static_cast<int>((maxZ_ - minZ_) / lineStepSize_) + 1; //等深线层数
 
     QHash<int, IsobathsSegVec> segsByLvl;
@@ -229,9 +229,9 @@ void IsobathsProcessor::fullRebuildLinesLabels()
 
         // 线条
         for (const auto& p : polys) {
-            if(p.size() < 2000) {
-                continue;
-            }
+            // if(p.size() < 2000) {
+            //     continue;
+            // }
             for (int i = 0; i + 1 < p.size(); ++i) {
                 resLines << p[i] << p[i + 1];
             }
@@ -240,9 +240,9 @@ void IsobathsProcessor::fullRebuildLinesLabels()
         // label
         float distNext = 0.0f;
         for (const auto& p : polys) {
-            if(p.size() < 2000) {
-                continue;
-            }
+            // if(p.size() < 2000) {
+            //     continue;
+            // }
             if (canceled()) {
                 return;
             }
