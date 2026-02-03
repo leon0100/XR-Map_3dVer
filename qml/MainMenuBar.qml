@@ -9,19 +9,17 @@ Item {
     id: menu
     implicitWidth: menuLayout.width
 
-    property var targetPlot: null
-
-    property var lastItem: menuSettings
-    //property bool isConsoleVisible: consoleEnable.checked // TODO
-    property bool is3DVisible: visible3DButton.checked
-    property bool is2DVisible: visible2DButton.checked
-    property int numPlots: appSettings.numPlots
-    property bool syncPlots: appSettings.syncPlots
-    property int instruments:  appSettings.instruments
-    property int settingsWidth: theme.controlHeight*20
-    property string filePath: devSettings.filePath
-    property bool extraInfoVis: appSettings.extraInfoVis
-    property bool autopilotInfofVis: appSettings.autopilotInfofVis
+    property  var    targetPlot:    null
+    property  var    lastItem:      menuSettings
+    property  bool   is3DVisible:   visible3DButton.checked
+    property  bool   is2DVisible:   visible2DButton.checked
+    property  int    numPlots:      appSettings.numPlots
+    property  bool   syncPlots:     appSettings.syncPlots
+    property  int    instruments:   appSettings.instruments
+    property  int    settingsWidth: theme.controlHeight*20
+    property  string filePath:      devSettings.filePath
+    property  bool   extraInfoVis:  appSettings.extraInfoVis
+    property  bool   autopilotInfofVis: appSettings.autopilotInfofVis
 
     signal languageChanged(string langStr)
     signal menuBarSettingOpened()
@@ -62,11 +60,10 @@ Item {
         let wasOpen = currentItem.active
         let lastItemTmp = lastItem
 
-        //控制了DeviceSettingsViewer、DisplaySettingsViewer的显示和隐藏
+        //控制DeviceSettingsViewer、DisplaySettingsViewer的显示和隐藏
         if (currentItem) {
             currentItem.active = !(currentItem.active)
         }
-
 
         if (lastItem && lastItem !== currentItem) {
             lastItem.active = false
@@ -180,7 +177,9 @@ Item {
                     property alias visible2DButtonChecked: visible2DButton.checked
                 }
             }
+
         }
+
 
         //左上角第一个按钮（串口连接、文件导入等）
         DeviceSettingsViewer {
@@ -199,7 +198,6 @@ Item {
             Layout.maximumHeight: menu.height
             menuWidth: settingsWidth
             y:0
-
             targetPlot: menu.targetPlot
         }
 

@@ -29,7 +29,7 @@ public:
     SurfaceTile();
     SurfaceTile(QVector3D origin);
     void init(int sidePixelSize, int heightMatrixRatio, float resolution);
-    void updateHeightIndices(); // обновляет индексы для отрисовки
+    void updateHeightIndices(); // 更新用于绘制的索引
 
     void                        setMosaicTextureId(GLuint val);
     void                        setIsUpdated(bool state);

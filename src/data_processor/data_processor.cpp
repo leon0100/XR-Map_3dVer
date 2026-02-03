@@ -105,7 +105,7 @@ void DataProcessor::clearProcessing(DataProcessorType procType)
     attitudeCounter_ = 0;
     mosaicCounter_ = 0;
 
-    postState(DataProcessorType::kUndefined); //
+    postState(DataProcessorType::kUndefined);
 }
 
 void DataProcessor::setUpdateBottomTrack(bool state)
@@ -113,7 +113,11 @@ void DataProcessor::setUpdateBottomTrack(bool state)
     qDebug() << "DataProcessor::setUpdateBottomTrack(bool state)..........";
     updateBottomTrack_ = state;
 
-    if ((updateBottomTrack_ || updateIsobaths_ || updateMosaic_) && !pendingSurfaceIndxs_.empty()) {
+    // if ((updateBottomTrack_ || updateIsobaths_ || updateMosaic_) && !pendingSurfaceIndxs_.empty()) {
+    //     scheduleLatest(WorkSet(WF_Surface));
+    // }
+
+    if ((updateIsobaths_ || updateMosaic_) && !pendingSurfaceIndxs_.empty()) {
         scheduleLatest(WorkSet(WF_Surface));
     }
 }
@@ -137,7 +141,7 @@ void DataProcessor::setUpdateMosaic(bool state)
         scheduleLatest(WorkSet(WF_Mosaic));
     }
     else if (!updateMosaic_) {
-        pendingIsobathsWork_ = true; // мозаика могла изменить поверхность
+        pendingIsobathsWork_ = true;
         scheduleLatest(WorkSet(WF_Isobaths));
     }
 }
@@ -232,7 +236,6 @@ void DataProcessor::bottomTrackProcessing(const DatasetChannel &ch1, const Datas
 {
     qDebug() << "DataProcessor::bottomTrackProcessing..............";
     if (btBusy_) {
-        //qDebug() << "bt skip - busy";
         return;
     }
 

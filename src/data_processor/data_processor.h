@@ -84,7 +84,6 @@ public slots:
     void setMosaicHighLevel(float val);
     void askColorTableForMosaic();
 
-    //
     void onIsobathsUpdated();
     void onMosaicUpdated();
     void requestCancel() noexcept;
@@ -163,7 +162,7 @@ private:
     // this
     Dataset* datasetPtr_;
     
-    // рабочая нить и воркер
+    //工作线程与工作者（线程 / 对象）
     QThread computeThread_;
     ComputeWorker* worker_;
 

@@ -75,7 +75,7 @@ public:
 
     virtual ~SceneObject();
 
-    enum class SceneObjectType{
+    enum class SceneObjectType {
         Unknown      = 0,
         BoatTrack    = 1,
         BottomTrack  = 2,
@@ -90,7 +90,6 @@ public:
         Contacts     = 11,
         IsobathsView = 12
     };
-
     Q_ENUM(SceneObjectType)
 
     QString id() const;

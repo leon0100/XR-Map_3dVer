@@ -9,8 +9,6 @@ MenuScroll {
     property string filePath: devConnection.filePath
 
     Column {
-        // width: menuWidth
-        // Layout.margins: 0
         padding: 0
         spacing: 10
 

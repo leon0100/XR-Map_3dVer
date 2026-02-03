@@ -34,11 +34,10 @@ bool SurfaceMesh::concatenate(kmath::MatrixParams &actualMatParams)
     }
 
     if (tileMatrix_.empty()) {
-        int newNumWidthTiles = std::ceil(actualMatParams.width * 1.0f / tileSideMeterSize_);
+        int newNumWidthTiles  = std::ceil(actualMatParams.width * 1.0f / tileSideMeterSize_);
         int newNumHeightTiles = std::ceil(actualMatParams.height * 1.0f / tileSideMeterSize_);
 
         initializeMatrix(newNumWidthTiles, newNumHeightTiles, actualMatParams);
-
         return true;
     }
 
@@ -49,15 +48,16 @@ bool SurfaceMesh::concatenate(kmath::MatrixParams &actualMatParams)
         columnsToAddLeft = std::ceil((origin_.x() - actualMatParams.originX) / tileSideMeterSize_);
     }
     if ((actualMatParams.originX + actualMatParams.width) > (origin_.x() + getWidthMeters())) {
-        columnsToAddRight = std::ceil(((actualMatParams.originX + actualMatParams.width) - (origin_.x() + getWidthMeters())) / tileSideMeterSize_);
+        columnsToAddRight = std::ceil(((actualMatParams.originX +
+                                actualMatParams.width) - (origin_.x() + getWidthMeters())) / tileSideMeterSize_);
     }
     if ((actualMatParams.originY + actualMatParams.height) > (origin_.y() + getHeightMeters()) ) {
-        rowsToAddTop = std::ceil(((actualMatParams.originY + actualMatParams.height) - (origin_.y() + getHeightMeters())) / tileSideMeterSize_);
+        rowsToAddTop = std::ceil(((actualMatParams.originY +
+                                actualMatParams.height) - (origin_.y() + getHeightMeters())) / tileSideMeterSize_);
     }
     if (actualMatParams.originY < origin_.y()) {
         rowsToAddBottom = std::ceil((origin_.y() - actualMatParams.originY) / tileSideMeterSize_);
     }
-
 
     if (columnsToAddLeft > 0) {
         origin_.setX(origin_.x() - columnsToAddLeft * tileSideMeterSize_);
@@ -85,8 +85,7 @@ bool SurfaceMesh::concatenate(kmath::MatrixParams &actualMatParams)
 QVector3D SurfaceMesh::convertPhToPixCoords(QVector3D physicsCoordinate) const
 {
     return QVector3D((std::fabs(origin_.x() - physicsCoordinate.x())) / tileResolution_,
-                     (std::fabs(origin_.y() - physicsCoordinate.y())) / tileResolution_,
-                     0);
+                     (std::fabs(origin_.y() - physicsCoordinate.y())) / tileResolution_, 0);
 }
 
 void SurfaceMesh::printMatrix() const

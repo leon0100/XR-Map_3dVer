@@ -63,7 +63,7 @@ void IsobathsView::IsobathsViewRenderImplementation::render(QOpenGLFunctions *ct
                  const QMatrix4x4 &view, const QMatrix4x4 &projection,  const QMap<QString,
                  std::shared_ptr<QOpenGLShaderProgram>> &spMap) const
 {
-    qDebug() << "IsobathsView::IsobathsViewRenderImplementation::render...........";
+    // qDebug() << "IsobathsView::IsobathsViewRenderImplementation::render...........";
     if (mVis_ || !m_isVisible || lineSegments_.isEmpty()) {
         return;
     }

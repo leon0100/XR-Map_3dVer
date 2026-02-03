@@ -5,11 +5,11 @@ import QtQuick.Dialogs
 import QtCore
 
 
-/*----- 左上角的工具栏的第一个按钮（连接connection） -----*/
+/*----- 左上角的工具栏的第一个按钮（连接connection）对应的界面 -----*/
 ColumnLayout
 {
-    property var dev: null
-    property var devList: deviceManagerWrapper.devs
+    property var dev:         null
+    property var devList:     deviceManagerWrapper.devs
     property string filePath: pathText.text
 
     Layout.margins: 0
@@ -45,7 +45,6 @@ ColumnLayout
                     anchors.margins: 1
                     anchors.leftMargin: 0
                     anchors.rightMargin: 0
-                    // anchors.verticalCenter: parent
                     color: ConnectionStatus ? (ReceivesData ? "#005000" : "#505000") : IsNotAvailable ? "#500000" : theme.controlBackColor
                     border.width: 0
                     border.color: theme.controlBorderColor
@@ -435,7 +434,6 @@ ColumnLayout
     }
 
     MenuRow {
-        // Layout.margins: 0
         Layout.topMargin: 0
         Layout.fillWidth: false
 

@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import SceneGraphRendering 1.0
-import QtQuick.Window 2.15
+import QtQuick.Window  2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Dialogs
 import QtQuick.Controls 2.15
@@ -18,17 +18,15 @@ ApplicationWindow  {
     height:        512
     minimumHeight: 256
     color:         "black"
-    title:         qsTr("KoggerApp, KOGGER")
+    title:         qsTr("XR_Map_3dVer")
 
     readonly property int _rightBarWidth:                360
     readonly property int _activeObjectParamsMenuHeight: 500
     readonly property int _sceneObjectsListHeight:       300
 
     Settings {
-            id: appSettings
-            property bool isFullScreen: false
-            //property int savedX: 100
-            //property int savedY: 100
+        id: appSettings
+        property bool isFullScreen: false
     }
 
     Loader {
@@ -36,6 +34,60 @@ ApplicationWindow  {
         active: (Qt.platform.os === "windows")
         sourceComponent: stateGroupComp
     }
+
+
+    menuBar: MenuBar_XR {
+           id: menuToolBar
+
+           // 监听自定义信号
+           onOpenClicked: {
+               console.log("Open clicked")
+               // 这里可以调用 C++ / QML 的打开逻辑
+               // core.openLogFile("", false, false)
+           }
+
+           onFullScreenToggled: function(isFull) {
+               window.visibility = isFull
+                   ? Window.FullScreen
+                   : Window.Windowed
+           }
+    }
+
+
+
+    header: ToolBar_XR {
+        id: toolBarXR
+        // onMenuBarSettingOpened: onMenuBarSettingsOpened()
+        Component.onCompleted: toolBarXR.targetPlot = waterViewFirst //把qPlot2D类与ToolBar_XR绑定
+    }
+
+
+    footer: Rectangle {
+        height: 28
+        color: "#363636"
+
+        RowLayout {
+            anchors.fill: parent
+            anchors.margins: 1
+
+            Label {
+                text: qsTr("Coordinate: =Lat: %1  Lon: %2")
+                        .arg(renderer.currentLat.toFixed(6))
+                        .arg(renderer.currentLon.toFixed(6))
+                color: "white"
+            }
+
+            Item { Layout.fillHeight: true }
+
+            Label {
+                text: qsTr("Zoom: %1").arg(renderer.currentZoom)
+                color: "white"
+            }
+        }
+    }
+
+
+
 
     Component {
         id: stateGroupComp
@@ -99,6 +151,7 @@ ApplicationWindow  {
         waterViewFirst.settingsClicked.connect(onPlotSettingsClicked)
         waterViewSecond.settingsClicked.connect(onPlotSettingsClicked)
         menuBar.menuBarSettingOpened.connect(onMenuBarSettingsOpened)
+        ToolBar_XR.menuBarSettingOpened.connect(onMenuBarSettingsOpened)
 
         if (Qt.platform.os !== "windows") {
             if (appSettings.isFullScreen) {
@@ -1085,6 +1138,7 @@ ApplicationWindow  {
         }
     }
 
+
     MainMenuBar {
         id:                menuBar
         objectName:        "menuBar"
@@ -1094,7 +1148,8 @@ ApplicationWindow  {
         Component.onCompleted: {
             menuBar.targetPlot = waterViewFirst //这句把qPlot2D类与MainMenuBar绑定
         }
-        visible: !showBanner
+        // visible: !showBanner   //暂时注释掉
+        visible: false
     }
 
     function handleChildSignal(langStr) {

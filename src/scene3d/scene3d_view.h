@@ -34,11 +34,7 @@ public:
     {
     public:
         explicit Camera(GraphicsScene3dView* viewPtr = nullptr);
-        Camera(qreal pitch,
-               qreal yaw,
-               qreal distToFocusPoint,
-               qreal fov,
-               qreal sensivity);
+        Camera(qreal pitch, qreal yaw, qreal distToFocusPoint, qreal fov, qreal sensivity);
 
         float distForMapView() const;
         qreal distToFocusPoint() const;
@@ -320,6 +316,15 @@ private:
     bool navigatorViewLocation_;
     bool isNorth_;
     QTimer* testingTimer_;
+
+
+    //***************************************************************************************
+    bool isBoxSelecting_ = false;
+    QPoint boxSelectStart_;
+    QPoint boxSelectEnd_;
+    QVector<SurfaceTile*> selectedTiles_;
+    QVector<QVector3D> selectedIsobaths_;
+    void selectTilesInBox();
 };
 
 #endif // GRAPHICSSCENE3DVIEW_H

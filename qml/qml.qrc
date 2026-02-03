@@ -99,5 +99,7 @@
         <file>IsobathsExtraSettings.qml</file>
         <file>LocationExtraSettings.qml</file>
         <file>MosaicExtraSettings.qml</file>
+        <file>MenuBar_XR.qml</file>
+        <file>ToolBar_XR.qml</file>
     </qresource>
 </RCC>

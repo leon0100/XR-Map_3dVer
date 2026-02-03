@@ -74,6 +74,7 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
 
     QMetaObject::invokeMethod(dataProcessor_, "postState", Qt::QueuedConnection, Q_ARG(DataProcessorType, DataProcessorType::kSurface));
 
+    //头一次都是初始化时的数据
     auto& tr = delaunayProc_.getTriangles();
     auto& pt = delaunayProc_.getPoints();
 
@@ -90,6 +91,7 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
     static QSet<SurfaceTile*> changedTiles;
     changedTiles.clear();
 
+/*  nie:test 等高线测试，这里的左右两侧侧扫的内容暂时注释掉
     auto ensureMeshCoversDisk = [&](const QVector3D& P, float radiusM) -> void { // 用于外推的网格扩展
         QVector<QVector3D> tri(4);
         tri[0] = QVector3D(P.x() + radiusM, P.y(),           P.z());
@@ -172,7 +174,7 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
         const QVector3D Ppix3 = surfaceMeshPtr_->convertPhToPixCoords(P);
         const QVector3D Qpix3 = surfaceMeshPtr_->convertPhToPixCoords(QVector3D(P.x() + radiusM, P.y(), P.z()));
         const float radiusPxF = std::fabs(Qpix3.x() - Ppix3.x());
-        const int   radiusPx  = std::max(1, static_cast<int>(std::ceil(radiusPxF + 0.5f /*запас*/ * stepPix)));
+        const int   radiusPx  = std::max(1, static_cast<int>(std::ceil(radiusPxF + 0.5f * stepPix)));
 
         const int minPx = clampGrid(roundToGrid(Ppix3.x() - radiusPx), meshW - 1);
         const int maxPx = clampGrid(roundToGrid(Ppix3.x() + radiusPx), meshW - 1);
@@ -342,6 +344,8 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
         writeCellWithNeighbors(cx, cy);
     };
 
+*/
+
     // --- 添加 / 更新中心点（按网格单元划分） ---
     auto processOneCenter = [&](const QVector3D& pnt) -> void {
         if (!originSet_) {
@@ -429,6 +433,7 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
         maxZ_ = std::max(static_cast<double>(maxZ_), std::max({ pt[t.a].z, pt[t.b].z, pt[t.c].z }));
     }
 
+/*
     for (const auto& itm : indxs) { // 外推法
         const QVector3D& point = bTrData[itm.second];
         QVector2D dirVecPix;
@@ -440,6 +445,7 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
             paintDiskExtrapolated(point, haveDir ? &dirVecPix : nullptr, changedTiles);
         }
     }
+*/
 
     propagateBorderHeights(changedTiles);
     for (SurfaceTile* t : std::as_const(changedTiles)) {
@@ -466,7 +472,7 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
         }
     }
 
-     const bool zChanged = !qFuzzyCompare(1.0+minZ_, 1.0+lastMinZ) || !qFuzzyCompare(1.0+maxZ_, 1.0+lastMaxZ);
+    const bool zChanged = !qFuzzyCompare(1.0+minZ_, 1.0+lastMinZ) || !qFuzzyCompare(1.0+maxZ_, 1.0+lastMaxZ);
     if (zChanged) {
         QMetaObject::invokeMethod(dataProcessor_, "postMinZ", Qt::QueuedConnection, Q_ARG(float, minZ_));
         QMetaObject::invokeMethod(dataProcessor_, "postMaxZ", Qt::QueuedConnection, Q_ARG(float, maxZ_));
@@ -708,7 +714,7 @@ void SurfaceProcessor::propagateBorderHeights(QSet<SurfaceTile*>& changedTiles)
                 continue;
             }
 
-            if (ty + 1 < tilesY) { // вверх, строка 0 в последнюю верхнего тайла
+            if (ty + 1 < tilesY) { // 向上，将第 0 行移动到顶部瓦片的最后一行
                 SurfaceTile* top = matrix[ty + 1][tx];
                 if (!top->getIsInited()) {
                     top->init(tileSidePixelSize_, tileHeightMatrixRatio_, tileResolution_);
@@ -718,7 +724,7 @@ void SurfaceProcessor::propagateBorderHeights(QSet<SurfaceTile*>& changedTiles)
                 changedTiles.insert(top);
             }
 
-            if (tx > 0) { // влево, столбец 0 в правый столбец левого тайла
+            if (tx > 0) { // 向左，将第 0 列移到左侧瓦片的最右列
                 SurfaceTile* left = matrix[ty][tx - 1];
                 if (!left->getIsInited()) {
                     left->init(tileSidePixelSize_, tileHeightMatrixRatio_, tileResolution_);
@@ -728,7 +734,7 @@ void SurfaceProcessor::propagateBorderHeights(QSet<SurfaceTile*>& changedTiles)
                 changedTiles.insert(left);
             }
 
-            if (ty + 1 < tilesY && tx > 0) { // диагональный узел
+            if (ty + 1 < tilesY && tx > 0) { // 对角节点
                 SurfaceTile* topLeft = matrix[ty + 1][tx - 1];
                 if (!topLeft->getIsInited()) {
                     topLeft->init(tileSidePixelSize_, tileHeightMatrixRatio_, tileResolution_);

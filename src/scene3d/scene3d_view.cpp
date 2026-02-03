@@ -244,6 +244,13 @@ void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal 
     ned.d = 0;
     LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
     qDebug() << "mousePressTrigger x:" << x << "   y:" << y << "   lati:" << lla.latitude << "   long:" << lla.longitude;
+    // 开始框选
+    // if (mouseButton == Qt::LeftButton && !isBoxSelecting_) {
+    //     isBoxSelecting_ = true;
+    //     boxSelectStart_ = QPoint(x,y);
+    //     boxSelectEnd_ =  QPoint(x,y);
+    //     return;
+    // }
 
     wasMoved_ = false;
     clearComboSelectionRect();
@@ -272,6 +279,13 @@ void GraphicsScene3dView::mouseMoveTrigger(Qt::MouseButtons mouseButton, qreal x
         m_startMousePos = QPointF(x, y);
         needToResetStartPos_ = false;
     }
+
+    //截图框选
+    // if(isBoxSelecting_) {
+    //     boxSelectEnd_ = QPoint(x, y);
+    //     update();
+    //     return;
+    // }
 
     contacts_->mouseMoveEvent(mouseButton, x, y);
 
@@ -341,6 +355,12 @@ void GraphicsScene3dView::mouseReleaseTrigger(Qt::MouseButtons mouseButton, qrea
     clearComboSelectionRect();
 
     m_lastMousePos = { x, y };
+
+    // if(mouseButton == Qt::LeftButton && isBoxSelecting_) {
+    //     isBoxSelecting_ = false;
+    //     selectTilesInBox();
+    //     update(); // 触发重绘
+    // }
 
     if (switchedToBottomTrackVertexComboSelectionMode_) {
         m_mode = lastMode_;
@@ -426,6 +446,44 @@ void GraphicsScene3dView::bottomTrackActionEvent(BottomTrack::ActionEvent action
 
     QQuickFramebufferObject::update();
 }
+
+void GraphicsScene3dView::selectTilesInBox()
+{
+    selectedTiles_.clear();
+    selectedIsobaths_.clear();
+
+
+    // 计算框选区域
+    int minX = std::min(boxSelectStart_.x(), boxSelectEnd_.x());
+    int maxX = std::max(boxSelectStart_.x(), boxSelectEnd_.x());
+    int minY = std::min(boxSelectStart_.y(), boxSelectEnd_.y());
+    int maxY = std::max(boxSelectStart_.y(), boxSelectEnd_.y());
+
+    qDebug() << "selectTilesInBox minX:" << minX << "  maxX:" << maxX << "  minY:" << minY << "  maxY:" << maxY;
+
+    // // 获取所有瓦片
+    // if (auto surfaceMeshPtr = dataProcessor_->getSurfaceMeshPtr()) {
+    //     auto& tiles = surfaceMeshPtr->getTilesCRef();
+    //     for (auto tile : tiles) {
+    //         // 检查瓦片是否在框选区域内
+    //         QRect tileRect = tile->getScreenRect(); // 需要实现此方法
+    //         if (tileRect.intersects(QRect(minX, minY, maxX - minX, maxY - minY))) {
+    //             selectedTiles_.append(tile);
+    //         }
+    //     }
+    // }
+
+    // // 选择等值线
+    // if (auto isobathsViewPtr = getIsobathsViewPtr()) {
+    //     // 实现等值线选择逻辑
+    //     selectedIsobaths_ = isobathsViewPtr->getIsobathsInBox(QRect(minX, minY, maxX - minX, maxY - minY));
+    // }
+
+    // // 触发选择事件
+    // emit tilesSelected(selectedTiles_);
+    // emit isobathsSelected(selectedIsobaths_);
+}
+
 
 void GraphicsScene3dView::setTrackLastData(bool state)
 {

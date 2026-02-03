@@ -51,12 +51,12 @@ struct TriResult {
 
 struct Triangle {
     size_t a, b, c;          // indices of vertices in points[]
-    Point circumcenter;       // Center of circumcircle
-    double circumradius2;     // Squared radius of circumcircle
+    Point circumcenter;       // Center of circumcircle 外接圆圆心
+    double circumradius2;     // Squared radius of circumcircle 外接圆半径的平方
     bool is_bad = false;
     double longest_edge_dist;
 
-    /// Construct and compute circumcircle from indexed points
+    // Construct and compute circumcircle from indexed points
     Triangle(size_t ia, size_t ib, size_t ic, const std::vector<Point> &points) {
         std::array<size_t,3> v = {ia, ib, ic};
         std::sort(v.begin(), v.end());
@@ -81,7 +81,7 @@ struct Triangle {
         return std::vector<Edge>() = {{a, b}, {b, c}, {a, c}};
     }
 
-    /// Compute a robust circumcircle; fallback on collinear triangles
+    // Compute a robust circumcircle; fallback on collinear triangles
     void computeCircumcircle(const std::vector<Point> &pts) {
         const Point &A = pts[a];
         const Point &B = pts[b];
@@ -138,7 +138,7 @@ struct Triangle {
         circumradius2 = dx*dx + dy*dy;
     }
 
-    /// Check if a point lies inside the circumcircle
+    // Check if a point lies inside the circumcircle
     bool containsInCircumcircle(const Point &p) const {
         double dx = p.x - circumcenter.x;
         double dy = p.y - circumcenter.y;

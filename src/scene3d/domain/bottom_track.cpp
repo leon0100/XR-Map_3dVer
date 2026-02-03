@@ -107,45 +107,45 @@ void BottomTrack::actionEvent(ActionEvent actionEvent)
     };
 
     switch (actionEvent) {
-    case ActionEvent::Undefined: {
-        break;
-    }
-    case ActionEvent::ClearDistProc: {
-        const auto indices{ RENDER_IMPL(BottomTrack)->selectedVertexIndices_ };
+        case ActionEvent::Undefined: {
+            break;
+        }
+        case ActionEvent::ClearDistProc: {
+            const auto indices{ RENDER_IMPL(BottomTrack)->selectedVertexIndices_ };
 
-        if (!indices.isEmpty()) {
-            bool isSomethingDeleted{ false };
-            for (const auto& verticeIndex : indices) {
-                const auto epochIndex{ vertex2Epoch_.value(verticeIndex) };
-                if (auto epoch{ datasetPtr_->fromIndex(epochIndex) }) {
-                    const auto channels = datasetPtr_->channelsList(); // TODO
-                    for (const auto& itm : channels) {
-                        epoch->clearDistProcessing(itm.channelId_);
+            if (!indices.isEmpty()) {
+                bool isSomethingDeleted{ false };
+                for (const auto& verticeIndex : indices) {
+                    const auto epochIndex{ vertex2Epoch_.value(verticeIndex) };
+                    if (auto epoch{ datasetPtr_->fromIndex(epochIndex) }) {
+                        const auto channels = datasetPtr_->channelsList();
+                        for (const auto& itm : channels) {
+                            epoch->clearDistProcessing(itm.channelId_);
+                        }
+
+                        Q_EMIT epochErased(epochIndex);
+                        isSomethingDeleted = true;
                     }
-
-                    Q_EMIT epochErased(epochIndex);
-                    isSomethingDeleted = true;
+                }
+                if (isSomethingDeleted) {
+                    RENDER_IMPL(BottomTrack)->selectedVertexIndices_.clear();
+                    updateRenderData(0, 0, false, true);
+                    emit datasetPtr_->dataUpdate();
                 }
             }
-            if (isSomethingDeleted) {
-                RENDER_IMPL(BottomTrack)->selectedVertexIndices_.clear();
-                updateRenderData(0, 0, false, true);
-                emit datasetPtr_->dataUpdate();
-            }
-        }
 
-        break;
-    }
-    case ActionEvent::MaxDistProc: {
-        minMaxFunc(false);
-        break;
-    }
-    case ActionEvent::MinDistProc: {
-        minMaxFunc(true);
-        break;
-    }
-    default:
-        break;
+            break;
+        }
+        case ActionEvent::MaxDistProc: {
+            minMaxFunc(false);
+            break;
+        }
+        case ActionEvent::MinDistProc: {
+            minMaxFunc(true);
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -528,41 +528,42 @@ void BottomTrack::BottomTrackRenderImplementation::render(QOpenGLFunctions *ctx,
         return;
     }
 
+    //nie:test  这里是带颜色和高度的轨迹线
     // track
-    {
-        QOpenGLShaderProgram* shaderProgram = nullptr;
-        int posLoc = -1, maxZLoc = -1, minZLoc = -1, matrixLoc = -1;
+    // {
+    //     QOpenGLShaderProgram* shaderProgram = nullptr;
+    //     int posLoc = -1, maxZLoc = -1, minZLoc = -1, matrixLoc = -1;
 
-        shaderProgram = shaderProgramMap["height"].get();
-        shaderProgram->bind();
+    //     shaderProgram = shaderProgramMap["height"].get();
+    //     shaderProgram->bind();
 
-        int isPointLoc   = shaderProgram->uniformLocation("isPoint");
-        int isTriangleLoc= shaderProgram->uniformLocation("isTriangle");
-        shaderProgram->setUniformValue(isPointLoc,    true);
-        shaderProgram->setUniformValue(isTriangleLoc, false);
+    //     int isPointLoc   = shaderProgram->uniformLocation("isPoint");
+    //     int isTriangleLoc= shaderProgram->uniformLocation("isTriangle");
+    //     shaderProgram->setUniformValue(isPointLoc,    true);
+    //     shaderProgram->setUniformValue(isTriangleLoc, false);
 
-        maxZLoc = shaderProgram->uniformLocation("max_z");
-        minZLoc = shaderProgram->uniformLocation("min_z");
-        shaderProgram->setUniformValue(maxZLoc, m_bounds.maximumZ());
-        shaderProgram->setUniformValue(minZLoc, m_bounds.minimumZ());
+    //     maxZLoc = shaderProgram->uniformLocation("max_z");
+    //     minZLoc = shaderProgram->uniformLocation("min_z");
+    //     shaderProgram->setUniformValue(maxZLoc, m_bounds.maximumZ());
+    //     shaderProgram->setUniformValue(minZLoc, m_bounds.minimumZ());
 
-        posLoc = shaderProgram->attributeLocation("position");
-        matrixLoc = shaderProgram->uniformLocation("matrix");
+    //     posLoc = shaderProgram->attributeLocation("position");
+    //     matrixLoc = shaderProgram->uniformLocation("matrix");
 
-        shaderProgram->setUniformValue(matrixLoc, projection * view * model);
-        shaderProgram->enableAttributeArray(posLoc);
-        shaderProgram->setAttributeArray(posLoc, m_data.constData());
+    //     shaderProgram->setUniformValue(matrixLoc, projection * view * model);
+    //     shaderProgram->enableAttributeArray(posLoc);
+    //     shaderProgram->setAttributeArray(posLoc, m_data.constData());
 
-        ctx->glLineWidth(4.0);
-        ctx->glDrawArrays(m_primitiveType, 0, m_data.size());
-        ctx->glLineWidth(1.0);
+    //     ctx->glLineWidth(4.0);
+    //     ctx->glDrawArrays(m_primitiveType, 0, m_data.size());
+    //     ctx->glLineWidth(1.0);
 
-        shaderProgram->setUniformValue(isPointLoc,    false);
-        shaderProgram->setUniformValue(isTriangleLoc, false);
+    //     shaderProgram->setUniformValue(isPointLoc,    false);
+    //     shaderProgram->setUniformValue(isTriangleLoc, false);
 
-        shaderProgram->disableAttributeArray(posLoc);
-        shaderProgram->release();
-    }
+    //     shaderProgram->disableAttributeArray(posLoc);
+    //     shaderProgram->release();
+    // }
 
     {
         QOpenGLShaderProgram* shaderProgram = nullptr;

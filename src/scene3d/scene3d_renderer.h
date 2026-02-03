@@ -84,4 +84,9 @@ private:
     GLuint VAO, VBO;
     float scaleFactor_;
     float gridVisibility_ = true;
+    
+    // 框选相关
+    bool m_isBoxSelecting = false;
+    QPoint m_boxSelectStart;
+    QPoint m_boxSelectEnd;
 };

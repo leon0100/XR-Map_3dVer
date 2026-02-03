@@ -31,7 +31,7 @@ public:
         friend class BoatTrack;
         QVector3D boatTrackVertice_;
         QVector3D bottomTrackVertice_;
-        bool bottomTrackVisibleState_ = true;
+        bool bottomTrackVisibleState_ = false;
     };
 
     explicit BoatTrack(GraphicsScene3dView* view = nullptr, QObject* parent = nullptr);

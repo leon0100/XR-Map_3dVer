@@ -47,6 +47,7 @@ void IsobathsProcessor::setSurfaceMeshPtr(SurfaceMesh* surfaceMeshPtr)
 
 void IsobathsProcessor::onUpdatedBottomTrackData()
 {
+    qDebug() << "IsobathsProcessor::onUpdatedBottomTrackData.............";
     fullRebuildLinesLabels();
 }
 
@@ -135,7 +136,7 @@ void IsobathsProcessor::fullRebuildLinesLabels()
     vertMark_.clear();
     tris_.clear();
     std::unordered_map<VKey,int> vDict;
-    vDict.reserve(1 << 20); // 1Mb
+    vDict.reserve(1 << 20);
 
     for (auto* tile: surfaceMeshPtr_->getTilesCRef()) {
         const auto& V = tile->getHeightVerticesCRef();
@@ -172,7 +173,6 @@ void IsobathsProcessor::fullRebuildLinesLabels()
         return;
     }
 
-    lineStepSize_ = 10.0;//nie:test
     const int levelCnt = static_cast<int>((maxZ_ - minZ_) / lineStepSize_) + 1; //等深线层数
 
     QHash<int, IsobathsSegVec> segsByLvl;
@@ -229,9 +229,6 @@ void IsobathsProcessor::fullRebuildLinesLabels()
 
         // 线条
         for (const auto& p : polys) {
-            // if(p.size() < 2000) {
-            //     continue;
-            // }
             for (int i = 0; i + 1 < p.size(); ++i) {
                 resLines << p[i] << p[i + 1];
             }
@@ -240,9 +237,6 @@ void IsobathsProcessor::fullRebuildLinesLabels()
         // label
         float distNext = 0.0f;
         for (const auto& p : polys) {
-            // if(p.size() < 2000) {
-            //     continue;
-            // }
             if (canceled()) {
                 return;
             }
@@ -340,7 +334,7 @@ void IsobathsProcessor::buildPolylines(const IsobathsSegVec& segs, IsobathsPolyl
         }
 
         // qDebug() << "poly.size()............" << poly.size();
-        if (poly.size() > 20) {
+        if (poly.size() > 5) {
             polys << QVector<QVector3D>(poly.begin(), poly.end());
         }
     }

@@ -298,4 +298,44 @@ void GraphicsScene3dRenderer::drawObjects()
         shaderProgram->disableAttributeArray(posLoc);
         shaderProgram->release();
     }
+
+    // 绘制框选区域
+    if (m_isBoxSelecting) {
+        if(!m_shaderProgramMap.contains("static")) return;
+
+        auto shaderProgram = m_shaderProgramMap["static"];
+        if (!shaderProgram->bind()) {
+            return;
+        }
+
+        glDisable(GL_DEPTH_TEST);
+
+        int viewport[4];
+        glGetIntegerv(GL_VIEWPORT, viewport);
+
+        const int colorLoc  = shaderProgram->uniformLocation("color");
+        shaderProgram->setUniformValue(colorLoc, DrawUtils::colorToVector4d(QColor(255.0f, 255.0f, 0.0f, 1.0f))); // 黄色框选
+        shaderProgram->enableAttributeArray(0);
+
+        const float halfWidth = viewport[2] / 2.0f;
+        const float halfHeight = viewport[3] / 2.0f;
+        
+        // 计算框选矩形的四个顶点
+        QVector<QVector2D> rectVert = { 
+            { (m_boxSelectStart.x() / halfWidth) - 1.0f, 
+              (m_boxSelectStart.y() / halfHeight) - 1.0f },
+            { (m_boxSelectEnd.x() / halfWidth) - 1.0f, 
+              (m_boxSelectStart.y() / halfHeight) - 1.0f },
+            { (m_boxSelectEnd.x() / halfWidth) - 1.0f, 
+              (m_boxSelectEnd.y() / halfHeight) - 1.0f },
+            { (m_boxSelectStart.x() / halfWidth) - 1.0f, 
+              (m_boxSelectEnd.y() / halfHeight) - 1.0f }
+        };
+
+        shaderProgram->setAttributeArray(0, rectVert.constData());
+        glDrawArrays(GL_LINE_LOOP, 0, rectVert.size());
+        shaderProgram->release();
+
+        glEnable(GL_DEPTH_TEST);
+    }
 }

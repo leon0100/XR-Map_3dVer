@@ -129,6 +129,7 @@ void IsobathsViewControlMenuController::onEdgesVisible(bool state)
 
 void IsobathsViewControlMenuController::onSetSurfaceLineStepSize(float val)
 {
+    qDebug() << "IsobathsViewControlMenuController::onSetSurfaceLi  val:  " << val;
     surfaceLineStepSize_ = val;
 
     if (graphicsSceneViewPtr_) {

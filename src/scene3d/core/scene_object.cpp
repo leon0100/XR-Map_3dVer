@@ -225,7 +225,7 @@ SceneObject::RenderImplementation::~RenderImplementation()
 void SceneObject::RenderImplementation::render(QOpenGLFunctions *ctx,  const QMatrix4x4 &mvp,
                                                const QMap<QString, std::shared_ptr<QOpenGLShaderProgram>> &shaderProgramMap) const
 {
-    qDebug() << "SceneObject::RenderImplementation::render.........";
+    // qDebug() << "SceneObject::RenderImplementation::render.........";
     if(!m_isVisible) return;
 
     if(!shaderProgramMap.contains("static")) return;
@@ -256,7 +256,7 @@ void SceneObject::RenderImplementation::render(QOpenGLFunctions *ctx,  const QMa
 void SceneObject::RenderImplementation::render(QOpenGLFunctions *ctx, const QMatrix4x4 &model, const QMatrix4x4 &view,
                 const QMatrix4x4 &projection, const QMap<QString, std::shared_ptr<QOpenGLShaderProgram> > &shaderProgramMap) const
 {
-    qDebug() << "SceneObject::RenderImplementation::render............";
+    // qDebug() << "SceneObject::RenderImplementation::render............";
     render(ctx, projection * view * model, shaderProgramMap);
 }
 
@@ -282,7 +282,7 @@ void SceneObject::RenderImplementation::appendData(const QVector<QVector3D>& dat
 
 void SceneObject::RenderImplementation::appendData(const QVector3D& data)
 {
-    qDebug() << "RenderImplementation::appendData22222222222222222222..............";
+    qDebug() << "RenderImplementation::appendData222222222222222222.........................";
     m_data.append(data);
 
     updateBounds();

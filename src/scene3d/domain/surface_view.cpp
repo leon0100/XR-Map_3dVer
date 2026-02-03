@@ -320,7 +320,6 @@ void SurfaceView::setMaxZ(float maxZ)
 void SurfaceView::setSurfaceStep(float surfaceStep)
 {
     //qDebug() << "SurfaceView::setSurfaceStep" << levelStep;
-
     if (auto* r = RENDER_IMPL(SurfaceView); r) {
         r->surfaceStep_ = surfaceStep;
         Q_EMIT changed();
@@ -378,7 +377,7 @@ void SurfaceView::updateMosaicTileTextureTask(const QHash<QUuid, SurfaceTile>& n
             const auto& key   = it.key();
             const auto& value = it.value();
 
-            if (auto rIt = rTiles.find(key); rIt != rTiles.end()) { // только апдейт
+            if (auto rIt = rTiles.find(key); rIt != rTiles.end()) { // 仅更新
                 auto& tile = rIt.value();
                 tile.imageData_ = value.imageData_;
                 mosaicTileTextureToAppend_.insert(key, tile.getMosaicImageDataCRef());
