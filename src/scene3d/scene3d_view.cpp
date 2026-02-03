@@ -176,6 +176,16 @@ Dataset *GraphicsScene3dView::dataset() const
     return datasetPtr_;
 }
 
+double GraphicsScene3dView::currentLat() const
+{
+    return currentLat_;
+}
+
+double GraphicsScene3dView::currentLon() const
+{
+    return currentLon_;
+}
+
 void GraphicsScene3dView::clear(bool cleanMap)
 {
     isobathsView_->clear();
@@ -243,6 +253,14 @@ void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal 
     ned.e = to.x();
     ned.d = 0;
     LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
+    if (!qFuzzyCompare(currentLat_, lla.latitude)) {
+        currentLat_ = lla.latitude;
+        emit currentLatChanged();
+    }
+    if (!qFuzzyCompare(currentLon_, lla.longitude)) {
+        currentLon_ = lla.longitude;
+        emit currentLonChanged();
+    }
     qDebug() << "mousePressTrigger x:" << x << "   y:" << y << "   lati:" << lla.latitude << "   long:" << lla.longitude;
     // 开始框选
     // if (mouseButton == Qt::LeftButton && !isBoxSelecting_) {

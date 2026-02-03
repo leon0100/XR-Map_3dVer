@@ -27,6 +27,8 @@ class GraphicsScene3dView : public QQuickFramebufferObject
 {
     Q_OBJECT
     QML_NAMED_ELEMENT(GraphicsScene3dView)
+    Q_PROPERTY(double currentLat READ currentLat NOTIFY currentLatChanged)
+    Q_PROPERTY(double currentLon READ currentLon NOTIFY currentLonChanged)
 
 public:
     //Camera
@@ -196,6 +198,8 @@ public:
     float verticalScale() const;
     bool sceneBoundingBoxVisible() const;
     Dataset* dataset() const;
+    double currentLat() const;
+    double currentLon() const;
     void clear(bool cleanMap = false);
     QVector3D calculateIntersectionPoint(const QVector3D &rayOrigin, const QVector3D &rayDirection, float planeZ);
     void updateProjection();
@@ -250,6 +254,8 @@ signals:
     void sendLlaRef(LLARef viewLlaRef);
     void cameraIsMoved();
     void sendMapTextureIdByTileIndx(const map::TileIndex& tileIndx, GLuint textureId);
+    void currentLatChanged();
+    void currentLonChanged();
 
 private:
     void updateBounds();
@@ -318,6 +324,8 @@ private:
     QTimer* testingTimer_;
 
 
+    double currentLat_ = 0.0;
+    double currentLon_ = 0.0;
     //***************************************************************************************
     bool isBoxSelecting_ = false;
     QPoint boxSelectStart_;
