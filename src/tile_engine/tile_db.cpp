@@ -106,6 +106,7 @@ void TileDB::init()
 
     db_ = QSqlDatabase::addDatabase("QSQLITE", "TileDBConnection");
     db_.setDatabaseName(dbPath);
+    // qDebug() << "TileDB dbPath:" << dbPath;
 
     if (!db_.open()) {
         qWarning() << "Failed to open the database:" << db_.lastError().text();
