@@ -90,12 +90,13 @@ void TileManager::getRectRequest(QVector<LLA> request, bool isPerspective, LLARe
         if (itm.longitude > maxLon) maxLon = itm.longitude;
         if (itm.longitude < minLon) minLon = itm.longitude;
 
-        if (zoomLevel == -1) { // for the first element
+        if (zoomLevel == -1) {
             zoomLevel = tileIndx.z_;
             if (zoomLevel != lastZoomLevel_) {
                 zoomState = lastZoomLevel_ > zoomLevel ? ZoomState::kOut : ZoomState::kIn;
-                //qDebug() << "zoom level chaged to:" << zoomLevel << "isPerspective" << isPerspective << "zoomState" << static_cast<int>(zoomState);
+                // qDebug() << "zoom level chaged to:" << zoomLevel << "isPerspective" << isPerspective << "zoomState" << static_cast<int>(zoomState);
                 lastZoomLevel_ = zoomLevel;
+                emit zoomLevelChanged(zoomLevel);
             }
             else {
                 zoomState = ZoomState::kUnchanged;

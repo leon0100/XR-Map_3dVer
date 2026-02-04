@@ -90,8 +90,7 @@ bool Cube::isValid() const
 
 Plane Cube::bottom() const
 {
-    return Plane({ m_xMin, m_yMin, m_zMin },
-                 { m_xMax, m_yMax, m_zMin });
+    return Plane({ m_xMin, m_yMin, m_zMin }, { m_xMax, m_yMax, m_zMin });
 }
 
 Plane Cube::top() const

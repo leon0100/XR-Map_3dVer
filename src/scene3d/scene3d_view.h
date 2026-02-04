@@ -27,8 +27,9 @@ class GraphicsScene3dView : public QQuickFramebufferObject
 {
     Q_OBJECT
     QML_NAMED_ELEMENT(GraphicsScene3dView)
-    Q_PROPERTY(double currentLat READ currentLat NOTIFY currentLatChanged)
-    Q_PROPERTY(double currentLon READ currentLon NOTIFY currentLonChanged)
+    Q_PROPERTY(double currLat READ getCurrLat NOTIFY currentLatChanged)
+    Q_PROPERTY(double currLon READ getCurrLon NOTIFY currentLonChanged)
+
 
 public:
     //Camera
@@ -68,8 +69,8 @@ public:
 
         float getHeightAboveGround() const;
         float getAngleToGround() const;
-        bool getIsPerspective() const;
-        bool getIsFarAwayFromOriginLla() const;
+        bool  getIsPerspective() const;
+        bool  getIsFarAwayFromOriginLla() const;
         map::CameraTilt getCameraTilt() const;
 
     private:
@@ -106,7 +107,7 @@ public:
         qreal m_sensivity = 4.f;
         float distToGround_ = 0.0f;
         float angleToGround_ = 0.0f;
-        bool isPerspective_ = false;
+        bool  isPerspective_ = false;
         float highDistThreshold_ = 5000.0f;
         float lowDistThreshold_ = highDistThreshold_ * 0.9f;
         QVector2D m_rotAngle;
@@ -116,7 +117,7 @@ public:
         LLA yerevanLla = LLA(30.35485766185152f, 118.00459876165770f, 0.0f);
         LLARef viewLlaRef_ = LLARef(yerevanLla);
 
-        // yaw фильтр
+        // 偏航滤波器
         float navYawFilteredRad_        = 0.f;
         bool  navYawInited_             = false;
         QElapsedTimer navYawTmr_;
@@ -198,8 +199,8 @@ public:
     float verticalScale() const;
     bool sceneBoundingBoxVisible() const;
     Dataset* dataset() const;
-    double currentLat() const;
-    double currentLon() const;
+    double getCurrLat() const;
+    double getCurrLon() const;
     void clear(bool cleanMap = false);
     QVector3D calculateIntersectionPoint(const QVector3D &rayOrigin, const QVector3D &rayDirection, float planeZ);
     void updateProjection();
@@ -215,14 +216,19 @@ public:
     Q_INVOKABLE void keyPressTrigger(Qt::Key key);
     Q_INVOKABLE void bottomTrackActionEvent(BottomTrack::ActionEvent actionEvent);
 
+    Q_INVOKABLE void setScreenMode(bool isScreen);
+
+
     void setTrackLastData(bool state);
     void setTextureIdByTileIndx(const map::TileIndex& tileIndx, GLuint textureId);
     void setGridVisibility(bool state);
     void setUseAngleLocation(bool state);
     void setNavigatorViewLocation(bool state);
 
+
 protected:
     void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override final;
+
 
 public Q_SLOTS:
     void setSceneBoundingBoxVisible(bool visible);
@@ -326,13 +332,18 @@ private:
 
     double currentLat_ = 0.0;
     double currentLon_ = 0.0;
+
+    int currentMapLevel_,screetCurrentMapLevel_;
     //***************************************************************************************
-    bool isBoxSelecting_ = false;
+    bool isScreenMode_ = false;  //截图模式
     QPoint boxSelectStart_;
     QPoint boxSelectEnd_;
     QVector<SurfaceTile*> selectedTiles_;
     QVector<QVector3D> selectedIsobaths_;
     void selectTilesInBox();
+
+public:
+    void setCurrentMapLevel(int mapLevel);
 };
 
 #endif // GRAPHICSSCENE3DVIEW_H

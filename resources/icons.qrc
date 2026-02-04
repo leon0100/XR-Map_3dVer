@@ -78,5 +78,12 @@
         <file>icons/ui/wifi.svg</file>
         <file>icons/ui/x.svg</file>
         <file>icons/ui/zoom_cancel.svg</file>
+	<file>XR/screet.png</file>
+	<file>XR/historyScreen.png</file>
+	<file>XR/measuredistance.png</file>
+	<file>XR/location.png</file>
+	<file>XR/pushPin.png</file>
+	<file>XR/contour.png</file>
+
     </qresource>
 </RCC>

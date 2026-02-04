@@ -111,6 +111,20 @@ MenuBar {
             MenuItem { text: qsTr("Feet") }
         }
     }
+
+    Menu {
+        title: qsTr("Help")
+        delegate: myMenuItemDelegate
+
+        Menu {
+            title: qsTr("Registration")
+        }
+
+        Menu {
+            title: qsTr("About")
+        }
+
+    }
 }
 
 

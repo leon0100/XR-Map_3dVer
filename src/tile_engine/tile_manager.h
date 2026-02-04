@@ -24,6 +24,9 @@ public:
 
     std::shared_ptr<TileSet> getTileSetPtr() const;
 
+signals:
+    void zoomLevelChanged(int level);
+
 public slots:
     void getRectRequest(QVector<LLA> request, bool isPerspective, LLARef viewLlaRef, bool moveUp, map::CameraTilt tiltCam);
     void getLlaRef(LLARef viewLlaRef);

@@ -1592,7 +1592,8 @@ void Core::createMapTileManagerConnections()
     QObject::connect(tileManager_->getTileSetPtr().get(),    &map::TileSet::mvClearAppendTasks,   scene3dViewPtr_->getMapViewPtr().get(), &MapView::onClearAppendTasks,       connType);
     QObject::connect(scene3dViewPtr_->getMapViewPtr().get(), &MapView::deletedFromAppend,         tileManager_->getTileSetPtr().get(),    &map::TileSet::onDeletedFromAppend, connType);
 
-    QObject::connect(scene3dViewPtr_, &GraphicsScene3dView::sendMapTextureIdByTileIndx, this, &Core::onSendMapTextureIdByTileIndx, Qt::DirectConnection);
+    QObject::connect(scene3dViewPtr_, &GraphicsScene3dView::sendMapTextureIdByTileIndx, this, &Core::onSendMapTextureIdByTileIndx, connType);
+    QObject::connect(tileManager_.get(), &map::TileManager::zoomLevelChanged, this, &Core::onZoomLevelChanged);
 }
 
 void Core::onDataProcesstorStateChanged(const DataProcessorType& state)
@@ -1609,6 +1610,13 @@ void Core::onSendFrameInputToLogger(QUuid uuid, Link *link, const Parsers::Frame
     }
 }
 
+void Core::onZoomLevelChanged(int level)
+{
+    currMapLevel_ = level;
+    scene3dViewPtr_->setCurrentMapLevel(level);
+    emit currentMapLevelChanged();
+}
+
 void Core::createDatasetConnections()
 {
     QObject::connect(datasetPtr_, &Dataset::channelsUpdated, this,               &Core::onChannelsUpdated);
@@ -1620,6 +1628,11 @@ void Core::createDatasetConnections()
     QObject::connect(datasetPtr_, &Dataset::chartAdded,       dataHorizon_.get(), &DataHorizon::onAddedChart);
     QObject::connect(datasetPtr_, &Dataset::attitudeAdded,    dataHorizon_.get(), &DataHorizon::onAddedAttitude);
     QObject::connect(datasetPtr_, &Dataset::bottomTrackAdded, dataHorizon_.get(), &DataHorizon::onAddedBottomTrack);
+}
+
+int Core::getCurrMapLevel() const
+{
+    return currMapLevel_;
 }
 
 int Core::getDataProcessorState() const

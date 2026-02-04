@@ -3,6 +3,13 @@
 
 #include "scene_object.h"
 
+
+typedef struct {
+    double latitude;
+    double longitude;
+}typGpsCoor;
+
+
 class CoordinateAxes : public SceneObject
 {
     Q_OBJECT

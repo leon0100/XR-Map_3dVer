@@ -86,11 +86,113 @@ Rectangle {
         anchors.margins: 2
         spacing: 2
 
+        MenuButton {  //截图
+            id: frameSlectBtn
+            icon.source: "qrc:/XR/screet.png"
+
+            CMouseOpacityArea {
+                id: btn1
+                toolTipText: qsTr("Screetshot")
+            }
+            Rectangle {
+                anchors.fill: parent
+                radius: 2
+                color: btn1.containsMouse ? "#d6e6ff" : "transparent"
+            }
+
+            property bool screenMode: false
+
+            onPressed: {
+                screenMode = !screenMode
+                renderer.setScreenMode(screenMode)
+            }
+        }
+
+        MenuButton {  //历史截图
+            id: historyScreenBtn
+            icon.source: "qrc:/XR/historyScreen.png"
+            CMouseOpacityArea {
+                id: btn2
+                toolTipText: qsTr("History Screen")
+            }
+            Rectangle {
+                anchors.fill: parent
+                radius: 2
+                color: btn2.containsMouse ? "#d6e6ff" : "transparent"
+            }
+
+            onPressed: itemChangeActive(historyScreenBtn)
+        }
+
+        MenuButton {  //测距
+            id: measureBtn
+            icon.source: "qrc:/XR/measuredistance.png"
+            CMouseOpacityArea {
+                id: btn3
+                toolTipText: qsTr("Measure")
+            }
+            Rectangle {
+                anchors.fill: parent
+                radius: 2
+                color: btn3.containsMouse ? "#d6e6ff" : "transparent"
+            }
+
+            onPressed: itemChangeActive(measureBtn)
+        }
+
+        MenuButton { //定位
+            id: locationBtn
+            icon.source: "qrc:/XR/location.png"
+            CMouseOpacityArea {
+                id: btn4
+                toolTipText: qsTr("Location")
+            }
+            Rectangle {
+                anchors.fill: parent
+                radius: 2
+                color: btn4.containsMouse ? "#d6e6ff" : "transparent"
+            }
+
+            onPressed: itemChangeActive(locationBtn)
+        }
+
+        MenuButton { //兴趣点
+            id: landMarkBtn
+            icon.source: "qrc:/XR/pushPin.png"
+            CMouseOpacityArea {
+                id: btn5
+                toolTipText: qsTr("LandMark")
+            }
+            Rectangle {
+                anchors.fill: parent
+                radius: 2
+                color: btn5.containsMouse ? "#d6e6ff" : "transparent"
+            }
+
+            onPressed: itemChangeActive(landMarkBtn)
+        }
+
+        MenuButton { //等值线
+            id: contourBtn
+            icon.source: "qrc:/icons/contour.png"
+            CMouseOpacityArea {
+                id: btn6
+                toolTipText: qsTr("Contours")
+            }
+            Rectangle {
+                anchors.fill: parent
+                radius: 2
+                color: btn6.containsMouse ? "#d6e6ff" : "transparent"
+            }
+
+            onPressed: itemChangeActive(contourBtn)
+        }
+
+
+
         MenuButton {
             id: menuSettings
             icon.source: "qrc:/icons/ui/plug.svg"
-            // Layout.fillWidth: true
-            isKlfLogging: core.isKlfLogging
             CMouseOpacityArea {
                 toolTipText: qsTr("Connections")
                 // onContainsMouseChanged: containsMouse ? mainLayout.highlightAllButtons() : mainLayout.resetButtonOpacity()
@@ -101,38 +203,15 @@ Rectangle {
 
         MenuButton {
             id: menuDisplay
-            // Layout.fillWidth: true
             icon.source: "./settings-outline.svg"
-
             CMouseOpacityArea {
                 toolTipText: qsTr("Settings")
-                // onContainsMouseChanged: containsMouse ? mainLayout.highlightAllButtons() : mainLayout.resetButtonOpacity()
+                onContainsMouseChanged: hoverBackgroundColor
             }
 
             onPressed: itemChangeActive(menuDisplay)
         }
 
-
-
-        ToolItem {
-            text: "Open"
-            onClicked: root.openClicked()
-        }
-
-        ToolItem {
-            text: "Save"
-            onClicked: root.saveClicked()
-        }
-
-        ToolSeparator {}
-
-        ToolItem {
-            text: "Create Screen"
-        }
-
-        ToolItem {
-            text: "Measure"
-        }
     }
 
     //左上角第一个按钮（串口连接、文件导入等）
@@ -156,11 +235,7 @@ Rectangle {
     }
 
 
-
-    /* =========================================================
-       ================== inline component =====================
-       ========================================================= */
-
+    /* ================== inline component ===================== */
     component ToolItem : Rectangle {
         id: item
         height: parent.height - 2

@@ -59,6 +59,7 @@ public:
     Q_PROPERTY(QString           ch1Name                      READ getChannel1Name                 NOTIFY channelListUpdated FINAL)
     Q_PROPERTY(QString           ch2Name                      READ getChannel2Name                 NOTIFY channelListUpdated FINAL)
     Q_PROPERTY(int               dataProcessorState           READ getDataProcessorState           NOTIFY dataProcessorStateChanged)
+    Q_PROPERTY(int               currMapLevel                 READ getCurrMapLevel                 NOTIFY currentMapLevelChanged)
 
     void setEngine(QQmlApplicationEngine *engine);
     Console* getConsolePtr();
@@ -130,6 +131,7 @@ public slots:
     void onRedrawEpochs(const QSet<int>& indxs);
     int getDataProcessorState() const;
     void initStreamList();
+    int getCurrMapLevel() const;
 
 #ifdef FLASHER
     void connectOpenedLinkAsFlasher(QString pn);
@@ -155,6 +157,7 @@ signals:
     void dataProcessorStateChanged();
     void isGPSAliveChanged();
     void loggingKlfChanged();
+    void currentMapLevelChanged();
 
 #ifdef SEPARATE_READING
     void sendCloseLogFile(bool onOpen = false);
@@ -166,6 +169,7 @@ private slots:
     void onSendMapTextureIdByTileIndx(const map::TileIndex& tileIndx, GLuint textureId); // TODO: maybe store map texture id in mapView
     void onDataProcesstorStateChanged(const DataProcessorType& state);
     void onSendFrameInputToLogger(QUuid uuid, Link* link, const Parsers::FrameParser& frame);
+    void onZoomLevelChanged(int level);
 
 private:
     /*methods*/
@@ -242,6 +246,8 @@ private:
     bool fixBlackStripesState_;;
     int  fixBlackStripesForwardSteps_;
     int  fixBlackStripesBackwardSteps_;
+
+    int currMapLevel_;
 
 #ifdef FLASHER
     Q_PROPERTY(QString flasherTextInfo READ flasherTextInfo NOTIFY dev_flasher_changed)

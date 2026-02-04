@@ -37,10 +37,4 @@ Button {
         border.width: borderWidth
     }
 
-//    contentItem: CText {
-//        text: control.text
-//        horizontalAlignment: Text.AlignHCenter
-//        verticalAlignment: Text.AlignTop
-//        font.pointSize: 20
-//    }
 }

@@ -176,12 +176,11 @@ Dataset *GraphicsScene3dView::dataset() const
     return datasetPtr_;
 }
 
-double GraphicsScene3dView::currentLat() const
+double GraphicsScene3dView::getCurrLat() const
 {
     return currentLat_;
 }
-
-double GraphicsScene3dView::currentLon() const
+double GraphicsScene3dView::getCurrLon() const
 {
     return currentLon_;
 }
@@ -253,14 +252,12 @@ void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal 
     ned.e = to.x();
     ned.d = 0;
     LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
-    if (!qFuzzyCompare(currentLat_, lla.latitude)) {
-        currentLat_ = lla.latitude;
-        emit currentLatChanged();
-    }
-    if (!qFuzzyCompare(currentLon_, lla.longitude)) {
-        currentLon_ = lla.longitude;
-        emit currentLonChanged();
-    }
+
+    currentLat_ = lla.latitude;
+    emit currentLatChanged();
+
+    currentLon_ = lla.longitude;
+    emit currentLonChanged();
     qDebug() << "mousePressTrigger x:" << x << "   y:" << y << "   lati:" << lla.latitude << "   long:" << lla.longitude;
     // 开始框选
     // if (mouseButton == Qt::LeftButton && !isBoxSelecting_) {
@@ -465,6 +462,26 @@ void GraphicsScene3dView::bottomTrackActionEvent(BottomTrack::ActionEvent action
     QQuickFramebufferObject::update();
 }
 
+void GraphicsScene3dView::setCurrentMapLevel(int mapLevel)
+{
+    qDebug() << "mapLevel...." << mapLevel;
+    currentMapLevel_ = mapLevel;
+}
+
+void GraphicsScene3dView::setScreenMode(bool isScreen)
+{
+    qDebug() << "isScreen:  "<< isScreen;
+    isScreenMode_ = isScreen;
+    if(isScreen) {
+        // this->setDragMode(GraphicsScene3dView::NoDrag);
+        // this->setMouseTracking(true);
+        screetCurrentMapLevel_ = currentMapLevel_;
+
+    } else {
+        // clearScreenShot();
+    }
+}
+
 void GraphicsScene3dView::selectTilesInBox()
 {
     selectedTiles_.clear();
@@ -539,23 +556,26 @@ void GraphicsScene3dView::setNavigatorViewLocation(bool state)
 
 void GraphicsScene3dView::updateProjection()
 {
-    QMatrix4x4 currProj;
-
     if (m_camera) {
-        if (m_camera->getIsPerspective()) {
-            float coeff = m_camera->getHeightAboveGround() / perspectiveEdge_;
-            qreal fixFov = m_camera->fov() + m_camera->fov() * coeff;
-            currProj.perspective(fixFov, static_cast<float>(width() / height()), nearPlanePersp_, farPlanePersp_);
+        //这里有个bug，14等级时，地图等级切换会出现抖动现象！！！
+        QMatrix4x4 currProj;
+        float aspectRatio = width()/height();
+        if (m_camera->getIsPerspective()) { //当地图等级大于14的某个值时为perspective透视投影
+            float coeff = m_camera->getHeightAboveGround()/perspectiveEdge_;
+            qreal fixFov = m_camera->fov() + m_camera->fov()*coeff;
+            // qDebug() << "coeff: " << coeff << "............  :fixFov:" <<fixFov;
+            currProj.perspective(fixFov, aspectRatio, nearPlanePersp_, farPlanePersp_);
         }
-        else {
+        else {  //当地图等级小于14的某个值时为ortho正交投影
             float orthV = m_camera->getHeightAboveGround();
-            float aspectRatio = width() / height();
-            currProj.ortho(-orthV * aspectRatio, orthV * aspectRatio, -orthV, orthV, orthV * nearPlaneOrthoCoeff_, orthV * farPlaneOrthoCoeff_);
+            // qDebug() << "orthV:.........." << orthV << "        aspectRatio:" << aspectRatio;
+            currProj.ortho(-orthV*aspectRatio, orthV*aspectRatio, -orthV, orthV, orthV*nearPlaneOrthoCoeff_, orthV*farPlaneOrthoCoeff_);
         }
 
         m_projection = std::move(currProj);
     }
 }
+
 
 void GraphicsScene3dView::setNeedToResetStartPos(bool state)
 {
@@ -593,9 +613,7 @@ void GraphicsScene3dView::setSceneBoundingBoxVisible(bool visible)
 
 void GraphicsScene3dView::fitAllInView()
 {
-    auto maxSize = std::max(m_bounds.width(),
-                            std::max(m_bounds.height(),
-                                     m_bounds.length()));
+    auto maxSize = std::max(m_bounds.width(), std::max(m_bounds.height(), m_bounds.length()));
 
     auto d = (maxSize/2.0f)/(std::tan(m_camera->fov()/2.0f)) * 2.0f;
 
@@ -896,14 +914,6 @@ void GraphicsScene3dView::updatePlaneGrid()
 {
     m_planeGrid->setPlane(m_bounds.bottom());
     m_planeGrid->setCellSize(10);
-    // if(m_camera->distToFocusPoint() < 65)
-    //     m_planeGrid->setCellSize(1);
-    // if(m_camera->distToFocusPoint() >= 65 && m_camera->distToFocusPoint() <= 130)
-    //     m_planeGrid->setCellSize(3);
-    // if(m_camera->distToFocusPoint() >= 130 && m_camera->distToFocusPoint() <= 230)
-    //     m_planeGrid->setCellSize(5);
-    // if(m_camera->distToFocusPoint() > 230)
-    //     m_planeGrid->setCellSize(10);
 }
 
 void GraphicsScene3dView::clearComboSelectionRect()
@@ -969,12 +979,12 @@ void GraphicsScene3dView::updateMapView()
         return;
     }
 
-    float reductorFactor = -0.05f; // debug
+    float reductorFactor = -0.05f;
     QVector<QPair<float, float>> cornerMultipliers = {
-        {       reductorFactor,         reductorFactor }, // lt
-        {       reductorFactor,  1.0f - reductorFactor }, // lb
-        {1.0f - reductorFactor , 1.0f - reductorFactor }, // rb
-        {1.0f - reductorFactor ,        reductorFactor }  // rt
+        {       reductorFactor,         reductorFactor },   // lt
+        {       reductorFactor,  1.0f - reductorFactor },   // lb
+        {1.0f - reductorFactor , 1.0f - reductorFactor },   // rb
+        {1.0f - reductorFactor ,        reductorFactor }    // rt
     };
 
     updateProjection();
@@ -985,7 +995,7 @@ void GraphicsScene3dView::updateMapView()
     float maxX = std::numeric_limits<float>::lowest();
     float maxY = std::numeric_limits<float>::lowest();
 
-    bool allPointsAreValid{ true };
+    bool allPointsAreValid = true;
     for (const auto& multiplier : cornerMultipliers) {
         float currWidth  = width() * multiplier.first;
         float currHeight = height() * multiplier.second;
@@ -1602,18 +1612,11 @@ void GraphicsScene3dView::Camera::zoom(qreal delta)
         distForMapView_ = m_distToFocusPoint;
     }
 
-    //
     bool preIsPersp{ false };
     distToGround_ = std::max(0.0f, std::fabs(-cosf(m_rotAngle.y()) * m_distToFocusPoint));
     float perspEdge = viewPtr_ ? viewPtr_->perspectiveEdge_ : 5000.0f;
     preIsPersp = distToGround_ < perspEdge;
-    //bool changedToOrtho       =  isPerspective_ && !preIsPersp;
-    //bool changedToPerspective = !isPerspective_ &&  preIsPersp;
     bool projectionChanged    =  isPerspective_ !=  preIsPersp;
-
-    //if (projectionChanged) qDebug() << "CHANGED!";
-    //if (changedToOrtho) qDebug() << "changed to ORTHO";
-    //if (changedToPerspective) qDebug() << "changed to PERSP";
 
     NED lookAtNed(m_lookAt.x(), m_lookAt.y(), 0.0f);
     LLA lookAtLla(&lookAtNed, &viewLlaRef_, isPerspective_);
@@ -1621,20 +1624,16 @@ void GraphicsScene3dView::Camera::zoom(qreal delta)
 
     float datasetDist = map::calculateDistance(lookAtLlaRef, datasetLlaRef_);
 
-
-    if (isPerspective_ && !projectionChanged) { // do nothing
+    if (isPerspective_ && !projectionChanged) {
     }
     //else if (isPerspective_ && !projectionChanged && datasetDist < lowDistThreshold_ && getIsFarAwayFromOriginLla()) {
-    //    qDebug() << "2";
-
     //    viewPtr_->setNeedToResetStartPos(true);
     //    LLA datasetLla(datasetLlaRef_.refLla.latitude, datasetLlaRef_.refLla.longitude, 0.0);
     //    NED datasetNed(&datasetLla, &viewLlaRef_, isPerspective_);
     //    m_lookAt -= QVector3D(datasetNed.n, datasetNed.e, 0.0f);
     //    viewLlaRef_ = datasetLlaRef_;
     //}
-    else if ( (!isPerspective_ && projectionChanged && datasetDist < lowDistThreshold_ && getIsFarAwayFromOriginLla())) { // catching when ortho->persp trans and near place
-
+    else if ((!isPerspective_ && projectionChanged && (datasetDist < lowDistThreshold_) && getIsFarAwayFromOriginLla())) { // catching when ortho->persp trans and near place
         if (cameraListener_) {
             cameraListener_->resetRotationAngle();
         }

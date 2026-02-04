@@ -71,16 +71,12 @@ ApplicationWindow  {
             anchors.margins: 1
 
             Label {
-                text: qsTr("Coordinate: =Lat: %1  Lon: %2")
-                        .arg(renderer.currentLat.toFixed(6))
-                        .arg(renderer.currentLon.toFixed(6))
+                text: qsTr("Coordinate: Lat:%1  Lon:%2").arg(renderer.currLat.toFixed(6)).arg(renderer.currLon.toFixed(6))
                 color: "white"
             }
 
-            Item { Layout.fillHeight: true }
-
             Label {
-                text: qsTr("Zoom: %1").arg(renderer.currentZoom)
+                text: qsTr("Zoom: %1").arg(core.currMapLevel)
                 color: "white"
             }
         }
