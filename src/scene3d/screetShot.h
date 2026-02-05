@@ -6,9 +6,8 @@
 
 #include <QGuiApplication>
 #include <QRectF>
-// #include <QWidget>
 #include <QVector3D>
-
+#include <QCursor>
 
 
 enum class ResizeMode { None, Move, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight };
@@ -68,6 +67,8 @@ public:
     bool isSelectionRectVisible_ = false;
 
     int currentMapLevel_;
+    QPoint lastPos_;
+    bool dragging_ = false;
 
 signals:
 };

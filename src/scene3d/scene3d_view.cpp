@@ -276,6 +276,10 @@ void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal 
             }
             else {
                 screetShot_.judgeResizeMode(screetShot_.shotRect_,pos); //确认调整模式
+                if(screetShot_.resizeMode_ == ResizeMode::Move) {
+                    screetShot_.endPos_ = pos;
+                    screetShot_.dragging_ = true;
+                }
             }
 
             return;
@@ -315,35 +319,34 @@ void GraphicsScene3dView::mouseMoveTrigger(Qt::MouseButtons mouseButton, qreal x
 
     QPoint pos = QPoint(x,y);
 
-    // if(mouseButton == Qt::LeftButton)
-    // {
-        if(screetShot_.isScreenMode_)
-        {
-            if(!screetShot_.firstScreenDown_) {
-                if(mouseButton == Qt::LeftButton) {
-                    QPointF currentPos(x, y);
-                    qreal width  = currentPos.x() - screetShot_.startPos_.x();
-                    qreal height = currentPos.y() - screetShot_.startPos_.y();
-                    screetShot_.shotRect_ = QRectF(std::min(screetShot_.startPos_.x(), currentPos.x()),
-                                std::min(screetShot_.startPos_.y(), currentPos.y()), std::abs(width), std::abs(height));
-                    // screetShot_.setSelectionRectVisible(true);
-                    screetShot_.setSelectionRect(screetShot_.shotRect_);
-                    qDebug() << "Screen capture rect:" << screetShot_.shotRect_;
-                }
+
+    if(screetShot_.isScreenMode_)
+    {
+        if(!screetShot_.firstScreenDown_) {
+            QGuiApplication::setOverrideCursor(Qt::CrossCursor);
+            if(mouseButton == Qt::LeftButton) {
+                QPointF currentPos(x, y);
+                qreal width  = currentPos.x() - screetShot_.startPos_.x();
+                qreal height = currentPos.y() - screetShot_.startPos_.y();
+                screetShot_.shotRect_ = QRectF(std::min(screetShot_.startPos_.x(), currentPos.x()),
+                            std::min(screetShot_.startPos_.y(), currentPos.y()), std::abs(width), std::abs(height));
+                screetShot_.setSelectionRect(screetShot_.shotRect_);
+                qDebug() << "Screen capture rect:" << screetShot_.shotRect_;
             }
-            else {
-                screetShot_.judgeResizeMode(screetShot_.shotRect_, pos);
+        }
+        else {
+            screetShot_.judgeResizeMode(screetShot_.shotRect_, pos);
+            if(mouseButton == Qt::LeftButton) {
                 screetShot_.resizeMode(screetShot_.shotRect_, pos);
                 screetShot_.setSelectionRect(screetShot_.shotRect_);
             }
 
-            return;
         }
 
+        return;
+    }
 
 
-
-    // }
 
 
 
@@ -423,7 +426,6 @@ void GraphicsScene3dView::mouseReleaseTrigger(Qt::MouseButtons mouseButton, qrea
     if(screetShot_.isScreenMode_)
     {
         if(!screetShot_.firstScreenDown_) {
-            // m_moveView = true;
             screetShot_.firstScreenDown_ = true;
         }
 
@@ -529,106 +531,6 @@ void GraphicsScene3dView::setCurrentMapLevel(int mapLevel)
 }
 
 
-#include <QCursor>
-// void GraphicsScene3dView::judgeResizeMode(const QRectF rect,const QPoint pos)
-// {
-//     const qreal margin = 15.0;
-//     bool onLeft   =  qAbs(pos.x() - rect.left())   <= margin;
-//     bool onRight  =  qAbs(pos.x() - rect.right())  <= margin;
-//     bool onTop    =  qAbs(pos.y() - rect.top())    <= margin;
-//     bool onBottom =  qAbs(pos.y() - rect.bottom()) <= margin;
-
-//     if (onLeft && onTop) {
-//         resizeMode_ = ResizeMode::TopLeft;
-//         setCursor(Qt::SizeFDiagCursor);
-//     }
-//     else if (onRight && onTop) {
-//         resizeMode_ = ResizeMode::TopRight;
-//         setCursor(Qt::SizeBDiagCursor);
-//     }
-//     else if (onLeft && onBottom) {
-//         resizeMode_ = ResizeMode::BottomLeft;
-//         setCursor(Qt::SizeBDiagCursor);
-//     }
-//     else if (onRight && onBottom) {
-//         resizeMode_ = ResizeMode::BottomRight;
-//         setCursor(Qt::SizeFDiagCursor);
-//     }
-//     else if (onLeft) {
-//         resizeMode_ = ResizeMode::Left;
-//         setCursor(Qt::SizeHorCursor);
-//     }
-//     else if (onRight) {
-//         resizeMode_ = ResizeMode::Right;
-//         setCursor(Qt::SizeHorCursor);
-//     }
-//     else if (onTop) {
-//         resizeMode_ = ResizeMode::Top;
-//         setCursor(Qt::SizeVerCursor);
-//     }
-//     else if (onBottom) {
-//         resizeMode_ = ResizeMode::Bottom;
-//         setCursor(Qt::SizeVerCursor);
-//     }
-//     else if(rect.contains(pos)){
-//         resizeMode_ = ResizeMode::Move;
-//         setCursor(Qt::SizeAllCursor);
-//         endPos_ = pos;
-//     }
-//     else {
-//         resizeMode_ = ResizeMode::None;
-//         setCursor(Qt::ArrowCursor);
-//     }
-
-// }
-
-
-// void GraphicsScene3dView::resizeMode(QRectF& rect,const QPoint pos)
-// {
-
-//     QPoint delta;
-
-//     switch (resizeMode_) {
-//     case ResizeMode::Top:
-//         rect.setTop(pos.y());
-//         break;
-//     case ResizeMode::Bottom:
-//         rect.setBottom(pos.y());
-//         break;
-//     case ResizeMode::Left:
-//         rect.setLeft(pos.x());
-//         break;
-//     case ResizeMode::Right:
-//         rect.setRight(pos.x());
-//         break;
-//     case ResizeMode::TopLeft:
-//         rect.setTop(pos.y());
-//         rect.setLeft(pos.x());
-//         break;
-//     case ResizeMode::TopRight:
-//         rect.setTop(pos.y());
-//         rect.setRight(pos.x());
-//         break;
-//     case ResizeMode::BottomLeft:
-//         rect.setBottom(pos.y());
-//         rect.setLeft(pos.x());
-//         break;
-//     case ResizeMode::BottomRight:
-//         rect.setBottom(pos.y());
-//         rect.setRight(pos.x());
-//         break;
-//     case ResizeMode::Move:
-//         delta = pos - endPos_.toPoint();
-//         endPos_ = pos;
-//         rect.translate(delta);
-//         break;
-//     default:
-//         break;
-//     }
-
-// }
-
-
 
 void GraphicsScene3dView::setScreenMode(bool isScreen)
 {
@@ -637,56 +539,18 @@ void GraphicsScene3dView::setScreenMode(bool isScreen)
 
     screetShot_.shotRect_ = QRectF();
 
-    // emit isScreenCaptureModeChanged(true);
     if(isScreen) {
-        setCursor(Qt::CrossCursor);
-        // this->setDragMode(GraphicsScene3dView::NoDrag);
-        // this->setMouseTracking(true);
+        screetShot_.firstScreenDown_ = false;
 
         screetCurrentMapLevel_ = currentMapLevel_;
 
     } else {
-        setCursor(Qt::ArrowCursor);
+        QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
         screetShot_.setSelectionRectVisible(false);
         // clearScreenShot();
     }
 }
 
-// void GraphicsScene3dView::selectTilesInBox()
-// {
-//     selectedTiles_.clear();
-//     selectedIsobaths_.clear();
-
-//     // 计算框选区域
-//     int minX = std::min(boxSelectStart_.x(), boxSelectEnd_.x());
-//     int maxX = std::max(boxSelectStart_.x(), boxSelectEnd_.x());
-//     int minY = std::min(boxSelectStart_.y(), boxSelectEnd_.y());
-//     int maxY = std::max(boxSelectStart_.y(), boxSelectEnd_.y());
-
-//     qDebug() << "selectTilesInBox minX:" << minX << "  maxX:" << maxX << "  minY:" << minY << "  maxY:" << maxY;
-
-//     // // 获取所有瓦片
-//     // if (auto surfaceMeshPtr = dataProcessor_->getSurfaceMeshPtr()) {
-//     //     auto& tiles = surfaceMeshPtr->getTilesCRef();
-//     //     for (auto tile : tiles) {
-//     //         // 检查瓦片是否在框选区域内
-//     //         QRect tileRect = tile->getScreenRect(); // 需要实现此方法
-//     //         if (tileRect.intersects(QRect(minX, minY, maxX - minX, maxY - minY))) {
-//     //             selectedTiles_.append(tile);
-//     //         }
-//     //     }
-//     // }
-
-//     // // 选择等值线
-//     // if (auto isobathsViewPtr = getIsobathsViewPtr()) {
-//     //     // 实现等值线选择逻辑
-//     //     selectedIsobaths_ = isobathsViewPtr->getIsobathsInBox(QRect(minX, minY, maxX - minX, maxY - minY));
-//     // }
-
-//     // // 触发选择事件
-//     // emit tilesSelected(selectedTiles_);
-//     // emit isobathsSelected(selectedIsobaths_);
-// }
 
 
 void GraphicsScene3dView::setTrackLastData(bool state)

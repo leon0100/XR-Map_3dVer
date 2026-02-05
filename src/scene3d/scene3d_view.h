@@ -220,8 +220,6 @@ public:
     Q_INVOKABLE void keyPressTrigger(Qt::Key key);
     Q_INVOKABLE void bottomTrackActionEvent(BottomTrack::ActionEvent actionEvent);
 
-    Q_INVOKABLE void setScreenMode(bool isScreen);
-
 
     void setTrackLastData(bool state);
     void setTextureIdByTileIndx(const map::TileIndex& tileIndx, GLuint textureId);
@@ -340,50 +338,13 @@ private:
 
     int currentMapLevel_,screetCurrentMapLevel_;
 
-//     //***************************************************************************************
-//     bool isScreenMode_ = false;  //截图模式
-//     QPoint boxSelectStart_;
-//     QPoint boxSelectEnd_;
-//     QVector<SurfaceTile*> selectedTiles_;
-//     QVector<QVector3D> selectedIsobaths_;
-//     void selectTilesInBox();
-//     bool m_moveView = false; //鼠标移动地图
 
-//     bool showHistoryScreen_ = false; //显示历史截图
-//     bool firstScreenDown_ = false;
-//     QPointF startPos_,endPos_;  // 矩形场景坐标
-//     QQuickItem* rectOverlay_ = nullptr;
-//     bool isResizing_ = false,isDragging_ = false;
-//     QRectF shotRect_;
-//     ResizeMode resizeMode_;
-
-//     bool isSelectionRectVisible_ = false;
-// signals:
-//     void selectionRectChanged();
-//     void selectionRectVisibleChanged();
-//     // void isScreenCaptureModeChanged(bool changed);
 
 public:
+    Q_INVOKABLE void setScreenMode(bool isScreen);
     void setCurrentMapLevel(int mapLevel);
     Q_PROPERTY(QObject* screetShot READ screetShot CONSTANT)
     QObject* screetShot() { return &screetShot_; }
-//     // 添加矩形属性
-//     Q_PROPERTY(QRectF selectionRect READ selectionRect WRITE setSelectionRect NOTIFY selectionRectChanged)
-//     Q_PROPERTY(bool isSelectionRectVisible READ isSelectionRectVisible WRITE setSelectionRectVisible NOTIFY selectionRectVisibleChanged)
-
-//     QRectF selectionRect() const { return shotRect_; }
-//     void setSelectionRect(const QRectF& rect) { shotRect_ = rect; emit selectionRectChanged(); }
-
-//     bool isSelectionRectVisible() const { return isSelectionRectVisible_; }
-//     void setSelectionRectVisible(bool visible) { isSelectionRectVisible_ = visible; emit selectionRectVisibleChanged(); }
-// private:
-//     void judgeResizeMode(const QRectF rect,const QPoint pos);
-//     void resizeMode(QRectF& rect,const QPoint pos);
-
-
-// private:
-//     QRectF m_selectionRect_;
-//     bool m_isSelectionRectVisible_ = false;
 
 
     ScreetShot screetShot_;

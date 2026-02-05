@@ -1,5 +1,4 @@
 #include "screetShot.h"
-#include <QCursor>
 
 
 
@@ -26,7 +25,6 @@ void ScreetShot::judgeResizeMode(const QRectF rect,const QPoint pos)
         resizeMode_ = ResizeMode::TopLeft;
         // setCursor(Qt::SizeFDiagCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeFDiagCursor);
-
     }
     else if (onRight && onTop) {
         resizeMode_ = ResizeMode::TopRight;
@@ -68,7 +66,6 @@ void ScreetShot::judgeResizeMode(const QRectF rect,const QPoint pos)
         resizeMode_ = ResizeMode::Move;
         // setCursor(Qt::SizeAllCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeAllCursor);
-        endPos_ = pos;
     }
     else {
         resizeMode_ = ResizeMode::None;
@@ -79,56 +76,144 @@ void ScreetShot::judgeResizeMode(const QRectF rect,const QPoint pos)
 }
 
 
-void ScreetShot::resizeMode(QRectF& rect,const QPoint pos)
+
+void ScreetShot::resizeMode(QRectF& rect, const QPoint pos)
 {
-    QPoint delta;
+    QPointF delta;
 
-    switch (resizeMode_)
-    {
-        case ResizeMode::Top:
-            rect.setTop(pos.y());
-            break;
+    switch (resizeMode_) {
+    case ResizeMode::Top: {
+        qreal newTop = pos.y();
+        if (newTop > rect.bottom()) {
+            rect.setTop(rect.bottom());
+            rect.setBottom(newTop);
+        } else {
+            rect.setTop(newTop);
+        }
+        break;
+    }
+    case ResizeMode::Bottom: {
+        qreal newBottom = pos.y();
+        if (newBottom < rect.top()) {
+            rect.setBottom(rect.bottom());
+            rect.setTop(newBottom);
+        } else {
+            rect.setBottom(newBottom);
+        }
+        break;
+    }
+    case ResizeMode::Left: {
+        qreal newLeft = pos.x();
+        if (newLeft > rect.right()) {
+            rect.setLeft(rect.left());
+            rect.setRight(newLeft);
+        } else {
+            rect.setLeft(newLeft);
+        }
+        break;
+    }
+    case ResizeMode::Right: {
+        qreal newRight = pos.x();
+        if (newRight < rect.left()) {
+            rect.setRight(rect.right());
+            rect.setLeft(newRight);
+        } else {
+            rect.setRight(newRight);
+        }
+        break;
+    }
+    case ResizeMode::TopLeft: {
+        qreal newTop = pos.y();
+        qreal newLeft = pos.x();
 
-        case ResizeMode::Bottom:
-            rect.setBottom(pos.y());
-            break;
+        if (newTop > rect.bottom()) {
+            qreal oldTop = rect.top();
+            rect.setTop(newTop);
+            rect.setBottom(oldTop);
+        } else {
+            rect.setTop(newTop);
+        }
 
-        case ResizeMode::Left:
-            rect.setLeft(pos.x());
-            break;
+        if (newLeft > rect.right()) {
+            qreal oldLeft = rect.left();
+            rect.setLeft(newLeft);
+            rect.setRight(oldLeft);
+        } else {
+            rect.setLeft(newLeft);
+        }
+        break;
+    }
+    case ResizeMode::TopRight: {
+        qreal newTop = pos.y();
+        qreal newRight = pos.x();
 
-        case ResizeMode::Right:
-            rect.setRight(pos.x());
-            break;
+        if (newTop > rect.bottom()) {
+            qreal oldTop = rect.top();
+            rect.setTop(newTop);
+            rect.setBottom(oldTop);
+        } else {
+            rect.setTop(newTop);
+        }
 
-        case ResizeMode::TopLeft:
-            rect.setTop(pos.y());
-            rect.setLeft(pos.x());
-            break;
+        if (newRight < rect.left()) {
+            qreal oldRight = rect.right();
+            rect.setRight(newRight);
+            rect.setLeft(oldRight);
+        } else {
+            rect.setRight(newRight);
+        }
+        break;
+    }
+    case ResizeMode::BottomLeft: {
+        qreal newBottom = pos.y();
+        qreal newLeft = pos.x();
 
-        case ResizeMode::TopRight:
-            rect.setTop(pos.y());
-            rect.setRight(pos.x());
-            break;
+        if (newBottom < rect.top()) {
+            qreal oldBottom = rect.bottom();
+            rect.setBottom(newBottom);
+            rect.setTop(oldBottom);
+        } else {
+            rect.setBottom(newBottom);
+        }
 
-        case ResizeMode::BottomLeft:
-            rect.setBottom(pos.y());
-            rect.setLeft(pos.x());
-            break;
+        if (newLeft > rect.right()) {
+            qreal oldLeft = rect.left();
+            rect.setLeft(newLeft);
+            rect.setRight(oldLeft);
+        } else {
+            rect.setLeft(newLeft);
+        }
+        break;
+    }
+    case ResizeMode::BottomRight: {
+        qreal newBottom = pos.y();
+        qreal newRight = pos.x();
 
-        case ResizeMode::BottomRight:
-            rect.setBottom(pos.y());
-            rect.setRight(pos.x());
-            break;
+        if (newBottom < rect.top()) {
+            qreal oldBottom = rect.bottom();
+            rect.setBottom(newBottom);
+            rect.setTop(oldBottom);
+        } else {
+            rect.setBottom(newBottom);
+        }
 
-        case ResizeMode::Move:
-            delta = pos - endPos_.toPoint();
-            endPos_ = pos;
-            rect.translate(delta);
-            break;
-
-        default:
-            break;
+        if (newRight < rect.left()) {
+            qreal oldRight = rect.right();
+            rect.setRight(newRight);
+            rect.setLeft(oldRight);
+        } else {
+            rect.setRight(newRight);
+        }
+        break;
+    }
+    case ResizeMode::Move: {
+        delta = QPointF(pos) - endPos_;
+        endPos_ = QPointF(pos);
+        rect.translate(delta);
+        break;
+    }
+    default:
+        break;
     }
 
 }

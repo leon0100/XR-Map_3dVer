@@ -20,20 +20,51 @@ Rectangle {
     border.color: Qt.rgba(0, 1, 1, 1.0)
     z: 1000
 
-    // 添加调试信息
-    Component.onCompleted: {
-        console.log("selectionRect initial state:")
-        console.log("  x:", x)
-        console.log("  y:", y)
-        console.log("  width:", width)
-        console.log("  height:", height)
-        console.log("  visible:", visible)
-        console.log("  z:", z)
-    }
 
-    onXChanged: console.log("selectionRect x changed:", x)
-    onYChanged: console.log("selectionRect y changed:", y)
-    onWidthChanged: console.log("selectionRect width changed:", width)
-    onHeightChanged: console.log("selectionRect height changed:", height)
-    onVisibleChanged: console.log("selectionRect visible changed:", visible)
+    property int handleSize: 8
+
+       // 左上角
+       Rectangle {
+           width: handleSize
+           height: handleSize
+           color: "#d02090"
+           border.color: "#d02090"
+           border.width: 2
+           x: -handleSize/2
+           y: -handleSize/2
+       }
+
+       // 右上角
+       Rectangle {
+           width: handleSize
+           height: handleSize
+           color: "#d02090"
+           border.color: "#d02090"
+           border.width: 2
+           x: parent.width - handleSize/2
+           y: -handleSize/2
+       }
+
+       // 左下角
+       Rectangle {
+           width: handleSize
+           height: handleSize
+           color: "#d02090"
+           border.color: "#d02090"
+           border.width: 2
+           x: -handleSize/2
+           y: parent.height - handleSize/2
+       }
+
+       // 右下角
+       Rectangle {
+           width: handleSize
+           height: handleSize
+           color: "#d02090"
+           border.color: "#d02090"
+           border.width: 2
+           x: parent.width - handleSize/2
+           y: parent.height - handleSize/2
+       }
+
 }
