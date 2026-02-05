@@ -84,7 +84,6 @@ ApplicationWindow  {
 
 
 
-
     Component {
         id: stateGroupComp
         StateGroup {
@@ -526,6 +525,11 @@ ApplicationWindow  {
                 Layout.fillWidth:  true
                 focus:             true
 
+                ScreetRect {
+
+                }
+                    // id: selectionRect
+
                 property bool longPressTriggered: false
 
                 PinchArea {
@@ -640,10 +644,7 @@ ApplicationWindow  {
 
                 Scene3DToolbar{
                     id:                       scene3DToolbar
-                    // anchors.bottom:              parent.bottom
                     y:renderer.height - height - 2
-                    //anchors.horizontalCenter: parent.horizontalCenter
-                    // anchors.rightMargin:      20
                     Keys.forwardTo:           [mousearea3D]
                 }
 

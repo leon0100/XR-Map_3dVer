@@ -19,6 +19,10 @@
 #include "usbl_view.h"
 #include "isobaths_view.h"
 #include "data_processor.h"
+#include "screetShot.h"
+
+
+
 
 
 class Dataset;
@@ -243,6 +247,7 @@ public Q_SLOTS:
     void setBottomTrackVertexSelectionMode();
     void setPolygonCreationMode();
     void setPolygonEditingMode();
+    void onCursorChanged(Qt::CursorShape cursorShape);
     void setDataset(Dataset* dataset);
     void setDataProcessorPtr(DataProcessor* dataProcessorPtr);
     void addPoints(QVector<QVector3D>, QColor color, float width = 1);
@@ -334,16 +339,54 @@ private:
     double currentLon_ = 0.0;
 
     int currentMapLevel_,screetCurrentMapLevel_;
-    //***************************************************************************************
-    bool isScreenMode_ = false;  //截图模式
-    QPoint boxSelectStart_;
-    QPoint boxSelectEnd_;
-    QVector<SurfaceTile*> selectedTiles_;
-    QVector<QVector3D> selectedIsobaths_;
-    void selectTilesInBox();
+
+//     //***************************************************************************************
+//     bool isScreenMode_ = false;  //截图模式
+//     QPoint boxSelectStart_;
+//     QPoint boxSelectEnd_;
+//     QVector<SurfaceTile*> selectedTiles_;
+//     QVector<QVector3D> selectedIsobaths_;
+//     void selectTilesInBox();
+//     bool m_moveView = false; //鼠标移动地图
+
+//     bool showHistoryScreen_ = false; //显示历史截图
+//     bool firstScreenDown_ = false;
+//     QPointF startPos_,endPos_;  // 矩形场景坐标
+//     QQuickItem* rectOverlay_ = nullptr;
+//     bool isResizing_ = false,isDragging_ = false;
+//     QRectF shotRect_;
+//     ResizeMode resizeMode_;
+
+//     bool isSelectionRectVisible_ = false;
+// signals:
+//     void selectionRectChanged();
+//     void selectionRectVisibleChanged();
+//     // void isScreenCaptureModeChanged(bool changed);
 
 public:
     void setCurrentMapLevel(int mapLevel);
+    Q_PROPERTY(QObject* screetShot READ screetShot CONSTANT)
+    QObject* screetShot() { return &screetShot_; }
+//     // 添加矩形属性
+//     Q_PROPERTY(QRectF selectionRect READ selectionRect WRITE setSelectionRect NOTIFY selectionRectChanged)
+//     Q_PROPERTY(bool isSelectionRectVisible READ isSelectionRectVisible WRITE setSelectionRectVisible NOTIFY selectionRectVisibleChanged)
+
+//     QRectF selectionRect() const { return shotRect_; }
+//     void setSelectionRect(const QRectF& rect) { shotRect_ = rect; emit selectionRectChanged(); }
+
+//     bool isSelectionRectVisible() const { return isSelectionRectVisible_; }
+//     void setSelectionRectVisible(bool visible) { isSelectionRectVisible_ = visible; emit selectionRectVisibleChanged(); }
+// private:
+//     void judgeResizeMode(const QRectF rect,const QPoint pos);
+//     void resizeMode(QRectF& rect,const QPoint pos);
+
+
+// private:
+//     QRectF m_selectionRect_;
+//     bool m_isSelectionRectVisible_ = false;
+
+
+    ScreetShot screetShot_;
 };
 
 #endif // GRAPHICSSCENE3DVIEW_H

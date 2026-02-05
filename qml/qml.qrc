@@ -101,5 +101,6 @@
         <file>MosaicExtraSettings.qml</file>
         <file>MenuBar_XR.qml</file>
         <file>ToolBar_XR.qml</file>
+        <file>ScreetRect.qml</file>
     </qresource>
 </RCC>
