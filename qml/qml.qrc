@@ -102,5 +102,6 @@
         <file>MenuBar_XR.qml</file>
         <file>ToolBar_XR.qml</file>
         <file>ScreetRect.qml</file>
+        <file>CMouseArea.qml</file>
     </qresource>
 </RCC>

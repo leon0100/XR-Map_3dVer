@@ -528,7 +528,6 @@ ApplicationWindow  {
                 ScreetRect {
 
                 }
-                    // id: selectionRect
 
                 property bool longPressTriggered: false
 

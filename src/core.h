@@ -61,6 +61,7 @@ public:
     Q_PROPERTY(int               dataProcessorState           READ getDataProcessorState           NOTIFY dataProcessorStateChanged)
     Q_PROPERTY(int               currMapLevel                 READ getCurrMapLevel                 NOTIFY currentMapLevelChanged)
 
+
     void setEngine(QQmlApplicationEngine *engine);
     Console* getConsolePtr();
     Dataset* getDatasetPtr();
@@ -129,9 +130,9 @@ public slots:
     bool getIsSeparateReading() const;
     void onChannelsUpdated();
     void onRedrawEpochs(const QSet<int>& indxs);
-    int getDataProcessorState() const;
+    int  getDataProcessorState() const;
     void initStreamList();
-    int getCurrMapLevel() const;
+    int  getCurrMapLevel() const;
 
 #ifdef FLASHER
     void connectOpenedLinkAsFlasher(QString pn);
@@ -157,6 +158,8 @@ signals:
     void dataProcessorStateChanged();
     void isGPSAliveChanged();
     void loggingKlfChanged();
+
+    void scrrenModeChanged();
     void currentMapLevelChanged();
 
 #ifdef SEPARATE_READING
@@ -169,6 +172,7 @@ private slots:
     void onSendMapTextureIdByTileIndx(const map::TileIndex& tileIndx, GLuint textureId); // TODO: maybe store map texture id in mapView
     void onDataProcesstorStateChanged(const DataProcessorType& state);
     void onSendFrameInputToLogger(QUuid uuid, Link* link, const Parsers::FrameParser& frame);
+
     void onZoomLevelChanged(int level);
 
 private:

@@ -160,6 +160,7 @@ Item  {
             }
 
 
+            //Settings3DExtraSettings.qml
             Item {
                 id: settings3DWrapper
                 width : settings3DCheckButton.implicitWidth

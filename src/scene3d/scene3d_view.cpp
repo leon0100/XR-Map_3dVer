@@ -241,22 +241,24 @@ void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal 
 {
     Q_UNUSED(keyboardKey)
 
-    //当前点x,y的经纬度坐标
-    auto toOrig = QVector3D(x, height() - y, -1.0f).unproject(m_camera->m_view * m_model, m_projection, boundingRect().toRect());
-    auto toEnd  = QVector3D(x, height() - y,  1.0f).unproject(m_camera->m_view * m_model, m_projection, boundingRect().toRect());
-    auto toDir = (toEnd - toOrig).normalized();
-    auto to = calculateIntersectionPoint(toOrig, toDir, 0);
-    NED ned;
-    ned.n = to.y();
-    ned.e = to.x();
-    ned.d = 0;
-    LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
+    // //当前点x,y的经纬度坐标
+    // auto toOrig = QVector3D(x, height() - y, -1.0f).unproject(m_camera->m_view * m_model, m_projection, boundingRect().toRect());
+    // auto toEnd  = QVector3D(x, height() - y,  1.0f).unproject(m_camera->m_view * m_model, m_projection, boundingRect().toRect());
+    // auto toDir = (toEnd - toOrig).normalized();
+    // auto to = calculateIntersectionPoint(toOrig, toDir, 0);
+    // NED ned;
+    // ned.n = to.y();
+    // ned.e = to.x();
+    // ned.d = 0;
+    // LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
 
-    currentLat_ = lla.latitude;
+    // currentLat_ = lla.latitude;
+    // emit currentLatChanged();
+    // currentLon_ = lla.longitude;
+    // emit currentLonChanged();
+    calculateLatLong(x, y, currentLat_, currentLon_);
     emit currentLatChanged();
-    currentLon_ = lla.longitude;
     emit currentLonChanged();
-    qDebug() << "mousePressTrigger x:" << x << "   y:" << y << "   lati:" << lla.latitude << "   long:" << lla.longitude;
 
     QPoint pos = QPoint(x,y);
 
@@ -285,8 +287,6 @@ void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal 
             return;
         }
     }
-
-
 
 
     wasMoved_ = false;
@@ -329,15 +329,28 @@ void GraphicsScene3dView::mouseMoveTrigger(Qt::MouseButtons mouseButton, qreal x
                 qreal width  = currentPos.x() - screetShot_.startPos_.x();
                 qreal height = currentPos.y() - screetShot_.startPos_.y();
                 screetShot_.shotRect_ = QRectF(std::min(screetShot_.startPos_.x(), currentPos.x()),
-                            std::min(screetShot_.startPos_.y(), currentPos.y()), std::abs(width), std::abs(height));
+                        std::min(screetShot_.startPos_.y(), currentPos.y()), std::abs(width), std::abs(height));
+                calculateLatLong(screetShot_.shotRect_.topLeft().x(), screetShot_.shotRect_.topLeft().y(),
+                        screetShot_.topLeftLati_,screetShot_.topLeftLong_);
+                calculateLatLong(screetShot_.shotRect_.topRight().x(), screetShot_.shotRect_.topRight().y(),
+                        screetShot_.topRightLati_,screetShot_.topRightLong_);
+                calculateLatLong(screetShot_.shotRect_.bottomRight().x(), screetShot_.shotRect_.bottomRight().y(),
+                        screetShot_.bottomRightLati_,screetShot_.bottomRightLong_);
                 screetShot_.setSelectionRect(screetShot_.shotRect_);
-                qDebug() << "Screen capture rect:" << screetShot_.shotRect_;
+                // qDebug() << "Screen capture rect:" << screetShot_.shotRect_;
             }
         }
         else {
             screetShot_.judgeResizeMode(screetShot_.shotRect_, pos);
             if(mouseButton == Qt::LeftButton) {
                 screetShot_.resizeMode(screetShot_.shotRect_, pos);
+                calculateLatLong(screetShot_.shotRect_.topLeft().x(), screetShot_.shotRect_.topLeft().y(),
+                        screetShot_.topLeftLati_,screetShot_.topLeftLong_);
+                calculateLatLong(screetShot_.shotRect_.topRight().x(), screetShot_.shotRect_.topRight().y(),
+                        screetShot_.topRightLati_,screetShot_.topRightLong_);
+                calculateLatLong(screetShot_.shotRect_.bottomRight().x(), screetShot_.shotRect_.bottomRight().y(),
+                        screetShot_.bottomRightLati_,screetShot_.bottomRightLong_);
+
                 screetShot_.setSelectionRect(screetShot_.shotRect_);
             }
 
@@ -428,6 +441,8 @@ void GraphicsScene3dView::mouseReleaseTrigger(Qt::MouseButtons mouseButton, qrea
         if(!screetShot_.firstScreenDown_) {
             screetShot_.firstScreenDown_ = true;
         }
+
+        screetShot_.setScreetToolBar(true);
 
         // showShotOptionBox();
         qDebug() << "Screen capture completed";
@@ -537,6 +552,21 @@ void GraphicsScene3dView::setScreenMode(bool isScreen)
     qDebug() << "isScreen:  "<< isScreen;
     screetShot_.isScreenMode_ = isScreen;
 
+    // setMapView();
+    if (m_camera && m_camera->getIsPerspective()) {
+        m_camera->resetRotationAngle();
+        if (m_axesThumbnailCamera) {
+            m_axesThumbnailCamera->resetRotationAngle();
+        }
+
+        m_camera->resetZAxis();
+        updateProjection();
+    }
+
+
+    QQuickFramebufferObject::update();
+    emit cameraIsMoved();
+
     screetShot_.shotRect_ = QRectF();
 
     if(isScreen) {
@@ -549,6 +579,7 @@ void GraphicsScene3dView::setScreenMode(bool isScreen)
         screetShot_.setSelectionRectVisible(false);
         // clearScreenShot();
     }
+
 }
 
 
@@ -1005,6 +1036,33 @@ void GraphicsScene3dView::initAutoDistTimer()
                      });
 
     testingTimer_->start();
+}
+
+void GraphicsScene3dView::calculateLatLong(qreal x, qreal y, double& latitude, double& longitude)
+{
+    QMatrix4x4 viewModelMatrix = m_camera->m_view * m_model;
+    QRect viewport = boundingRect().toRect();
+    float heightValue = height();
+
+    // 计算射线起点和终点
+    QVector3D toOrig = QVector3D(x, heightValue - y, -1.0f).unproject(viewModelMatrix, m_projection, viewport);
+    QVector3D toEnd  = QVector3D(x, heightValue - y,  1.0f).unproject(viewModelMatrix, m_projection, viewport);
+
+    QVector3D toDir = (toEnd - toOrig).normalized();  // 计算射线方向
+
+    QVector3D to = calculateIntersectionPoint(toOrig, toDir, 0);   // 计算与地面的交点
+
+    // 转换为 NED 坐标系
+    NED ned;
+    ned.n = to.y();
+    ned.e = to.x();
+    ned.d = 0;
+
+    // 转换为 LLA 坐标系
+    LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
+    latitude = lla.latitude;
+    longitude = lla.longitude;
+    // qDebug() << "mousePressTrigger x:" << x << "   y:" << y << "   lati:" << lla.latitude << "   long:" << lla.longitude;
 }
 
 void GraphicsScene3dView::updateMapView()

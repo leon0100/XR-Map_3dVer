@@ -237,7 +237,7 @@ public Q_SLOTS:
     void fitAllInView();
     void setIsometricView();
     void setCancelZoomView();
-    void setMapView();
+    void setMapView();//将3D视图切换到地图视图模式，也就是正交投影、俯视角度
     void setLastEpochFocusView(bool useAngle, bool useNavigatorView);
     void setIdleMode();
     void setVerticalScale(float scale);
@@ -263,6 +263,7 @@ signals:
     void sendLlaRef(LLARef viewLlaRef);
     void cameraIsMoved();
     void sendMapTextureIdByTileIndx(const map::TileIndex& tileIndx, GLuint textureId);
+
     void currentLatChanged();
     void currentLonChanged();
 
@@ -271,6 +272,7 @@ private:
     void updatePlaneGrid();
     void clearComboSelectionRect();
     void initAutoDistTimer();
+    void calculateLatLong(qreal x, qreal y, double& latitude, double& longitude);
 
 private:
     friend class BottomTrack;

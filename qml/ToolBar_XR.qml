@@ -94,17 +94,24 @@ Rectangle {
                 id: btn1
                 toolTipText: qsTr("Screetshot")
             }
+
+            property bool screenMode: false
             Rectangle {
                 anchors.fill: parent
                 radius: 2
-                color: btn1.containsMouse ? "#d6e6ff" : "transparent"
+                color: frameSlectBtn.screenMode ? "#a8d8ff" : btn1.containsMouse ? "#d6e6ff" : "transparent"
             }
-
-            property bool screenMode: false
 
             onPressed: {
                 screenMode = !screenMode
                 renderer.setScreenMode(screenMode)
+            }
+
+            Connections {
+                target: renderer.screetShot
+                function onCancelScreetShot() {
+                    frameSlectBtn.screenMode = false
+                }
             }
         }
 
@@ -195,7 +202,6 @@ Rectangle {
             icon.source: "qrc:/icons/ui/plug.svg"
             CMouseOpacityArea {
                 toolTipText: qsTr("Connections")
-                // onContainsMouseChanged: containsMouse ? mainLayout.highlightAllButtons() : mainLayout.resetButtonOpacity()
             }
 
             onPressed: itemChangeActive(menuSettings)
@@ -214,7 +220,7 @@ Rectangle {
 
     }
 
-    //左上角第一个按钮（串口连接、文件导入等）
+    //（串口连接、文件导入等）
     DeviceSettingsViewer {
         id: devSettings
         visible: menuSettings.active
@@ -224,7 +230,7 @@ Rectangle {
         y: 30
     }
 
-    //左上角第二个按钮settings按钮显示出来
+    //settings按钮显示出来
     DisplaySettingsViewer {
         id: appSettings
         visible: menuDisplay.active
@@ -235,41 +241,6 @@ Rectangle {
     }
 
 
-    /* ================== inline component ===================== */
-    component ToolItem : Rectangle {
-        id: item
-        height: parent.height - 2
-         width: Math.max(label.implicitWidth + 12, 24)
-        radius: 2
 
-        property string text
-        signal clicked()
-
-        color: mouse.pressed ? "#cce8ff" : mouse.containsMouse ? "#e6f2ff" : "transparent"
-
-        border.color: mouse.containsMouse ? "#7aa7d9" : "transparent"
-        border.width: 1
-
-        Text {
-            id: label
-            anchors.centerIn: parent
-            text: item.text
-            font.pixelSize: 14
-            color: "#333"
-        }
-
-        MouseArea {
-            id: mouse
-            anchors.fill: parent
-            hoverEnabled: true
-            onClicked: item.clicked()
-        }
-    }
-
-    component ToolSeparator : Rectangle {
-        width: 1
-        height: parent.height - 6
-        color: "#c0c0c0"
-    }
 }
 

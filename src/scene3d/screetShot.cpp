@@ -10,7 +10,66 @@ ScreetShot::ScreetShot(QObject *parent) : QObject{parent}
 
 
 
+QRectF ScreetShot::getSelectionRect() const
+{
+    return shotRect_;
+}
+void ScreetShot::setSelectionRect(const QRectF& rect)
+{
+    shotRect_ = rect;
 
+    double topWidth = getDistance_Haversine(topLeftLong_, topLeftLati_, topRightLong_, topRightLati_);
+    double rightHeight = getDistance_Haversine(topRightLong_, topRightLati_, bottomRightLong_, bottomRightLati_);
+
+    QString topWidthStr = getLengthChEn(topWidth);
+    QString rightHeightStr = getLengthChEn(rightHeight);
+
+    setScreetWidth(topWidthStr);
+    setScreetHeight(rightHeightStr);
+
+    setScreetToolBar(false);
+
+    emit selectionRectChanged();
+}
+
+bool ScreetShot::isSelectionRectVisible() const
+{
+    return isSelectionRectVisible_;
+}
+void ScreetShot::setSelectionRectVisible(bool visible)
+{
+    isSelectionRectVisible_ = visible;
+    emit selectionRectVisibleChanged();
+}
+
+QString ScreetShot::getScreetWidth() const
+{
+    return screetWidth_;
+}
+void ScreetShot::setScreetWidth(const QString screetWidth)
+{
+    screetWidth_ = screetWidth;
+    emit screetWidthChanged();
+}
+QString ScreetShot::getScreetHeight() const
+{
+    return screetHeight_;
+}
+void ScreetShot::setScreetHeight(const QString screetHeight)
+{
+    screetHeight_ = screetHeight;
+    emit screetHeightChanged();
+}
+
+bool ScreetShot::getScreetToolBar() const
+{
+    return screetToolBarShow_;
+}
+void ScreetShot::setScreetToolBar(bool screetToolBarShow)
+{
+    screetToolBarShow_ = screetToolBarShow;
+    emit screetToolBarShowChanged();
+}
 
 
 void ScreetShot::judgeResizeMode(const QRectF rect,const QPoint pos)
@@ -23,59 +82,67 @@ void ScreetShot::judgeResizeMode(const QRectF rect,const QPoint pos)
 
     if (onLeft && onTop) {
         resizeMode_ = ResizeMode::TopLeft;
-        // setCursor(Qt::SizeFDiagCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeFDiagCursor);
     }
     else if (onRight && onTop) {
         resizeMode_ = ResizeMode::TopRight;
-        // setCursor(Qt::SizeBDiagCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeBDiagCursor);
     }
     else if (onLeft && onBottom) {
         resizeMode_ = ResizeMode::BottomLeft;
-        // setCursor(Qt::SizeBDiagCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeBDiagCursor);
     }
     else if (onRight && onBottom) {
         resizeMode_ = ResizeMode::BottomRight;
-        // setCursor(Qt::SizeFDiagCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeFDiagCursor);
 
     }
     else if (onLeft) {
         resizeMode_ = ResizeMode::Left;
-        // setCursor(Qt::SizeHorCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeHorCursor);
     }
     else if (onRight) {
         resizeMode_ = ResizeMode::Right;
-        // setCursor(Qt::SizeHorCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeHorCursor);
     }
     else if (onTop) {
         resizeMode_ = ResizeMode::Top;
-        // setCursor(Qt::SizeVerCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeVerCursor);
     }
     else if (onBottom) {
         resizeMode_ = ResizeMode::Bottom;
-        // setCursor(Qt::SizeVerCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeVerCursor);
     }
     else if(rect.contains(pos)){
         resizeMode_ = ResizeMode::Move;
-        // setCursor(Qt::SizeAllCursor);
         QGuiApplication::setOverrideCursor(Qt::SizeAllCursor);
     }
     else {
         resizeMode_ = ResizeMode::None;
-        // setCursor(Qt::ArrowCursor);
         QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
     }
 
 }
 
+void ScreetShot::setToArrowCursor()
+{
+    QGuiApplication::setOverrideCursor(Qt::ArrowCursor);
+}
 
+void ScreetShot::setCancelShot()
+{
+    qDebug() << "ScreetShot::setCancelShot().........";
+    isScreenMode_ = false;
+    screetToolBarShow_ = false;
+    setSelectionRectVisible(false);
+    emit cancelScreetShot();
+
+}
+
+void ScreetShot::saveScreetShot()
+{
+
+}
 
 void ScreetShot::resizeMode(QRectF& rect, const QPoint pos)
 {
@@ -215,5 +282,32 @@ void ScreetShot::resizeMode(QRectF& rect, const QPoint pos)
     default:
         break;
     }
-
 }
+
+
+double ScreetShot::getDistance_Haversine(double current_longi, double current_lati, double goal_longi, double goal_lati)
+{
+    double dLat = (goal_lati - current_lati) * _PI_180;
+    double dLon = (goal_longi - current_longi) * _PI_180;
+    double a = pow(sin(dLat/2), 2) + cos(current_lati*_PI_180) * cos(goal_lati*_PI_180) * pow(sin(dLon/2), 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1-a));
+    return RE * c;
+}
+
+QString ScreetShot::getLengthChEn(double distance,int decimalPlaces)
+{
+    QString distanceStr;
+    // bool isMetres = ContourSingleton::getInstance().getGlobalUnits();
+    bool isMetres = true;
+    if (distance > 1000) {
+        double distanceKm = distance / 1000.0;
+        distanceStr = isMetres ? (QString::number(distanceKm,'f',decimalPlaces)+" km") :
+                          (QString::number(distanceKm*0.621371,'f',decimalPlaces)+" mi");
+    } else {
+        double distanceFeet = distance * 3.28084;
+        distanceStr = isMetres ? (QString::number(distance,'f',0)+" m") : (QString::number(distanceFeet,'f',0)+" ft");
+    }
+
+    return distanceStr;
+}
+
