@@ -9,6 +9,8 @@
 #include <QUuid>
 #include "math_defs.h"
 #include "dsp_defs.h"
+#include <cmath>
+
 
 
 #if defined(Q_OS_ANDROID) || (defined Q_OS_LINUX)
@@ -125,24 +127,25 @@ typedef struct NED NED;
 typedef struct LLARef LLARef;
 
 typedef struct LLA {
-    double latitude = NAN, longitude = NAN;
-    double altitude = NAN;
+    double latitude;
+    double longitude;
+    double altitude;
 
     PositionSource source = PositionSourceNone;
     AltitudeSource altSource = AltitudeSourceNone;
 
     LLA() {};
-    LLA(double lat, double lon, double alt= NAN) {
-        latitude = lat;
+    LLA(double lat, double lon, double alt = NAN) {
+        latitude  = lat;
         longitude = lon;
-        altitude = alt;
-    }  
+        altitude  = alt;
+    }
 
     LLA(const LLA& other) {
         latitude = other.latitude;
         longitude = other.longitude;
         altitude = other.altitude;
-    }   
+    }
 
     LLA& operator=(const LLA& other) {
         if (this != &other) {
@@ -254,8 +257,8 @@ typedef struct NED {
             double lat_rad = lla->latitude * M_DEG_TO_RAD;
             double ref_lat_rad = ref->refLla.latitude * M_DEG_TO_RAD;
 
-            double y = R * log(tan(M_PI / 4.0 + lat_rad / 2.0));
-            double y_ref = R * log(tan(M_PI / 4.0 + ref_lat_rad / 2.0));
+            double y = R * log(tan(3.14159265358979323846 / 4.0 + lat_rad / 2.0));
+            double y_ref = R * log(tan(3.14159265358979323846 / 4.0 + ref_lat_rad / 2.0));
 
             double delta_y = y - y_ref;
 
@@ -312,8 +315,8 @@ LLA::LLA(const NED* ned, const LLARef* ref, bool spherical)
         double x = cos_c - sin(lat0) * sin_lat;
         double lon_rad = lon0 + atan2(y, x);
 
-        latitude = lat_rad * 180.0 / M_PI;
-        longitude = lon_rad * 180.0 / M_PI;
+        latitude = lat_rad * 180.0 / 3.14159265358979323846;
+        longitude = lon_rad * 180.0 / 3.14159265358979323846;
         altitude = ref->refLla.altitude - ned->d;
     }
     else { // mercator
@@ -324,11 +327,11 @@ LLA::LLA(const NED* ned, const LLARef* ref, bool spherical)
         double R = CONSTANTS_RADIUS_OF_EARTH;
 
         double ref_lat_rad = ref->refLla.latitude * M_DEG_TO_RAD;
-        double y_ref = R * log(tan(M_PI / 4.0 + ref_lat_rad / 2.0));
+        double y_ref = R * log(tan(3.14159265358979323846 / 4.0 + ref_lat_rad / 2.0));
 
         double y = y_ref + ned->n;
 
-        double lat_rad = 2.0 * atan(exp(y / R)) - M_PI / 2.0;
+        double lat_rad = 2.0 * atan(exp(y / R)) - 3.14159265358979323846 / 2.0;
 
         double ref_lon_rad = ref->refLla.longitude * M_DEG_TO_RAD;
         double lon_rad = ref_lon_rad + (ned->e / R);

@@ -13,7 +13,9 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 
-#define RENDER_IMPL(Class) ({dynamic_cast<Class##RenderImplementation*>(m_renderImpl);})
+// #define RENDER_IMPL(Class) ({dynamic_cast<Class##RenderImplementation*>(m_renderImpl);})
+#define RENDER_IMPL(Class) dynamic_cast<Class##RenderImplementation*>(m_renderImpl)
+
 
 class GraphicsScene3dView;
 class SceneObject : public QObject, public std::enable_shared_from_this<SceneObject>

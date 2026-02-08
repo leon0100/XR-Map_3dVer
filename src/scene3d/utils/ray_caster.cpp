@@ -5,6 +5,7 @@
 
 #include "qsystemdetection.h"
 #if !defined(Q_OS_ANDROID) && !defined(LINUX_ES)
+#include <windows.h>   // 必须在最前
 #include <GL/gl.h>
 #else
 #include <GLES2/gl2.h>

@@ -66,6 +66,7 @@ public:
     std::unordered_map<map::TileIndex, QImage> takeInitTileTasks();
     std::unordered_map<map::TileIndex, QImage> takeUpdateTileTasks();
     QVector<map::TileIndex>                    takeDeleteTileTasks();
+     bool getTileImage(const map::TileIndex& tileIndx, QImage& out) const;
 
 public slots:
     void onTileAppend(const map::Tile& tile);
@@ -82,4 +83,6 @@ private:
     std::unordered_map<map::TileIndex, QImage> appendTasks_;
     std::unordered_map<map::TileIndex, QImage> updateImageTasks_;
     QVector<map::TileIndex> deleteTasks_;
+
+    std::unordered_map<map::TileIndex, QImage> tileImages_;
 };

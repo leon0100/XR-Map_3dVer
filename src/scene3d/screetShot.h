@@ -8,6 +8,8 @@
 #include <QRectF>
 #include <QVector3D>
 #include <QCursor>
+#include <memory>
+
 
 
 enum class ResizeMode { None, Move, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight };
@@ -23,6 +25,8 @@ enum class ResizeMode { None, Move, Top, Bottom, Left, Right, TopLeft, TopRight,
 #define PI (3.1415926535898)
 #endif
 
+
+class MapView;
 class ScreetShot : public QObject
 {
     Q_OBJECT
@@ -68,6 +72,7 @@ signals:
 
 public:
     void setCurrentMapLevel(int mapLevel);
+    void setMapView(const std::shared_ptr<MapView>& mapView);
     void judgeResizeMode(const QRectF rect,const QPoint pos);
     void resizeMode(QRectF& rect,const QPoint pos);
 
@@ -100,6 +105,7 @@ public:
     double topLeftLong_, topLeftLati_, topRightLong_, topRightLati_, bottomRightLong_, bottomRightLati_;
     bool screetToolBarShow_ = false;
 
+    std::weak_ptr<MapView> mapView_;
 
 };
 

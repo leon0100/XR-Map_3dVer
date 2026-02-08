@@ -2,12 +2,16 @@ import QtQuick 2.15
 import SceneGraphRendering 1.0
 import QtQuick.Window  2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs
+import QtQuick.Dialogs 1.3
 import QtQuick.Controls 2.15
 import WaterFall 1.0
 import KoggerCommon 1.0
 import BottomTrack 1.0
-import QtCore
+// import QtCore
+import Qt.labs.settings 1.1
+
+
+
 
 
 ApplicationWindow  {

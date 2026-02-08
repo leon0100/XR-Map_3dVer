@@ -229,7 +229,7 @@ public:
 
 
 protected:
-    void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry) override final;
+    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
 
 
 public Q_SLOTS:

@@ -1,8 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import QtQuick.Dialogs
-import QtCore
+import QtQuick.Dialogs 1.3
+// import QtCore
+import Qt.labs.settings 1.1
+
 
 
 // isobaths extra settings
@@ -230,9 +232,9 @@ MenuFrame {
                 id: exportSurfaceFileDialog
                 title: qsTr("Select folder and set .csv file name")
 
-                currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
+                // currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
 
-                fileMode: FileDialog.SaveFile
+                // fileMode: FileDialog.SaveFile
 
                 nameFilters: ["CSV Files (*.csv)", "All Files (*)"]
                 defaultSuffix: "csv"
@@ -253,9 +255,9 @@ MenuFrame {
                 onClicked: Scene3DControlMenuController.onExportToCSVButtonClicked(exportSurfacePathText.text)
             }
 
-            Settings {
-                property alias exportSurfaceFolder: exportSurfaceFileDialog.currentFolder
-            }
+            // Settings {
+            //     property alias exportSurfaceFolder: exportSurfaceFileDialog.currentFolder
+            // }
 
             Settings {
                 property alias exportSurfaceFolderText: exportSurfacePathText.text

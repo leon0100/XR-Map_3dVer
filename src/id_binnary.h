@@ -179,26 +179,40 @@ protected:
 
 
 struct RawData {
+
+    #pragma pack(push, 1)
     struct RawDataHeader {
-        struct  __attribute__((packed)) {
-            uint16_t dataType : 5; //
-            uint16_t dataSize : 6; // +1 bytes
-            uint16_t dataTrigger : 2;
+        // struct  __attribute__((packed)) {
+        //     uint16_t dataType : 5; //
+        //     uint16_t dataSize : 6; // +1 bytes
+        //     uint16_t dataTrigger : 2;
+        //     uint16_t channelGroup : 3;
+        // };
+#pragma pack(push, 1)
+        struct BitFieldHeader {
+            uint16_t dataType     : 5;
+            uint16_t dataSize     : 6;
+            uint16_t dataTrigger  : 2;
             uint16_t channelGroup : 3;
         };
+#pragma pack(pop)
+
         uint8_t channelCount = 0;
         uint32_t globalOffset = 0;
         uint32_t localOffset = 0;
         float sampleRate = 0;
-    } __attribute__((packed));
+    // } __attribute__((packed));
+    };
+    #pragma pack(pop)
 
     RawDataHeader header;
     QByteArray data;
 
     uint32_t samplesPerChannel() {
-        return data.size()/(header.dataSize + 1)/header.channelCount;
+        // return data.size()/(header.dataSize + 1)/header.channelCount;
     }
 };
+
 
 
 class IDBinChart : public IDBin
@@ -756,7 +770,8 @@ class IDBinUpdate : public IDBin
 {
     Q_OBJECT
 public:
-    struct __attribute__((packed)) ID_UPGRADE_V0
+    // struct __attribute__((packed)) ID_UPGRADE_V0
+     struct ID_UPGRADE_V0
     {
        uint16_t lastNumMsg = 0;
        uint32_t lastOffset = 0;
@@ -845,7 +860,8 @@ public:
         double latitude = NAN;
         double longitude = NAN;
         float depth  = NAN;
-    } __attribute__((packed));
+    // } __attribute__((packed));
+    };
 
     double latitude() { return _nav.latitude; }
     double longitude() { return _nav.longitude; }
@@ -870,7 +886,8 @@ public:
     ID id() override { return ID_DVL_VEL; }
     Resp  parsePayload(FrameParser &proto) override;
 
-    struct __attribute__((packed)) BeamSolution
+    // struct __attribute__((packed)) BeamSolution
+    struct BeamSolution
     {
         uint8_t num;
         uint8_t flags;
@@ -884,7 +901,8 @@ public:
         int8_t difference[4];
     };
 
-    typedef struct  __attribute__((packed)) {
+    // typedef struct  __attribute__((packed)) {
+    struct DVLSolution {
         union {
             struct {
                 uint32_t xValid : 1;
@@ -905,34 +923,34 @@ public:
             uint32_t flags;
         };
 
-        struct {
+        struct solutionTime {
             uint32_t timestamp_ms;
             float deltaT;
             float latency;
-        } solutionTime  __attribute__((packed));
+        };
 
-        struct {
+        struct velocity {
             float x;
             float y;
             float z;
             float z1;
             float z2;
-        } velocity  __attribute__((packed));
+        };
 
-        struct {
+        struct uncertainty{
             float x;
             float y;
             float z;
             float z1;
             float z2;
-        } uncertainty  __attribute__((packed));
+        };
 
-        struct {
+        struct distance{
             float z;
             float z1;
             float z2;
-        } distance  __attribute__((packed));
-    } DVLSolution;
+        };
+    } ;
 
     float velX() { return vel_x; }
     float velY() { return vel_y; }
@@ -966,7 +984,8 @@ public:
     ID id() override { return ID_DVL_MODE; }
     Resp  parsePayload(FrameParser &proto) override;
 
-    struct __attribute__((packed)) DVLModeSetup
+    // struct __attribute__((packed)) DVLModeSetup
+    struct DVLModeSetup
     {
         uint8_t id = 0;
         uint8_t selection = 1; // 0 - not select, 1 - always
@@ -1030,7 +1049,7 @@ public:
 
         float beacon_n = NAN;
         float beacon_e = NAN;
-    } __attribute__((packed));
+    };
 
     struct USBLRequestBeacon {
         uint8_t id = 0; // 0 is promisc mode
@@ -1042,17 +1061,17 @@ public:
         float force_beacon_depth_m = NAN;
         float external_pitch = NAN;
         float external_roll = NAN;
-    }  __attribute__((packed));
+    };
 
     struct BeaconActivationResponce {
         uint8_t id = 0; // 0 is promisc mode
         uint8_t reserved = 0;
         uint16_t reserved1 = 0;
-    }  __attribute__((packed));
+    };
 
     struct BeaconActivate {
         float timeout_s = 2;
-    }  __attribute__((packed));
+    };
 
     UsblSolution usblSolution() {
         return _usblSolution;
@@ -1089,7 +1108,7 @@ public:
         uint32_t timeout_us = 0;
         // 1-8 are addresses, 0: promisc address, 0xFF: disabled address slot
         uint8_t address = 0;
-    } __attribute__((packed));
+    };
 
     // Regular addresses
     struct USBLPingAddresses {
@@ -1100,7 +1119,7 @@ public:
         uint8_t max_position = 1; // 1-8, 0 is reserved
         // 1-8 are addresses, 0: promisc address, 0xFF: disabled address slot
         uint8_t address[8] = {0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-    } __attribute__((packed));
+    };
 
     struct USBLResponseTimeout {
         static constexpr ID getId() { return ID_USBL_CONTROL; }
@@ -1109,7 +1128,7 @@ public:
         // 0xFFFFFFFF: response always enabled
         // otherwise: enable response for a certain time after setting the value
         uint32_t timeout_us = 0;
-    } __attribute__((packed));
+    };
 
     // Filter for incoming addresses
     struct USBLResponseAddressFilter {
@@ -1117,7 +1136,7 @@ public:
         static constexpr Version getVer() { return v4; }
         // 1-8 are addresses, 0: promisc address, 0xFF: disabled address slot
         uint8_t address = 0;
-    } __attribute__((packed));
+    };
 
     void pingRequest(uint32_t timeout_us, uint8_t address);
     void setResponseTimeout(uint32_t timeout_us);

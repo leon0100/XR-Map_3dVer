@@ -1,8 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import QtQuick.Dialogs
-import QtCore
+import QtQuick.Dialogs 1.3
+// import QtCore
+import Qt.labs.settings 1.1
+
 
 
 // settings3D extra settings
@@ -99,9 +101,9 @@ MenuFrame {
                 Scene3dToolBarController.onIsNorthLocationButtonChanged(checked)
             }
 
-            Settings {
-                property alias isNorthViewButton: isNorthViewButton.checked
-            }
+            // Settings {
+            //     property alias isNorthViewButton: isNorthViewButton.checked
+            // }
         }
 
         CheckButton {
@@ -126,9 +128,9 @@ MenuFrame {
                 Scene3dToolBarController.onBottomTrackVertexEditingModeButtonChecked(checked)
             }
 
-            Settings {
-                property alias selectionToolButton: selectionToolButton.checked
-            }
+            // Settings {
+            //     property alias selectionToolButton: selectionToolButton.checked
+            // }
         }
 
 
@@ -155,9 +157,9 @@ MenuFrame {
                 Scene3dToolBarController.onGridVisibilityCheckedChanged(checked)
             }
 
-            Settings {
-                property alias gridCheckButton: gridCheckButton.checked
-            }
+            // Settings {
+            //     property alias gridCheckButton: gridCheckButton.checked
+            // }
         }
 
         CheckButton {

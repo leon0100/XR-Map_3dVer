@@ -1,8 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
-import QtQuick.Dialogs
-import QtCore
+import QtQuick.Dialogs 1.3
+// import QtCore
+import Qt.labs.settings 1.1
+
 
 
 /*----- 左上角的工具栏的第一个按钮（连接connection）对应的界面 -----*/
@@ -767,8 +769,7 @@ ColumnLayout
                 FileDialog {
                     id: importTrackFileDialog
                     title: "Please choose a file"
-                    currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
-                    //                    fileMode: FileDialog.OpenFiles
+                    folder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
 
                     nameFilters: ["Logs (*.csv *.txt)"]
 
@@ -782,7 +783,7 @@ ColumnLayout
                     }
 
                     onAccepted: {
-                        importPathText.text = importTrackFileDialog.selectedFile.toString()
+                        importPathText.text = importTrackFileDialog.fileUrl.toString()
 
                         openCSV();
                     }
@@ -791,7 +792,7 @@ ColumnLayout
                 }
 
                 Settings {
-                    property alias importFolder: importTrackFileDialog.currentFolder
+                    property alias importFolder: importTrackFileDialog.folder
                 }
             }
         }
@@ -934,7 +935,7 @@ ColumnLayout
             FileDialog {
                 id: newFileDialog
                 title: qsTr("Please choose a file")
-                currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
+                // currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
 
                 nameFilters: ["Logs (*.klf *.KLF *.ubx *.UBX *.xtf *.XTF)", "Kogger log files (*.klf *.KLF)", "U-blox (*.ubx *.UBX)"]
 
@@ -955,9 +956,9 @@ ColumnLayout
                 }
             }
 
-            Settings {
-                property alias logFolder: newFileDialog.currentFolder
-            }
+            // Settings {
+            //     property alias logFolder: newFileDialog.currentFolder
+            // }
         }
 
         CheckButton {
@@ -974,7 +975,7 @@ ColumnLayout
             FileDialog {
                 id: appendFileDialog
                 title: qsTr("Please choose a file")
-                currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
+                // currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
 
                 nameFilters: ["Logs (*.klf *.KLF *.ubx *.UBX *.xtf *.XTF)", "Kogger log files (*.klf *.KLF)", "U-blox (*.ubx *.UBX)"]
 
@@ -990,9 +991,9 @@ ColumnLayout
                 }
             }
 
-            Settings {
-                property alias logFolder: appendFileDialog.currentFolder
-            }
+            // Settings {
+            //     property alias logFolder: appendFileDialog.currentFolder
+            // }
         }
 
         CheckButton {

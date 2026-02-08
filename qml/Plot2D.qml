@@ -1,8 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs
-import QtCore
+import QtQuick.Dialogs 1.3
+// import QtCore
+import Qt.labs.settings 1.1
+
 
 import WaterFall 1.0
 

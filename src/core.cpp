@@ -160,22 +160,22 @@ void Core::consoleProto(FrameParser &parser, bool isIn)
     QString str_dir;
     isIn ? str_dir = "-->> " : str_dir = "<<-- ";
 
-    try {
-        QString str_data = QByteArray((char*)parser.frame(), parser.frameLen()).toHex();
+    // try {
+    //     QString str_data = QByteArray((char*)parser.frame(), parser.frameLen()).toHex();
 
-        consoleInfo(
-            str_dir % "KG[" % QString::number(parser.route()) % "]: id "
-            % QString::number(parser.id())
-            % " v" % QString::number(parser.ver())
-            % ", " % str_mode
-            % ", len " % QString::number(parser.payloadLen())
-            % "; " % comment
-            % " [ " % str_data % " ]"
-            );
-    }
-    catch(std::bad_alloc& ex) {
-        qCritical().noquote() << __func__ << " --> " << ex.what();
-    }
+    //     consoleInfo(
+    //         str_dir % "KG[" % QString::number(parser.route()) % "]: id "
+    //         % QString::number(parser.id())
+    //         % " v" % QString::number(parser.ver())
+    //         % ", " % str_mode
+    //         % ", len " % QString::number(parser.payloadLen())
+    //         % "; " % comment
+    //         % " [ " % str_data % " ]"
+    //         );
+    // }
+    // catch(std::bad_alloc& ex) {
+    //     qCritical().noquote() << __func__ << " --> " << ex.what();
+    // }
 }
 
 
@@ -462,8 +462,13 @@ bool Core::openXTF(const QByteArray& data)
 bool Core::openCSV(QString name, int separatorType, int firstRow, int colTime,
                    bool isUtcTime, int colLat, int colLon, int colAltitude, int colNorth, int colEast, int colUp)
 {
-    qDebug() << "name:   " << name;
-    const QString& filePath = name;
+    QString& filePath = name;
+    if (filePath.startsWith("file:")) {
+        filePath = QUrl(filePath).toLocalFile();
+    }
+
+    qDebug() << "name:.............   " << name;
+
     bool isAppend = false;
     bool onCustomEvent = false;
     isFileOpening_ = true;

@@ -33,16 +33,16 @@ bool Plot2DDVLSolution::draw(Plot2D *parent, Dataset *dataset)
         int pool_index = cursor.getIndex(i);
         Epoch *data = dataset->fromIndex(pool_index);
 
-        if (data != NULL && data->isDVLSolutionAvail()) {
-            IDBinDVL::DVLSolution sol = data->dvlSolution();
-            velocityX[i] = sol.velocity.x;
-            velocityY[i] = sol.velocity.y;
-            velocityZ[i] = sol.velocity.z;
-            velocityA[i] = sqrt(sol.velocity.x * sol.velocity.x +
-                                sol.velocity.y * sol.velocity.y +
-                                sol.velocity.z * sol.velocity.z);
-            distance[i] = sol.distance.z;
-        }
+        // if (data != NULL && data->isDVLSolutionAvail()) {
+        //     IDBinDVL::DVLSolution sol = data->dvlSolution();
+        //     velocityX[i] = sol.velocity.x;
+        //     velocityY[i] = sol.velocity.y;
+        //     velocityZ[i] = sol.velocity.z;
+        //     velocityA[i] = sqrt(sol.velocity.x * sol.velocity.x +
+        //                         sol.velocity.y * sol.velocity.y +
+        //                         sol.velocity.z * sol.velocity.z);
+        //     distance[i] = sol.distance.z;
+        // }
     }
 
     drawY(canvas, velocityX, cursor.velocity.from, cursor.velocity.to,

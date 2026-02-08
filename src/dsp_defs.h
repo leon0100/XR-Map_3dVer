@@ -1,10 +1,15 @@
 #ifndef DSP_H
 #define DSP_H
 
-#include "stdint.h"
-#include "math.h"
+// #include "stdint.h"
+// #include "math.h"
 
-typedef struct __attribute__((packed)) Complex16 {
+#include <cstdint>
+#include <cmath>
+
+
+// typedef struct __attribute__((packed)) Complex16 {
+typedef struct Complex16 {
     Complex16() {
         real = 0;
         imag = 0;
@@ -85,6 +90,7 @@ struct ComplexF {
     }
 
 
-} __attribute__((packed));
+// } __attribute__((packed));
+};
 
 #endif // DSP_H

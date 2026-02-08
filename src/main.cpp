@@ -1,4 +1,11 @@
-#include <QGuiApplication>
+
+
+
+// #include <QGuiApplication>
+#include <QApplication>
+
+
+
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
 #include <QTranslator>
@@ -110,10 +117,10 @@ int main(int argc, char *argv[])
 
 #if defined(Q_OS_WIN)
     //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::Round);
+    QApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::Round);
 #endif
 
-    QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGLRhi);
+    // QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGLRhi);//QT6的新功能，QT5不需要
 
     QSurfaceFormat format;
 #if defined(Q_OS_ANDROID) || defined(LINUX_ES)
@@ -125,7 +132,7 @@ int main(int argc, char *argv[])
 
     QSurfaceFormat::setDefaultFormat(format);
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     //qDebug() << "Lib paths:" << QCoreApplication::libraryPaths();
     //qDebug() << "SQL drivers:" << QSqlDatabase::drivers();

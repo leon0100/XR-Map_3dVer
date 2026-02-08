@@ -1,6 +1,16 @@
 #include "screetShot.h"
 
 
+#include <QDebug>
+
+#include <QDateTime>
+#include <QDir>
+#include <QImage>
+#include <QPainter>
+#include <QStandardPaths>
+
+#include "map_view.h"
+#include "tile_google_provider.h"
 
 
 ScreetShot::ScreetShot(QObject *parent) : QObject{parent}
@@ -69,6 +79,11 @@ void ScreetShot::setScreetToolBar(bool screetToolBarShow)
 {
     screetToolBarShow_ = screetToolBarShow;
     emit screetToolBarShowChanged();
+}
+
+void ScreetShot::setMapView(const std::shared_ptr<MapView>& mapView)
+{
+    mapView_ = mapView;
 }
 
 
@@ -141,7 +156,102 @@ void ScreetShot::setCancelShot()
 
 void ScreetShot::saveScreetShot()
 {
+    auto mapView = mapView_.lock();
+    if (!mapView) {
+        qWarning() << "ScreetShot::saveScreetShot: mapView is null";
+        return;
+    }
 
+    const int zoom = currentMapLevel_;
+    if (zoom < 0) {
+        qWarning() << "ScreetShot::saveScreetShot: invalid zoom level" << zoom;
+        return;
+    }
+
+    double minLat = std::min({topLeftLati_, topRightLati_, bottomRightLati_});
+    double maxLat = std::max({topLeftLati_, topRightLati_, bottomRightLati_});
+    double minLon = std::min({topLeftLong_, topRightLong_, bottomRightLong_});
+    double maxLon = std::max({topLeftLong_, topRightLong_, bottomRightLong_});
+
+    map::TileGoogleProvider provider;
+    auto [lonStartTile, lonEndTile, boundaryTile] = provider.lonToTileXWithWrapAndBoundary(minLon, maxLon, zoom);
+    int yStart = provider.latToTileY(maxLat, zoom);
+    int yEnd = provider.latToTileY(minLat, zoom);
+
+    if (lonStartTile < 0 || lonEndTile < 0 || yStart < 0 || yEnd < 0) {
+        qWarning() << "ScreetShot::saveScreetShot: invalid tile indices";
+        return;
+    }
+
+    int minY = std::min(yStart, yEnd);
+    int maxY = std::max(yStart, yEnd);
+
+    QVector<int> xIndices;
+    if (boundaryTile == -1) {
+        for (int x = lonStartTile; x <= lonEndTile; ++x) {
+            xIndices.append(x);
+        }
+    } else {
+        for (int x = lonStartTile; x <= boundaryTile; ++x) {
+            xIndices.append(x);
+        }
+        for (int x = 0; x <= lonEndTile; ++x) {
+            xIndices.append(x);
+        }
+    }
+
+    if (xIndices.isEmpty() || minY > maxY) {
+        qWarning() << "ScreetShot::saveScreetShot: empty tile range";
+        return;
+    }
+
+    const int tileWidth = 256;
+    const int tileHeight = 256;
+    const int mosaicWidth = xIndices.size() * tileWidth;
+    const int mosaicHeight = (maxY - minY + 1) * tileHeight;
+
+    QImage mosaic(mosaicWidth, mosaicHeight, QImage::Format_RGB32);
+    mosaic.fill(QColor(0, 0, 0));
+
+    QPainter painter(&mosaic);
+
+    for (int y = minY; y <= maxY; ++y) {
+        for (int xi = 0; xi < xIndices.size(); ++xi) {
+            const int x = xIndices[xi];
+            map::TileIndex tileIndx(x, y, zoom, provider.getProviderId());
+
+            QImage tileImage;
+            QRect targetRect(xi * tileWidth, (y - minY) * tileHeight, tileWidth, tileHeight);
+            if (mapView->getTileImage(tileIndx, tileImage) && !tileImage.isNull()) {
+                painter.drawImage(targetRect, tileImage, tileImage.rect());
+            } else {
+                QImage placeholder(tileWidth, tileHeight, QImage::Format_RGB32);
+                placeholder.fill(QColor(30, 30, 30));
+                painter.drawImage(targetRect, placeholder, placeholder.rect());
+            }
+        }
+    }
+
+    painter.end();
+
+
+
+    QString baseDir = QCoreApplication::applicationDirPath();
+    QDir dir(baseDir);
+    dir.mkpath("screetTest");
+
+    QString filePath = dir.filePath(QString("screetTest/map_tiles_%1.png")
+                                        .arg(QDateTime::currentDateTime()
+                                                 .toString("yyyyMMdd_hhmmss")));
+
+    if (!mosaic.save(filePath)) {
+        qWarning() << "ScreetShot::saveScreetShot: failed to save" << filePath;
+        return;
+    }
+
+
+
+    qDebug() << "ScreetShot::saveScreetShot: saved" << filePath;
 }
 
 void ScreetShot::resizeMode(QRectF& rect, const QPoint pos)

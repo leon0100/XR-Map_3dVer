@@ -488,7 +488,8 @@ inline uint8_t getMAVLinkExtra(uint32_t msgid)
     return 0;
 }
 
-struct __attribute__((packed)) MAVLink_MSG_GLOBAL_POSITION_INT
+// struct __attribute__((packed)) MAVLink_MSG_GLOBAL_POSITION_INT
+struct MAVLink_MSG_GLOBAL_POSITION_INT
 {
     uint32_t time_boot_ms; // Timestamp (time since system boot), ms
     int32_t	lat; // Latitude, expressed, degE7
@@ -538,7 +539,8 @@ struct __attribute__((packed)) MAVLink_MSG_GLOBAL_POSITION_INT
 
 };
 
-struct __attribute__((packed)) MAVLink_MSG_GPS_RAW_INT
+// struct __attribute__((packed)) MAVLink_MSG_GPS_RAW_INT
+struct MAVLink_MSG_GPS_RAW_INT
 {
     uint64_t time_usec; // Timestamp (UNIX Epoch time or time since system boot).
 
@@ -575,7 +577,8 @@ struct __attribute__((packed)) MAVLink_MSG_GPS_RAW_INT
 
 };
 
-struct __attribute__((packed)) MAVLink_MSG_VFR_HUD
+// struct __attribute__((packed)) MAVLink_MSG_VFR_HUD
+struct MAVLink_MSG_VFR_HUD
 {
     float airspeed; // m/s
     float groundspeed; // m/s
@@ -585,7 +588,8 @@ struct __attribute__((packed)) MAVLink_MSG_VFR_HUD
     float climb; // m/s
 };
 
-struct __attribute__((packed)) MAVLink_MSG_HEARTBEAT
+// struct __attribute__((packed)) MAVLink_MSG_HEARTBEAT
+struct MAVLink_MSG_HEARTBEAT
 {
     enum class MAVLink_CustomMode {
         Manual = 0,
@@ -621,7 +625,8 @@ struct __attribute__((packed)) MAVLink_MSG_HEARTBEAT
     uint32_t customMode() { return custom_mode; }
 };
 
-struct __attribute__((packed)) MAVLink_MSG_SYS_STATUS
+// struct __attribute__((packed)) MAVLink_MSG_SYS_STATUS
+struct MAVLink_MSG_SYS_STATUS
 {
     uint32_t onboard_control_sensors_present; // MAV_SYS_STATUS_SENSOR	Bitmap showing which onboard controllers and sensors are present. Value of 0: not present. Value of 1: present.
     uint32_t onboard_control_sensors_enabled; // MAV_SYS_STATUS_SENSOR	Bitmap showing which onboard controllers and sensors are enabled: Value of 0: not enabled. Value of 1: enabled.
@@ -652,7 +657,8 @@ struct __attribute__((packed)) MAVLink_MSG_SYS_STATUS
     }
 };
 
-struct __attribute__((packed)) MAVLink_MSG_BATTERY_STATUS
+// struct __attribute__((packed)) MAVLink_MSG_BATTERY_STATUS
+struct MAVLink_MSG_BATTERY_STATUS
 {
     int32_t current_consumed; /*< [mAh] Consumed charge, -1: autopilot does not provide consumption estimate*/
     int32_t energy_consumed; /*< [hJ] Consumed energy, -1: autopilot does not provide energy consumption estimate*/
@@ -698,7 +704,8 @@ struct __attribute__((packed)) MAVLink_MSG_BATTERY_STATUS
 };
 
 
-struct __attribute__((packed)) MAVLink_MSG_ATTITUDE
+// struct __attribute__((packed)) MAVLink_MSG_ATTITUDE
+struct MAVLink_MSG_ATTITUDE
 {
  uint32_t time_boot_ms; /*< [ms] Timestamp (time since system boot).*/
  float roll; /*< [rad] Roll angle (-pi..+pi)*/

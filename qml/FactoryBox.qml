@@ -1,8 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs
-import QtCore
+import QtQuick.Dialogs 1.3
+// import QtCore
+import Qt.labs.settings 1.1
+
 
 
 DevSettingsBox {
@@ -12,7 +14,7 @@ DevSettingsBox {
         FileDialog {
             id: fileDialog
             title: qsTr("Please choose a file")
-            currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
+            // currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
             nameFilters: ["Upgrade files (*.bin)"]
             onAccepted: {
                 pathText.text = fileDialog.selectedFile.toString()
@@ -21,9 +23,9 @@ DevSettingsBox {
             }
         }
 
-        Settings {
-            property alias upgradeFolder: fileDialog.currentFolder
-        }
+        // Settings {
+        //     property alias upgradeFolder: fileDialog.currentFolder
+        // }
 
     //MenuBlock {
     //}

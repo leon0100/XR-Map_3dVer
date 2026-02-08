@@ -11,7 +11,7 @@ typedef int16_t XTFSHORT;
 typedef int32_t XTFINT;
 typedef int32_t XTFLONG;
 
-struct __attribute__((packed)) XTFCHANINFO
+struct XTFCHANINFO
 {
     XTFBYTE TypeOfChannel = 1; // SUBBOTTOM=0, PORT=1, STBD=2, BATHYMETRY=3
     XTFBYTE SubChannelNumber = 0; // Index for which CHANINFO structure this is.
@@ -36,7 +36,7 @@ struct __attribute__((packed)) XTFCHANINFO
     XTFCHAR ReservedArea2[53] = {};
 };
 
-struct __attribute__((packed)) XTFFILEHEADER
+struct  XTFFILEHEADER
 {
     XTFBYTE FileFormat = 123;
     XTFBYTE SystemType = 1;
@@ -79,7 +79,7 @@ struct __attribute__((packed)) XTFFILEHEADER
     XTFCHANINFO ChanInfo[6];
 };
 
-struct __attribute__((packed)) XTFPINGHEADER
+struct XTFPINGHEADER
 {
     XTFWORD MagicNumber = 0xFACE;
     XTFBYTE HeaderType = 0; // 0 = XTF_HEADER_SONAR (Sidescan data), 3 = XTF_HEADER_ATTITUDE (attitude packet)
@@ -167,7 +167,7 @@ struct __attribute__((packed)) XTFPINGHEADER
     XTFBYTE ReservedSpace2[6] = {};
 };
 
-struct __attribute__((packed)) XTFPINGCHANHEADER
+struct XTFPINGCHANHEADER
 {
     XTFWORD ChannelNumber = 0; // 0=port (low frequency), 1=stbd (low frequency), 2=port (high frequency), 3=stbd (high frequency)
     XTFWORD DownsampleMethod = 0; // 2 = MAX; 4 = RMS

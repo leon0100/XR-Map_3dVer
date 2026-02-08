@@ -3,8 +3,8 @@
 #include <QDebug>
 #include <QFile>
 
-#include <ft2build.h> // NOLINT
-#include FT_FREETYPE_H
+// #include <ft2build.h> // NOLINT
+// #include FT_FREETYPE_H
 
 
 TextRenderer& TextRenderer::instance()
@@ -325,83 +325,83 @@ void TextRenderer::initBuffers()
 
 void TextRenderer::initFont()
 {
-    m_chars.clear();
+//     m_chars.clear();
 
-    FT_Library ft;
-    FT_Face face;
+//     FT_Library ft;
+//     FT_Face face;
 
-    if (FT_Init_FreeType(&ft)){
-        qDebug().noquote() << "ERROR::FREETYPE: Could not init FreeType Library";
-        return;
-    }
+//     if (FT_Init_FreeType(&ft)){
+//         qDebug().noquote() << "ERROR::FREETYPE: Could not init FreeType Library";
+//         return;
+//     }
 
-    QString resourcePath  = ":/fonts/Roboto-VariableFont_wdth,wght.ttf";
+//     QString resourcePath  = ":/fonts/Roboto-VariableFont_wdth,wght.ttf";
 
-    QFile fontFile(resourcePath);
-    if (!fontFile.open(QIODevice::ReadOnly)) {
-        qDebug() << "ERROR::FREETYPE: Failed to open font file from resources:" << resourcePath;
-        return;
-    }
+//     QFile fontFile(resourcePath);
+//     if (!fontFile.open(QIODevice::ReadOnly)) {
+//         qDebug() << "ERROR::FREETYPE: Failed to open font file from resources:" << resourcePath;
+//         return;
+//     }
 
-    QByteArray fontData = fontFile.readAll();
-    fontFile.close();
+//     QByteArray fontData = fontFile.readAll();
+//     fontFile.close();
 
-    if (FT_New_Memory_Face(ft,
-                           reinterpret_cast<const FT_Byte*>(fontData.constData()),
-                           fontData.size(),
-                           0,
-                           &face))
-    {
-        qDebug().noquote() << "ERROR::FREETYPE: Failed to load font from memory";
-        return;
-    }
+//     if (FT_New_Memory_Face(ft,
+//                            reinterpret_cast<const FT_Byte*>(fontData.constData()),
+//                            fontData.size(),
+//                            0,
+//                            &face))
+//     {
+//         qDebug().noquote() << "ERROR::FREETYPE: Failed to load font from memory";
+//         return;
+//     }
 
-    FT_Set_Pixel_Sizes(face, 0, m_fontPixelSize);
+//     FT_Set_Pixel_Sizes(face, 0, m_fontPixelSize);
 
 
-    auto loadGlyphRange = [&](uint16_t start, uint16_t end) {
-        for (uint16_t c = start; c <= end; c++) {
-            if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
-                qDebug().noquote() << "ERROR::FREETYTPE: Failed to load Glyph for char code"
-                                   << QString("0x%1").arg(c, 0, 16);
-                continue;
-            }
+//     auto loadGlyphRange = [&](uint16_t start, uint16_t end) {
+//         for (uint16_t c = start; c <= end; c++) {
+//             if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
+//                 qDebug().noquote() << "ERROR::FREETYTPE: Failed to load Glyph for char code"
+//                                    << QString("0x%1").arg(c, 0, 16);
+//                 continue;
+//             }
 
-            QImage image((uchar*)face->glyph->bitmap.buffer,
-                         face->glyph->bitmap.width,
-                         face->glyph->bitmap.rows,
-                         face->glyph->bitmap.pitch,
-                         QImage::Format_Indexed8);
+//             QImage image((uchar*)face->glyph->bitmap.buffer,
+//                          face->glyph->bitmap.width,
+//                          face->glyph->bitmap.rows,
+//                          face->glyph->bitmap.pitch,
+//                          QImage::Format_Indexed8);
 
-            Character character;
-            character.num     = c;
-            character.size    = QVector2D(face->glyph->bitmap.width, face->glyph->bitmap.rows);
-            character.bearing = QVector2D(face->glyph->bitmap_left, face->glyph->bitmap_top);
-            character.advance = face->glyph->advance.x;
+//             Character character;
+//             character.num     = c;
+//             character.size    = QVector2D(face->glyph->bitmap.width, face->glyph->bitmap.rows);
+//             character.bearing = QVector2D(face->glyph->bitmap_left, face->glyph->bitmap_top);
+//             character.advance = face->glyph->advance.x;
 
-            if (!image.isNull()) {
-                auto texture = std::make_shared<QOpenGLTexture>(image, QOpenGLTexture::GenerateMipMaps);
-                texture->create();
-                texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-                texture->setMagnificationFilter(QOpenGLTexture::Linear);
-                texture->setWrapMode(QOpenGLTexture::ClampToEdge);
-                character.texture = texture;
-            } else {
-                // Для пробела и других невидимых символов оставляем texture = nullptr
-                character.texture = nullptr;
-            }
+//             if (!image.isNull()) {
+//                 auto texture = std::make_shared<QOpenGLTexture>(image, QOpenGLTexture::GenerateMipMaps);
+//                 texture->create();
+//                 texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+//                 texture->setMagnificationFilter(QOpenGLTexture::Linear);
+//                 texture->setWrapMode(QOpenGLTexture::ClampToEdge);
+//                 character.texture = texture;
+//             } else {
+//                 // Для пробела и других невидимых символов оставляем texture = nullptr
+//                 character.texture = nullptr;
+//             }
 
-            m_chars.insert(c, character);
-        }
-    };
+//             m_chars.insert(c, character);
+//         }
+//     };
 
-    // ASCII (English)
-    loadGlyphRange(0x0020, 0x007F);
-    // Polish
-    loadGlyphRange(0x00A0, 0x017F);
-    // Cyrillic (Russian)
-    loadGlyphRange(0x0400, 0x04FF);
+//     // ASCII (English)
+//     loadGlyphRange(0x0020, 0x007F);
+//     // Polish
+//     loadGlyphRange(0x00A0, 0x017F);
+//     // Cyrillic (Russian)
+//     loadGlyphRange(0x0400, 0x04FF);
 
-    FT_Done_Face(face);
-    FT_Done_FreeType(ft);
+//     FT_Done_Face(face);
+//     FT_Done_FreeType(ft);
 }

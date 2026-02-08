@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
-import QtQuick.Dialogs
+import QtQuick.Dialogs 1.3
 
 
 DevSettingsBox {
@@ -83,7 +83,7 @@ DevSettingsBox {
             FileDialog {
                 id: importFileDialog
                 title: qsTr("Open file")
-                fileMode: FileDialog.OpenFile
+                // fileMode: FileDialog.OpenFile
                 nameFilters: ["XML files (*.xml)"]
 
                 onAccepted: {
@@ -100,7 +100,7 @@ DevSettingsBox {
             FileDialog {
                 id: exportFileDialog
                 title: qsTr("Save as file")
-                fileMode: FileDialog.SaveFile
+                // fileMode: FileDialog.SaveFile
                 nameFilters: ["XML files (*.xml)"]
 
                 onAccepted: {

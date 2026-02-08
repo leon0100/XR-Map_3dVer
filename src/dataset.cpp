@@ -313,69 +313,69 @@ void Dataset::addChart(const ChannelId& channelId, const ChartParameters& chartP
 }
 
 void Dataset::rawDataRecieved(const ChannelId& channelId, RawData raw_data) {
-    RawData::RawDataHeader header = raw_data.header;
-    ComplexF* compelex_data = (ComplexF*)raw_data.data.data();
-    int16_t* real16_data = (int16_t*)raw_data.data.data();
-    int size = raw_data.samplesPerChannel();
+    // RawData::RawDataHeader header = raw_data.header;
+    // ComplexF* compelex_data = (ComplexF*)raw_data.data.data();
+    // int16_t* real16_data = (int16_t*)raw_data.data.data();
+    // int size = raw_data.samplesPerChannel();
 
-    Epoch* last_epoch = last();
-    if (!last_epoch) {
-        return;
-    }
-    ComplexSignals& compex_signals = last_epoch->complexSignals();
+    // Epoch* last_epoch = last();
+    // if (!last_epoch) {
+    //     return;
+    // }
+    // ComplexSignals& compex_signals = last_epoch->complexSignals();
 
-    ChannelId dev_id(channelId.uuid, header.channelGroup); // channelId.uuid
+    // ChannelId dev_id(channelId.uuid, header.channelGroup); // channelId.uuid
 
-    if(compex_signals[dev_id].contains(header.channelGroup)) {
-        float offset_m = 0;
-        float offset_db = 0;
-        offset_db = -20;
+    // if(compex_signals[dev_id].contains(header.channelGroup)) {
+    //     float offset_m = 0;
+    //     float offset_db = 0;
+    //     offset_db = -20;
 
-        Q_UNUSED(offset_m)
-        Q_UNUSED(offset_db)
+    //     Q_UNUSED(offset_m)
+    //     Q_UNUSED(offset_db)
 
-        // last_epoch->moveComplexToEchogram(offset_m, offset_db);
-        last_epoch = addNewEpoch();
-        compex_signals = last_epoch->complexSignals();
-    }
+    //     // last_epoch->moveComplexToEchogram(offset_m, offset_db);
+    //     last_epoch = addNewEpoch();
+    //     compex_signals = last_epoch->complexSignals();
+    // }
 
-    QVector<ComplexSignal>& channels = compex_signals[dev_id][header.channelGroup];
-    channels.resize(header.channelCount);
+    // QVector<ComplexSignal>& channels = compex_signals[dev_id][header.channelGroup];
+    // channels.resize(header.channelCount);
 
-    for(int ich = 0; ich < header.channelCount; ich++) {
-        ComplexSignal& signal = channels[ich]; //??
+    // for(int ich = 0; ich < header.channelCount; ich++) {
+    //     ComplexSignal& signal = channels[ich]; //??
 
-        signal.globalOffset = header.globalOffset;
-        signal.sampleRate = header.sampleRate;
-        signal.data.resize(size);
+    //     signal.globalOffset = header.globalOffset;
+    //     signal.sampleRate = header.sampleRate;
+    //     signal.data.resize(size);
 
-        ComplexF* signal_data = signal.data.data();
+    //     ComplexF* signal_data = signal.data.data();
 
-        if(header.dataType == 0) {
-            signal.isComplex = true;
+    //     if(header.dataType == 0) {
+    //         signal.isComplex = true;
 
-            for(int i  = 0; i < size; i++) {
-                signal_data[i] = compelex_data[i*header.channelCount + ich];
-            }
-        } else if(header.dataType == 1) {
-            signal.isComplex = false;
+    //         for(int i  = 0; i < size; i++) {
+    //             signal_data[i] = compelex_data[i*header.channelCount + ich];
+    //         }
+    //     } else if(header.dataType == 1) {
+    //         signal.isComplex = false;
 
-            for(int i  = 0; i < size; i++) {
-                signal_data[i] = ComplexF(real16_data[i*header.channelCount + ich], 0);
-            }
-        }
-    }
+    //         for(int i  = 0; i < size; i++) {
+    //             signal_data[i] = ComplexF(real16_data[i*header.channelCount + ich], 0);
+    //         }
+    //     }
+    // }
 
-    float offset_m = 0;
-    float offset_db = 0;
-    offset_db = -20;
-    last_epoch->moveComplexToEchogram(dev_id, header.channelGroup, offset_m, offset_db);
+    // float offset_m = 0;
+    // float offset_db = 0;
+    // offset_db = -20;
+    // last_epoch->moveComplexToEchogram(dev_id, header.channelGroup, offset_m, offset_db);
 
-    for(int ich = 0; ich < header.channelCount; ich++) {
-        validateChannelList(dev_id, ich);
-    }
+    // for(int ich = 0; ich < header.channelCount; ich++) {
+    //     validateChannelList(dev_id, ich);
+    // }
 
-    emit dataUpdate();
+    // emit dataUpdate();
 }
 
 void Dataset::addDist(const ChannelId& channelId, int dist)

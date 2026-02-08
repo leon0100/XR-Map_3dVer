@@ -1,5 +1,5 @@
 #include "map_view.h"
-
+#include <QObject>
 
 static inline bool toTightRGBA8888(const QImage& in, QByteArray& out, int& w, int& h)
 {
@@ -53,6 +53,8 @@ void MapView::clear()
     appendTasks_.clear();
     updateImageTasks_.clear();
 
+    tileImages_.clear();
+
     auto r = RENDER_IMPL(MapView);
     for (const auto& [tileIndx, tile] : r->tilesHash_) {
         deleteTasks_.append(tileIndx);
@@ -90,18 +92,33 @@ QVector<map::TileIndex> MapView::takeDeleteTileTasks()
     return tmp;
 }
 
+bool MapView::getTileImage(const map::TileIndex& tileIndx, QImage& out) const
+{
+    auto it = tileImages_.find(tileIndx);
+    if (it == tileImages_.end() || it->second.isNull()) {
+        return false;
+    }
+
+    out = it->second;
+    return true;
+}
+
+
 void MapView::onTileAppend(const map::Tile &tile)
 {
     auto r = RENDER_IMPL(MapView);
     auto tileIndx = tile.getIndex();
     r->tilesHash_.emplace(tileIndx, tile);
     appendTasks_[tileIndx] = tile.getImage();
+     tileImages_[tileIndx] = tile.getImage();
     Q_EMIT changed();
 }
 
 void MapView::onTileDelete(const map::TileIndex& tileIndx)
 {
     deleteTasks_.append(tileIndx);
+    tileImages_.erase(tileIndx);
+
 
     auto r = RENDER_IMPL(MapView);
     r->tilesHash_.erase(tileIndx); // CPU-часть можно убрать сразу
@@ -111,6 +128,8 @@ void MapView::onTileDelete(const map::TileIndex& tileIndx)
 void MapView::onTileImageUpdated(const map::TileIndex& tileIndx, const QImage& image)
 {
     updateImageTasks_[tileIndx] = image;
+    tileImages_[tileIndx] = image;
+
     Q_EMIT changed();
 }
 
@@ -135,6 +154,9 @@ void MapView::onClearAppendTasks()
         if (auto itSec = r->tilesHash_.find(it->first); itSec != r->tilesHash_.end()) {
             r->tilesHash_.erase(itSec->first);
         }
+
+        tileImages_.erase(it->first);
+
 
         emit deletedFromAppend(it->first);
     }

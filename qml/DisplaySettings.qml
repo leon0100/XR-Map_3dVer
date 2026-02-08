@@ -1,8 +1,11 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs
-import QtCore
+import QtQuick.Dialogs 1.3
+// import QtCore
+import Qt.labs.settings 1.1
+
+
 
 /*--- 左上角工具栏的第二个按钮（设置settints） ----*/
 GridLayout {
@@ -724,24 +727,24 @@ GridLayout {
                         onClicked: exportFileDialog.open()
                     }
 
-                    FolderDialog {
-                        id: exportFileDialog
-                        title: qsTr("Select folder for export")
+                    // FolderDialog {
+                    //     id: exportFileDialog
+                    //     title: qsTr("Select folder for export")
 
-                        currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
+                    //     currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
 
-                        onAccepted: {
-                            exportPathText.text = selectedFolder.toString()
-                        }
-                    }
+                    //     onAccepted: {
+                    //         exportPathText.text = selectedFolder.toString()
+                    //     }
+                    // }
 
-                    Settings {
-                        property alias exportFolder: exportFileDialog.currentFolder
-                    }
+                    // Settings {
+                    //     property alias exportFolder: exportFileDialog.currentFolder
+                    // }
 
-                    Settings {
-                        property alias exportFolderText: exportPathText.text
-                    }
+                    // Settings {
+                    //     property alias exportFolderText: exportPathText.text
+                    // }
                 }
 
                 RowLayout {

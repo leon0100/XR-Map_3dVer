@@ -1,7 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
-import QtCore
+// import QtCore
+import Qt.labs.settings 1.1
+
 
 
 //左上方的工具栏

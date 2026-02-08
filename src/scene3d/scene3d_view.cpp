@@ -51,6 +51,8 @@ GraphicsScene3dView::GraphicsScene3dView() :
 
     imageView_->setView(this);
 
+    screetShot_.setMapView(mapView_);
+
     QObject::connect(isobathsView_.get(), &IsobathsView::changed, this, &QQuickFramebufferObject::update);
     QObject::connect(surfaceView_.get(), &SurfaceView::changed, this, &QQuickFramebufferObject::update);
     QObject::connect(imageView_.get(), &ImageView::changed, this, &QQuickFramebufferObject::update);
@@ -241,21 +243,7 @@ void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal 
 {
     Q_UNUSED(keyboardKey)
 
-    // //当前点x,y的经纬度坐标
-    // auto toOrig = QVector3D(x, height() - y, -1.0f).unproject(m_camera->m_view * m_model, m_projection, boundingRect().toRect());
-    // auto toEnd  = QVector3D(x, height() - y,  1.0f).unproject(m_camera->m_view * m_model, m_projection, boundingRect().toRect());
-    // auto toDir = (toEnd - toOrig).normalized();
-    // auto to = calculateIntersectionPoint(toOrig, toDir, 0);
-    // NED ned;
-    // ned.n = to.y();
-    // ned.e = to.x();
-    // ned.d = 0;
-    // LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
-
-    // currentLat_ = lla.latitude;
-    // emit currentLatChanged();
-    // currentLon_ = lla.longitude;
-    // emit currentLonChanged();
+    //当前点x,y的经纬度坐标
     calculateLatLong(x, y, currentLat_, currentLon_);
     emit currentLatChanged();
     emit currentLonChanged();
@@ -658,9 +646,9 @@ void GraphicsScene3dView::forceUpdateDatasetLlaRef()
     QQuickFramebufferObject::update();
 }
 
-void GraphicsScene3dView::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
+void GraphicsScene3dView::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
-    QQuickFramebufferObject::geometryChange(newGeometry, oldGeometry);
+    QQuickFramebufferObject::geometryChanged(newGeometry, oldGeometry);
 
     if (newGeometry.size() != oldGeometry.size()) {
        updateProjection();

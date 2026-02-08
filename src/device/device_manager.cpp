@@ -3,6 +3,9 @@
 #include <QDateTime>
 #include "location_reader.h"
 #include "core.h"
+
+#include <QTimeZone>
+
 extern Core core;
 
 

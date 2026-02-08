@@ -44,7 +44,8 @@ public:
     } FragmentStatus;
 
     typedef struct {
-        uint32_t start, end;
+        uint32_t start;
+        uint32_t end;
         uint64_t timestamp;
         FragmentStatus status;
     } Fragment;
@@ -168,13 +169,13 @@ protected:
         }
 
         if (static_cast<uint32_t>(data.size()) < offset) {
-            Fragment new_fragment = {
-                .start = (uint32_t)data.size(),
-                .end = offset,
-                .timestamp = timestamp(),
-                .status = FragmentStatus::FragmentNew
-            };
-            gaps.append(new_fragment);
+            // Fragment new_fragment = {
+            //     .start     = static_cast<uint32_t>(data.size()),
+            //     .end = offset,
+            //     .timestamp = timestamp(),
+            //     .status = FragmentStatus::FragmentNew
+            // };
+            // gaps.append(new_fragment);
             stream->_counter._lostFragments++;
             debugAddGap(offset, offset - (uint32_t)data.size());
         }
@@ -196,14 +197,14 @@ protected:
                     } else {
                         gaps[i].end = offset - 1;
                         if(g_end >= end) {
-                            Fragment new_fragment = {
-                                .start = end + 1,
-                                .end = g_end,
-                                .timestamp = timestamp(),
-                                .status = FragmentStatus::FragmentNew
-                            };
+                            // Fragment new_fragment = {
+                            //     .start = end + 1,
+                            //     .end = g_end,
+                            //     .timestamp = timestamp(),
+                            //     .status = FragmentStatus::FragmentNew
+                            // };
 
-                            gaps.insert(i, new_fragment);
+                            // gaps.insert(i, new_fragment);
                             i+=1;
                         }
                     }
