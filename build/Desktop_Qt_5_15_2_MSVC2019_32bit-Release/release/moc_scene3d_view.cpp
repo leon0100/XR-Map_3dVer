@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsScene3dView_t {
-    QByteArrayData data[89];
-    char stringdata0[1203];
+    QByteArrayData data[90];
+    char stringdata0[1212];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -121,7 +121,8 @@ QT_MOC_LITERAL(84, 1153, 13), // "setScreenMode"
 QT_MOC_LITERAL(85, 1167, 8), // "isScreen"
 QT_MOC_LITERAL(86, 1176, 7), // "currLat"
 QT_MOC_LITERAL(87, 1184, 7), // "currLon"
-QT_MOC_LITERAL(88, 1192, 10) // "screetShot"
+QT_MOC_LITERAL(88, 1192, 10), // "screetShot"
+QT_MOC_LITERAL(89, 1203, 8) // "QWidget*"
 
     },
     "GraphicsScene3dView\0QML.Element\0"
@@ -157,7 +158,7 @@ QT_MOC_LITERAL(88, 1192, 10) // "screetShot"
     "keyPressTrigger\0key\0bottomTrackActionEvent\0"
     "BottomTrack::ActionEvent\0actionEvent\0"
     "setScreenMode\0isScreen\0currLat\0currLon\0"
-    "screetShot"
+    "screetShot\0QWidget*"
 };
 #undef QT_MOC_LITERAL
 
@@ -276,7 +277,7 @@ static const uint qt_meta_data_GraphicsScene3dView[] = {
  // properties: name, type, flags
       86, QMetaType::Double, 0x00495001,
       87, QMetaType::Double, 0x00495001,
-      88, QMetaType::QObjectStar, 0x00095401,
+      88, 0x80000000 | 89, 0x00095409,
 
  // properties: notify_signal_id
        4,
@@ -426,7 +427,14 @@ void GraphicsScene3dView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
                 return;
             }
         }
+    } else if (_c == QMetaObject::RegisterPropertyMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 2:
+            *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QWidget* >(); break;
+        }
     }
+
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty) {
         auto *_t = static_cast<GraphicsScene3dView *>(_o);
@@ -435,7 +443,7 @@ void GraphicsScene3dView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         switch (_id) {
         case 0: *reinterpret_cast< double*>(_v) = _t->getCurrLat(); break;
         case 1: *reinterpret_cast< double*>(_v) = _t->getCurrLon(); break;
-        case 2: *reinterpret_cast< QObject**>(_v) = _t->screetShot(); break;
+        case 2: *reinterpret_cast< QWidget**>(_v) = _t->screetShot(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {

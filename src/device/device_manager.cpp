@@ -686,11 +686,16 @@ void DeviceManager::setUSBLBeaconDirectAsk(bool is_ask) {
     isUSBLBeaconDirectAsk = is_ask;
     qDebug("Beacon auto scan is: %d", is_ask);
     if(is_ask == true) {
-        QObject::connect(&beacon_timer, &QTimer::timeout, this, &DeviceManager::beaconDirectQueueAsk);
-        beacon_timer.setInterval(3000);
-        beacon_timer.start();
+        if (!beacon_timer) {
+            beacon_timer = new QTimer(this);
+            QObject::connect(beacon_timer, &QTimer::timeout, this, &DeviceManager::beaconDirectQueueAsk);
+        }
+        beacon_timer->setInterval(3000);
+        beacon_timer->start();
     } else {
-        beacon_timer.stop();
+        if (beacon_timer) {
+            beacon_timer->stop();
+        }
     }
 }
 

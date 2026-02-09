@@ -36,6 +36,11 @@ TileDownloader::TileDownloader(std::weak_ptr<TileProvider> provider, int maxConc
 
 TileDownloader::~TileDownloader()
 {
+    if (networkCheckTimer_) {
+        networkCheckTimer_->stop();
+        delete networkCheckTimer_;
+        networkCheckTimer_ = nullptr;
+    }
     stopAndClearRequests();
 }
 

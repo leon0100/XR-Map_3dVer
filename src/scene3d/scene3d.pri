@@ -12,9 +12,12 @@ DEPENDPATH *= $$PWD
 HEADERS += \
     $$PWD/scene3d_renderer.h \
     $$PWD/scene3d_view.h \
-    $$PWD/screetShot.h
+    $$PWD/screetShot.h \
+    $$PWD/graphicscompute.h
+
 
 SOURCES += \
     $$PWD/scene3d_renderer.cpp \
     $$PWD/scene3d_view.cpp \
-    $$PWD/screetShot.cpp
+    $$PWD/screetShot.cpp \
+    $$PWD/graphicscompute.cpp

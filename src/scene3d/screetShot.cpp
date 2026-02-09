@@ -13,12 +13,14 @@
 #include "tile_google_provider.h"
 
 
-ScreetShot::ScreetShot(QObject *parent) : QObject{parent}
+/*----------------------------------------------ScreetShot---------------------------------------------*/
+ScreetShot::ScreetShot(QWidget *parent) : QWidget{parent}
 {
-
+    this->hide();
+    qDebug() << "ScreetShot created in thread:" << QThread::currentThread();
+    qDebug() << "Main thread:" << qApp->thread();
+    qDebug() << "QApplication exists:" << (qApp != nullptr);
 }
-
-
 
 QRectF ScreetShot::getSelectionRect() const
 {
@@ -28,11 +30,11 @@ void ScreetShot::setSelectionRect(const QRectF& rect)
 {
     shotRect_ = rect;
 
-    double topWidth = getDistance_Haversine(topLeftLong_, topLeftLati_, topRightLong_, topRightLati_);
-    double rightHeight = getDistance_Haversine(topRightLong_, topRightLati_, bottomRightLong_, bottomRightLati_);
+    topWidth_ = getDistance_Haversine(topLeftLong_, topLeftLati_, topRightLong_, topRightLati_);
+    rightHeight_ = getDistance_Haversine(topRightLong_, topRightLati_, bottomRightLong_, bottomRightLati_);
 
-    QString topWidthStr = getLengthChEn(topWidth);
-    QString rightHeightStr = getLengthChEn(rightHeight);
+    QString topWidthStr = getLengthChEn(topWidth_);
+    QString rightHeightStr = getLengthChEn(rightHeight_);
 
     setScreetWidth(topWidthStr);
     setScreetHeight(rightHeightStr);
@@ -154,17 +156,269 @@ void ScreetShot::setCancelShot()
 
 }
 
+void ScreetShot::getTitle(QRect rect, int level)
+{
+    QPoint tl = Bing::pixelXYToTileXY(rect.topLeft());
+    QPoint br = Bing::pixelXYToTileXY(rect.bottomRight());
+
+    quint64 value = 0;
+    ImageInfo info;
+    info.z = level;
+
+    int max = qPow(2, level);   // 最大瓦片编号
+    for (int x = tl.x(); x <= br.x(); x++)
+    {
+        if (x < 0)   continue;
+        if (x >= max)  break;
+        info.x = x;
+        for (int y = tl.y(); y <= br.y(); y++)
+        {
+            if (y < 0)   continue;
+            if (y >= max)  break;
+            value = ((quint64) level << 48) + (x << 24) + y;
+            if (!m_exist.contains(value))
+            {
+                info.y = y;
+                m_infos.append(info);
+            }
+        }
+    }
+}
+
+void ScreetShot::getUrl()
+{
+    for (int i = 0; i < m_infos.count(); i++)
+    {
+        if(m_url == GEOVISEARTH_MAP_CN) {
+            m_infos[i].url = m_url.arg(m_infos[i].z).arg(m_infos[i].x).arg(m_infos[i].y).arg(API_KEY_GEOVIS);
+        }else if(m_url == OPENSTREET_MAP_CN){
+            m_infos[i].url = m_url.arg(m_infos[i].z).arg(m_infos[i].x).arg(m_infos[i].y);
+        } else {
+            m_infos[i].url = m_url.arg(m_infos[i].x).arg(m_infos[i].y).arg(m_infos[i].z);
+        }
+    }
+}
+
+
+void ScreetShot::httpGetScreen(ImageInfo info)
+{
+    int retryCount = 0;
+    int tileTotalCnt = m_infos.count();
+    // qDebug() << "tileTotalCnt is " << tileTotalCnt;
+    interruptTile_ = false;
+    isScreenNetError_ = false;
+
+    while (retryCount < 5)
+    {
+        QNetworkAccessManager manager;
+        QNetworkRequest request;
+        request.setUrl(QUrl(info.url));
+        if(m_url == OPENSTREET_MAP_CN) {
+            request.setRawHeader("User-Agent", "XR-Map/1.10 (Contact: 2376963887@qq.com)");
+        }
+
+        QSharedPointer<QNetworkReply> reply(manager.get(request));
+        QEventLoop loop;
+        QObject::connect(reply.data(), &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        QTimer::singleShot(5000, &loop, &QEventLoop::quit);
+        loop.exec();
+
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray buf = reply->readAll();
+            if (!buf.isEmpty()) {
+                info.img.loadFromData(buf);
+                if (!info.img.isNull()) {
+                    // emit GetInterface::getInterface()->update(info);
+                    if (!m_itemGroup.contains(info.z))   // 如果图层不存在则添加
+                    {
+                        auto* item = new GraphItemGroup();
+                        m_itemGroup.insert(info.z, item);
+                        m_scene->addItem(item);
+                    }
+
+                    GraphItemGroup* itemGroup = m_itemGroup.value(info.z);
+                    if (itemGroup)
+                    {
+                        itemGroup->addImage(info);
+                    }
+
+                    m_screenTileCnt_++;
+                    // emit updateProgressText(m_screenTileCnt_,tileTotalCnt);
+                    return;
+                }
+
+            }
+
+        } else {
+            retryCount++;
+            //          qDebug() << "Retry:" << retryCount;
+        }
+    }
+
+    if(retryCount >= 5 && !isScreenNetError_) {
+        interruptTile_ = true;
+        isScreenNetError_ = true;
+
+        // emit showNetworkError();
+
+    }
+
+}
+
+void ScreetShot::slot_downloadScreenFinished()
+{
+    qDebug() << "watcher true 所有瓦片图像下载完成...." << m_completedDownloads_ << m_infos.count();
+    if(!interruptTile_) {
+        // emit signalDrawScreenTrue();
+        if(screenUserCancel_){
+            return;
+        }
+
+
+        GraphItemGroup* itemGroup = nullptr;
+        if (m_itemGroup.contains(currMapLevel_)) {
+            itemGroup = m_itemGroup.value(currMapLevel_);
+            itemGroup->show();
+        }
+        else {
+            itemGroup = new GraphItemGroup();
+            m_itemGroup.insert(currMapLevel_, itemGroup);
+            m_scene->addItem(itemGroup);
+        }
+
+
+
+        // 裁剪到框选区域
+        QPoint tlTile = Bing::pixelXYToTileXY(targetRect_.topLeft());
+
+        QRect cropRect(
+            targetRect_.x() - tlTile.x() * 256,
+            targetRect_.y() - tlTile.y() * 256,
+            targetRect_.width(),
+            targetRect_.height()
+            );
+        QImage finalImage = bigImage_.copy(cropRect);
+
+
+
+
+        QString baseDir = QCoreApplication::applicationDirPath();
+        QDir dir(baseDir);
+        dir.mkpath("screetTest");
+        dir.cd("screetTest");
+        if(!dir.exists()) {
+            if (!dir.mkpath(".")) {
+            }
+        }
+
+        QString bigFile = baseDir + "mosaic.png";
+        finalImage.save(bigFile);
+
+        qDebug() << "Big mosaic saved:" << bigFile;
+
+        // 保存到成员变量
+        bigImage_ = finalImage;
+
+        qDebug() << "bigImage_ size =" << bigImage_.size();
+        qDebug() << "bigImage_ rect =" << bigImage_.rect();
+        qDebug() << "cropRect =" << cropRect;
+        qDebug() << "finalImage size =" << finalImage.size();
+
+
+
+        // QImage image(targetRect_.size(),QImage::Format_RGB16);
+        // if (image.isNull()) {
+        //     qWarning() << "Failed to create QImage. Aborting rendering.";
+        //     return;
+        // }
+
+        // {
+        //     QPainter painter(&image);
+        //     m_scene->render(&painter, QRectF(0, 0, targetRect_.width(), targetRect_.height()), targetRect_);
+        // }
+        // image.save(bigFile);
+        // return;
+
+
+
+
+
+
+
+        // 划分 targetRect_ 为小正方形
+        double pixel1m = targetRect_.width() / topWidth_;
+        //   qDebug() << mapLevel << "级下， 1米的像素值: " << pixel1m << " " << targetRect_.height()/rightLen_;
+        pixel300m_ = pixel1m*300;
+        int rows = targetRect_.height() / pixel300m_;
+        int cols = targetRect_.width()  / pixel300m_;
+
+        int kmzCount = rows*cols;
+
+        // objScreenProgress_->setProperty("infoText", tr("      XMAP Generating..."));
+        // objScreenProgress_->setProperty("maxValue",kmzCount);
+        // qmlScreenProgress_->show();
+        // qmlScreenProgress_->raise();
+
+        for (int row = 0; row < rows; ++row)
+        {
+            for (int col = 0; col < cols; ++col)
+            {
+                // if(screenUserCancel_) {
+                //     generatedRectCount_ = kmzCount;
+                //     break;
+                // }
+                QPointF topLeft(targetRect_.x()+col * pixel300m_, targetRect_.y()+row * pixel300m_);
+                QPointF bottomRight(targetRect_.x()+(col+1) * pixel300m_, targetRect_.y()+(row+1) * pixel300m_);
+                QRectF  square(topLeft, bottomRight);
+
+                //          qDebug() << "Square:" << square.topLeft() << "->" << square.bottomRight();
+                double topLeftLon,topLeftLati,btmRightLon,btmRightLati;
+                Bing::pixelXYToLatLong(square.topLeft().toPoint(),currMapLevel_,topLeftLon,topLeftLati);
+                Bing::pixelXYToLatLong(square.bottomRight().toPoint(),currMapLevel_,btmRightLon,btmRightLati);
+                // if(isAmapSource_) {
+                //     Mars2Wgs(topLeftLon,topLeftLati,&topLeftLon,&topLeftLati);
+                //     Mars2Wgs(btmRightLon,btmRightLati,&btmRightLon,&btmRightLati);
+                // }
+
+                QString rowStr = QString::number(row + 1);
+                QString colStr = QString::number(col + 1);
+                QString kmzDir = baseDir + "/";
+                QString imagPathName = kmzDir + rowStr + "_" + colStr + ".png";
+                QString fileName = kmzDir + rowStr + "_" + colStr +".kml";
+                QString imageName = rowStr + "_" + colStr + ".png";
+                bool createKMl = createKmlFile(fileName,imageName,topLeftLati, btmRightLati,btmRightLon, topLeftLon);
+                if(!createKMl) {
+                    qDebug() << "createKMl failed";
+                    return;
+                }
+
+                QImage image(square.toRect().size(),QImage::Format_RGB16);
+                if (image.isNull()) {
+                    qWarning() << "Failed to create QImage. Aborting rendering.";
+                    return;
+                }
+
+                {
+                    QPainter painter(&image);
+                    m_scene->render(&painter, QRectF(0, 0, square.width(), square.height()), square);
+                }
+                image.save(imagPathName);
+                QString tmpFileName = fileName;
+                QString fileNameXmap = tmpFileName.replace("kml","xmap");
+                createXMAPFile(fileName,imagPathName,fileNameXmap);
+
+            }
+        }
+
+
+    }
+}
+
+
 void ScreetShot::saveScreetShot()
 {
     auto mapView = mapView_.lock();
     if (!mapView) {
-        qWarning() << "ScreetShot::saveScreetShot: mapView is null";
-        return;
-    }
-
-    const int zoom = currentMapLevel_;
-    if (zoom < 0) {
-        qWarning() << "ScreetShot::saveScreetShot: invalid zoom level" << zoom;
         return;
     }
 
@@ -174,84 +428,158 @@ void ScreetShot::saveScreetShot()
     double maxLon = std::max({topLeftLong_, topRightLong_, bottomRightLong_});
 
     map::TileGoogleProvider provider;
-    auto [lonStartTile, lonEndTile, boundaryTile] = provider.lonToTileXWithWrapAndBoundary(minLon, maxLon, zoom);
-    int yStart = provider.latToTileY(maxLat, zoom);
-    int yEnd = provider.latToTileY(minLat, zoom);
-
-    if (lonStartTile < 0 || lonEndTile < 0 || yStart < 0 || yEnd < 0) {
-        qWarning() << "ScreetShot::saveScreetShot: invalid tile indices";
-        return;
-    }
-
-    int minY = std::min(yStart, yEnd);
-    int maxY = std::max(yStart, yEnd);
+    auto [lonStartTile, lonEndTile, boundaryTile] = provider.lonToTileXWithWrapAndBoundary(minLon, maxLon, currMapLevel_);
+    int yStart = provider.latToTileY(maxLat, currMapLevel_);
+    int yEnd   = provider.latToTileY(minLat, currMapLevel_);
+    int minY   = std::min(yStart, yEnd);
+    int maxY   = std::max(yStart, yEnd);
 
     QVector<int> xIndices;
     if (boundaryTile == -1) {
         for (int x = lonStartTile; x <= lonEndTile; ++x) {
             xIndices.append(x);
         }
-    } else {
-        for (int x = lonStartTile; x <= boundaryTile; ++x) {
-            xIndices.append(x);
-        }
+    }
+    else {
         for (int x = 0; x <= lonEndTile; ++x) {
             xIndices.append(x);
         }
-    }
-
-    if (xIndices.isEmpty() || minY > maxY) {
-        qWarning() << "ScreetShot::saveScreetShot: empty tile range";
-        return;
-    }
-
-    const int tileWidth = 256;
-    const int tileHeight = 256;
-    const int mosaicWidth = xIndices.size() * tileWidth;
-    const int mosaicHeight = (maxY - minY + 1) * tileHeight;
-
-    QImage mosaic(mosaicWidth, mosaicHeight, QImage::Format_RGB32);
-    mosaic.fill(QColor(0, 0, 0));
-
-    QPainter painter(&mosaic);
-
-    for (int y = minY; y <= maxY; ++y) {
-        for (int xi = 0; xi < xIndices.size(); ++xi) {
-            const int x = xIndices[xi];
-            map::TileIndex tileIndx(x, y, zoom, provider.getProviderId());
-
-            QImage tileImage;
-            QRect targetRect(xi * tileWidth, (y - minY) * tileHeight, tileWidth, tileHeight);
-            if (mapView->getTileImage(tileIndx, tileImage) && !tileImage.isNull()) {
-                painter.drawImage(targetRect, tileImage, tileImage.rect());
-            } else {
-                QImage placeholder(tileWidth, tileHeight, QImage::Format_RGB32);
-                placeholder.fill(QColor(30, 30, 30));
-                painter.drawImage(targetRect, placeholder, placeholder.rect());
-            }
+        for (int x = lonStartTile; x <= boundaryTile; ++x) {
+            xIndices.append(x);
         }
     }
 
-    painter.end();
+
+    qDebug() << "currMapLevel_ =" << currMapLevel_;
+    qDebug() << "Lat range =" << minLat << "~" << maxLat;
+    qDebug() << "Lon range =" << minLon << "~" << maxLon;
+
+    qDebug() << "lonStartTile =" << lonStartTile << "lonEndTile =" << lonEndTile
+             << "boundaryTile =" << boundaryTile;
+    qDebug() << "yStart =" << yStart << "yEnd =" << yEnd;
+    qDebug() << "minY =" << minY << "maxY =" << maxY;
+
+    map::TileIndex firstTileIndx(xIndices[0], minY, currMapLevel_, provider.getProviderId());
+    auto firstTileInfo = provider.indexToTileInfo(firstTileIndx);
+    map::TileIndex lastTileIndx(xIndices.last(), maxY, currMapLevel_, provider.getProviderId());
+    auto lastTileInfo = provider.indexToTileInfo(lastTileIndx);
+    double tileMinLat = lastTileInfo.bounds.south;
+    double tileMaxLat = firstTileInfo.bounds.north;
+    double tileMinLon = firstTileInfo.bounds.west;
+    double tileMaxLon = lastTileInfo.bounds.east;
+    qDebug() << "Tile coverage Lat: [" << tileMinLat << "," << tileMaxLat << "]";
+    qDebug() << "Tile coverage Lon: [" << tileMinLon << "," << tileMaxLon << "]";
 
 
+/*--------------------------------------------------------------------------------*/
+    int w = int(qPow(2, currMapLevel_)*256);
+    targetRect_ = QRect(0, 0, w, w);
+    QPoint topLeft = Bing::latLongToPixelXY(minLon, maxLat, currMapLevel_);
+    QPoint bottomRight = Bing::latLongToPixelXY(maxLon, minLat, currMapLevel_);
+    targetRect_.setTopLeft(topLeft);
+    targetRect_.setBottomRight(bottomRight);
 
-    QString baseDir = QCoreApplication::applicationDirPath();
-    QDir dir(baseDir);
-    dir.mkpath("screetTest");
-
-    QString filePath = dir.filePath(QString("screetTest/map_tiles_%1.png")
-                                        .arg(QDateTime::currentDateTime()
-                                                 .toString("yyyyMMdd_hhmmss")));
-
-    if (!mosaic.save(filePath)) {
-        qWarning() << "ScreetShot::saveScreetShot: failed to save" << filePath;
-        return;
+    if(m_scene == nullptr) {
+        m_scene = new QGraphicsScene();
+        // this->setSce
     }
+    qDebug() << "scene thread =" << m_scene->thread();
+    qDebug() << "current thread =" << QThread::currentThread();
+
+    m_scene->setSceneRect(targetRect_);
+    if(targetRect_.isEmpty() || currMapLevel_ > 22 || currMapLevel_ < 0)  return;
+
+    if (m_future.isRunning()) {
+        m_future.cancel();
+    }
+    m_infos.clear();
+    getTitle(targetRect_, currMapLevel_);
+    getUrl();
+
+
+    isScreenNetError_ = false;
+    m_screenTileCnt_ = 0;
+
+    // 创建 QFutureWatcher 来监控并发任务
+    QFutureWatcher<void> *watcher = new QFutureWatcher<void>(this);
+    connect(watcher, &QFutureWatcher<void>::finished, this, &ScreetShot::slot_downloadScreenFinished);
+    auto f = [this](ImageInfo& info) {
+        this->httpGetScreen(info);
+    };
+    m_future = QtConcurrent::map(m_infos,f);
+    watcher->setFuture(m_future);
 
 
 
-    qDebug() << "ScreetShot::saveScreetShot: saved" << filePath;
+    return;
+/*----------------------------------------------------------------------------------*/
+
+
+
+
+    // const int mosaicWidth = xIndices.size() * MAP_TIlE_SIZE;
+    // const int mosaicHeight = (maxY - minY + 1) * MAP_TIlE_SIZE;
+    // qDebug() << "Tile count:" << xIndices.size() << "x" << (maxY - minY + 1) << "=" << (xIndices.size() * (maxY - minY + 1));
+    // qDebug() << "Mosaic size:" << mosaicWidth << "x" << mosaicHeight;
+
+    // QImage mosaic(mosaicWidth, mosaicHeight, QImage::Format_RGB32);
+    // mosaic.fill(QColor(0, 0, 0));
+    // QPainter painter(&mosaic);
+
+    // for (int y = minY; y <= maxY; ++y) {
+    //     for (int xi = 0; xi < xIndices.size(); ++xi) {
+    //         const int x = xIndices[xi];
+    //         map::TileIndex tileIndx(x, y, currMapLevel_, provider.getProviderId());
+
+    //         QImage tileImage;
+    //         QRect targetRect(xi * MAP_TIlE_SIZE, (y - minY) * MAP_TIlE_SIZE, MAP_TIlE_SIZE, MAP_TIlE_SIZE);
+
+    //         if (mapView->getTileImage(tileIndx, tileImage) && !tileImage.isNull()) {
+    //             QTransform trans;
+    //             trans.rotate(-90);
+    //             QImage rotatedImage = tileImage.transformed(trans);
+
+    //             painter.drawImage(targetRect, rotatedImage, rotatedImage.rect());
+    //         } else {
+    //             QImage placeholder(MAP_TIlE_SIZE, MAP_TIlE_SIZE, QImage::Format_RGB32);
+    //             placeholder.fill(QColor(30, 30, 30));
+    //             painter.drawImage(targetRect, placeholder, placeholder.rect());
+    //         }
+    //     }
+    // }
+
+    // painter.end();
+
+
+    // double latPerPixel = (tileMaxLat - tileMinLat) / mosaicHeight;
+    // double lonPerPixel = (tileMaxLon - tileMinLon) / mosaicWidth;
+    // qDebug() << "Lat per pixel:" << latPerPixel << "Lon per pixel:" << lonPerPixel;
+
+    // int cropTop = static_cast<int>((tileMaxLat - maxLat) / latPerPixel);
+    // int cropBottom = static_cast<int>((minLat - tileMinLat) / latPerPixel);
+    // int cropLeft = static_cast<int>((minLon - tileMinLon) / lonPerPixel);
+    // int cropRight = static_cast<int>((tileMaxLon - maxLon) / lonPerPixel);
+    // qDebug() << "Crop: top=" << cropTop << ", bottom=" << cropBottom << ", left=" << cropLeft << ", right=" << cropRight;
+
+    // QRect cropRect(cropLeft, cropTop, mosaicWidth - cropLeft - cropRight, mosaicHeight - cropTop - cropBottom);
+    // qDebug() << "Crop rect:" << cropRect;
+
+    // // QImage croppedMosaic = mosaic.copy(cropRect);
+    // QImage croppedMosaic = mosaic;
+    // qDebug() << "Cropped mosaic size:" << croppedMosaic.width() << "x" << croppedMosaic.height();
+
+    // QString baseDir = QCoreApplication::applicationDirPath();
+    // QDir dir(baseDir);
+    // dir.mkpath("screetTest");
+    // dir.cd("screetTest");
+
+    // QString fileName = QString("map_tiles_%1.png").arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss"));
+    // QString filePath = dir.filePath(fileName);
+
+    // qDebug() << "Saving cropped mosaic to:" << filePath;
+    // if (croppedMosaic.save(filePath)) {
+    //     qDebug() << "ScreetShot::saveScreetShot: saved" << filePath;
+    // }
 }
 
 void ScreetShot::resizeMode(QRectF& rect, const QPoint pos)
@@ -421,3 +749,100 @@ QString ScreetShot::getLengthChEn(double distance,int decimalPlaces)
     return distanceStr;
 }
 
+
+
+bool ScreetShot::createKmlFile(QString kmlPath,QString imageName,double north,double south,double east,double west)
+{
+    QFile file(kmlPath);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        qDebug() << QString("Cannot write file %1.").arg(file.errorString());
+        return false;
+    }
+
+    QXmlStreamWriter writer(&file);
+    writer.setCodec("UTF-8");
+    writer.setAutoFormatting(true);
+    writer.writeStartDocument("1.0", true);
+
+    writer.writeStartElement("kml");
+    writer.writeAttribute("xmlns", "http://www.opengis.net/kml/2.2");
+
+    writer.writeStartElement("Document");
+    writer.writeAttribute("id", "root_doc");
+
+    writer.writeStartElement("GroundOverlay");
+    writer.writeTextElement("name", "Shaded Relief");
+
+    writer.writeStartElement("Icon");
+    writer.writeTextElement("href", imageName);
+    writer.writeEndElement(); // Icon
+
+    writer.writeStartElement("LatLonBox");
+    writer.writeTextElement("north", QString::number(north, 'f', 14));
+    writer.writeTextElement("south", QString::number(south, 'f', 14));
+    writer.writeTextElement("east", QString::number(east, 'f', 14));
+    writer.writeTextElement("west", QString::number(west, 'f', 14));
+    writer.writeEndElement(); // LatLonBox
+
+    writer.writeEndElement(); // GroundOverlay
+
+    writer.writeEndElement(); // Document
+    writer.writeEndElement(); // kml
+
+    writer.writeEndDocument();
+    file.close();
+
+    return true;
+}
+
+
+
+bool ScreetShot::createXMAPFile(const QString kmlFilePath, const QString imageFilePath, QString &outputXMAPPath)
+{
+    QFile kmlFile(kmlFilePath);
+    if (!kmlFile.exists()) {
+        qDebug() << "KML file does not exist.";
+        return false;
+    }
+    QFile imageFile(imageFilePath);
+    if (!imageFile.exists()) {
+        qDebug() << "Image file does not exist.";
+        return false;
+    }
+
+    // 1、打开KML文件并读取内容
+    if (!kmlFile.open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open KML file.";
+        return false;
+    }
+    QByteArray kmlData = kmlFile.readAll();
+    if(!kmlFile.remove()) {
+        qDebug() << "kmlFile remove failed";
+        return false;
+    }
+
+    // 2、打开图片文件并读取内容
+    if (!imageFile.open(QIODevice::ReadOnly)) {
+        qDebug() << "Failed to open image file.";
+        return false;
+    }
+    QByteArray imageData = imageFile.readAll();
+    if(!imageFile.remove()) {
+        qDebug() << "Failed to delete image file.";
+        return false;
+    }
+
+    //3、创建KMZ文件
+    outputXMAPPath.replace(".xmap",".kmz");
+    QZipWriter kmzWriter(outputXMAPPath);
+    kmzWriter.addFile("doc.kml", kmlData);
+    QString imageFileName1 = QFileInfo(imageFilePath).fileName();
+    kmzWriter.addFile(imageFileName1, imageData);
+    kmzWriter.close();
+    if (kmzWriter.status() != QZipWriter::NoError) {
+        qDebug() << "Failed to create KMZ file.";
+        return false;
+    }
+
+    return true;
+}

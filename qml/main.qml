@@ -7,7 +7,6 @@ import QtQuick.Controls 2.15
 import WaterFall 1.0
 import KoggerCommon 1.0
 import BottomTrack 1.0
-// import QtCore
 import Qt.labs.settings 1.1
 
 
@@ -503,7 +502,6 @@ ApplicationWindow  {
         GridLayout {
             id:                   visualisationLayout
             SplitView.fillHeight: true
-            // anchors.fill: parent
             Layout.fillHeight: true
             Layout.fillWidth:  true
             rowSpacing: 0
@@ -528,6 +526,7 @@ ApplicationWindow  {
                 Layout.fillHeight: true
                 Layout.fillWidth:  true
                 focus:             true
+
 
                 ScreetRect {
 

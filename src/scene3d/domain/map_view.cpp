@@ -94,11 +94,42 @@ QVector<map::TileIndex> MapView::takeDeleteTileTasks()
 
 bool MapView::getTileImage(const map::TileIndex& tileIndx, QImage& out) const
 {
+    qDebug().noquote()
+        << QString("[MapView::getTileImage] Looking for TileIndex(x=%1,y=%2,z=%3,provider=%4) hash=%5, total tiles=%6")
+               .arg(tileIndx.x_)
+               .arg(tileIndx.y_)
+               .arg(tileIndx.z_)
+               .arg(tileIndx.providerId_)
+               .arg(std::hash<map::TileIndex>()(tileIndx))
+               .arg(tileImages_.size());
+
     auto it = tileImages_.find(tileIndx);
     if (it == tileImages_.end() || it->second.isNull()) {
+        qDebug() << "[MapView::getTileImage] Tile NOT FOUND or is NULL";
+
+        qDebug() << "[MapView::getTileImage] Stored tiles in MapView:";
+        int count = 0;
+        for (const auto& [idx, img] : tileImages_) {
+            if (count < 10) {
+                qDebug().noquote()
+                    << QString("  [%1] TileIndex(x=%2,y=%3,z=%4,provider=%5) hash=%6")
+                           .arg(count)
+                           .arg(idx.x_)
+                           .arg(idx.y_)
+                           .arg(idx.z_)
+                           .arg(idx.providerId_)
+                           .arg(std::hash<map::TileIndex>()(idx));
+                count++;
+            }
+        }
+        if (tileImages_.size() > 10) {
+            qDebug() << "  ... and" << (tileImages_.size() - 10) << "more tiles";
+        }
+
         return false;
     }
 
+    qDebug() << "[MapView::getTileImage] Tile FOUND, size:" << it->second.size();
     out = it->second;
     return true;
 }

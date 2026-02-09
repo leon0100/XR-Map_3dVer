@@ -177,7 +177,7 @@ private:
 #endif
 
     bool isUSBLBeaconDirectAsk = false;
-    QTimer beacon_timer;
+    QTimer* beacon_timer = nullptr;
     QUuid upgradeUuid_;
     uint8_t upgradeAddr_;
     QByteArray upgradeData_;

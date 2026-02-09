@@ -1,4 +1,4 @@
-QT += core gui quick widgets network qml sql concurrent positioning quickcontrols2
+QT += core gui quick widgets quickwidgets network gui-private qml sql concurrent positioning quickcontrols2
 
 CONFIG += c++17
 #CONFIG += FLASHER

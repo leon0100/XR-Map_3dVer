@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ScreetShot_t {
-    QByteArrayData data[16];
-    char stringdata0[264];
+    QByteArrayData data[17];
+    char stringdata0[292];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,20 +40,22 @@ QT_MOC_LITERAL(4, 61, 18), // "screetWidthChanged"
 QT_MOC_LITERAL(5, 80, 19), // "screetHeightChanged"
 QT_MOC_LITERAL(6, 100, 24), // "screetToolBarShowChanged"
 QT_MOC_LITERAL(7, 125, 16), // "cancelScreetShot"
-QT_MOC_LITERAL(8, 142, 16), // "setToArrowCursor"
-QT_MOC_LITERAL(9, 159, 13), // "setCancelShot"
-QT_MOC_LITERAL(10, 173, 14), // "saveScreetShot"
-QT_MOC_LITERAL(11, 188, 13), // "selectionRect"
-QT_MOC_LITERAL(12, 202, 22), // "isSelectionRectVisible"
-QT_MOC_LITERAL(13, 225, 11), // "screetWidth"
-QT_MOC_LITERAL(14, 237, 12), // "screetHeight"
-QT_MOC_LITERAL(15, 250, 13) // "screetToolBar"
+QT_MOC_LITERAL(8, 142, 27), // "slot_downloadScreenFinished"
+QT_MOC_LITERAL(9, 170, 16), // "setToArrowCursor"
+QT_MOC_LITERAL(10, 187, 13), // "setCancelShot"
+QT_MOC_LITERAL(11, 201, 14), // "saveScreetShot"
+QT_MOC_LITERAL(12, 216, 13), // "selectionRect"
+QT_MOC_LITERAL(13, 230, 22), // "isSelectionRectVisible"
+QT_MOC_LITERAL(14, 253, 11), // "screetWidth"
+QT_MOC_LITERAL(15, 265, 12), // "screetHeight"
+QT_MOC_LITERAL(16, 278, 13) // "screetToolBar"
 
     },
     "ScreetShot\0selectionRectChanged\0\0"
     "selectionRectVisibleChanged\0"
     "screetWidthChanged\0screetHeightChanged\0"
     "screetToolBarShowChanged\0cancelScreetShot\0"
+    "slot_downloadScreenFinished\0"
     "setToArrowCursor\0setCancelShot\0"
     "saveScreetShot\0selectionRect\0"
     "isSelectionRectVisible\0screetWidth\0"
@@ -67,25 +69,28 @@ static const uint qt_meta_data_ScreetShot[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
-       5,   68, // properties
+      10,   14, // methods
+       5,   74, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x06 /* Public */,
-       3,    0,   60,    2, 0x06 /* Public */,
-       4,    0,   61,    2, 0x06 /* Public */,
-       5,    0,   62,    2, 0x06 /* Public */,
-       6,    0,   63,    2, 0x06 /* Public */,
-       7,    0,   64,    2, 0x06 /* Public */,
+       1,    0,   64,    2, 0x06 /* Public */,
+       3,    0,   65,    2, 0x06 /* Public */,
+       4,    0,   66,    2, 0x06 /* Public */,
+       5,    0,   67,    2, 0x06 /* Public */,
+       6,    0,   68,    2, 0x06 /* Public */,
+       7,    0,   69,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+       8,    0,   70,    2, 0x08 /* Private */,
 
  // methods: name, argc, parameters, tag, flags
-       8,    0,   65,    2, 0x02 /* Public */,
-       9,    0,   66,    2, 0x02 /* Public */,
-      10,    0,   67,    2, 0x02 /* Public */,
+       9,    0,   71,    2, 0x02 /* Public */,
+      10,    0,   72,    2, 0x02 /* Public */,
+      11,    0,   73,    2, 0x02 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -95,17 +100,20 @@ static const uint qt_meta_data_ScreetShot[] = {
     QMetaType::Void,
     QMetaType::Void,
 
+ // slots: parameters
+    QMetaType::Void,
+
  // methods: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
  // properties: name, type, flags
-      11, QMetaType::QRectF, 0x00495103,
-      12, QMetaType::Bool, 0x00495003,
-      13, QMetaType::QString, 0x00495103,
+      12, QMetaType::QRectF, 0x00495103,
+      13, QMetaType::Bool, 0x00495003,
       14, QMetaType::QString, 0x00495103,
-      15, QMetaType::Bool, 0x00495103,
+      15, QMetaType::QString, 0x00495103,
+      16, QMetaType::Bool, 0x00495103,
 
  // properties: notify_signal_id
        0,
@@ -129,9 +137,10 @@ void ScreetShot::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->screetHeightChanged(); break;
         case 4: _t->screetToolBarShowChanged(); break;
         case 5: _t->cancelScreetShot(); break;
-        case 6: _t->setToArrowCursor(); break;
-        case 7: _t->setCancelShot(); break;
-        case 8: _t->saveScreetShot(); break;
+        case 6: _t->slot_downloadScreenFinished(); break;
+        case 7: _t->setToArrowCursor(); break;
+        case 8: _t->setCancelShot(); break;
+        case 9: _t->saveScreetShot(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -211,7 +220,7 @@ void ScreetShot::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
 }
 
 QT_INIT_METAOBJECT const QMetaObject ScreetShot::staticMetaObject = { {
-    QMetaObject::SuperData::link<QObject::staticMetaObject>(),
+    QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
     qt_meta_stringdata_ScreetShot.data,
     qt_meta_data_ScreetShot,
     qt_static_metacall,
@@ -230,22 +239,22 @@ void *ScreetShot::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_ScreetShot.stringdata0))
         return static_cast<void*>(this);
-    return QObject::qt_metacast(_clname);
+    return QWidget::qt_metacast(_clname);
 }
 
 int ScreetShot::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QObject::qt_metacall(_c, _id, _a);
+    _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 10;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

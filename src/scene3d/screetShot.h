@@ -3,35 +3,32 @@
 
 #include <QObject>
 #include <QPoint>
-
+#include <QWidget>
 #include <QGuiApplication>
 #include <QRectF>
 #include <QVector3D>
 #include <QCursor>
 #include <memory>
+#include <QtConcurrent>
+#include <QEventLoop>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QGraphicsScene>
+
+
+#include "graphicscompute.h"
+#include  "QtGui/private/qzipreader_p.h"
+#include  "QtGui/private/qzipwriter_p.h"
 
 
 
-enum class ResizeMode { None, Move, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight };
-
-#define _180_PI (57.2957795131f)
-#define _PI_180 (0.01745329252f)
-#define RE 6371004
-#define g_EarthRadius 6378137   // 赤道半径
-#define POINT_REPEATITIVE 361.0f
-
-
-#ifndef PI
-#define PI (3.1415926535898)
-#endif
-
-
+/*------------------------------------------ScreetShot---------------------------------------------*/
 class MapView;
-class ScreetShot : public QObject
+class ScreetShot : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ScreetShot(QObject *parent = nullptr);
+    explicit ScreetShot(QWidget *parent = nullptr);
 
     // 添加矩形属性
     Q_PROPERTY(QRectF selectionRect READ getSelectionRect WRITE setSelectionRect NOTIFY selectionRectChanged)
@@ -81,11 +78,19 @@ public:
     Q_INVOKABLE void setCancelShot();
     Q_INVOKABLE void saveScreetShot();
 
-
+private slots:
+    void slot_downloadScreenFinished();
 
 private:
     double getDistance_Haversine(double current_longi, double current_lati, double goal_longi, double goal_lati);
     QString getLengthChEn(double distance,int decimalPlaces = 2);
+    void getTitle(QRect rect, int level);
+    void getUrl();
+    void httpGetScreen(ImageInfo info);
+
+
+    bool createKmlFile(QString kmlPath,QString imageName,double north,double south,double east,double west);
+    bool createXMAPFile(const QString kmlFilePath, const QString imageFilePath, QString &outputXMAPPath);
 
 
 public:
@@ -99,13 +104,32 @@ public:
 
     ResizeMode resizeMode_;
 
-    int currentMapLevel_;
+    int currMapLevel_;
     bool dragging_ = false;
 
     double topLeftLong_, topLeftLati_, topRightLong_, topRightLati_, bottomRightLong_, bottomRightLati_;
     bool screetToolBarShow_ = false;
 
     std::weak_ptr<MapView> mapView_;
+    QRect targetRect_;
+    QFuture<void> m_future; //异步计算的结果
+    QString m_url = GOOGlE_MAP_COM;
+    QSet<quint64> m_exist;        // 已经存在的瓦片地图编号
+    QVector<ImageInfo> m_infos;   // 需要下载的瓦片地图信息
+    int m_completedDownloads_ = 0,m_screenTileCnt_ = 0;
+    bool interruptTile_ = false,isScreenNetError_ = false;
+    QHash<quint16, GraphItemGroup*> m_itemGroup;   // 瓦片图元组
+    bool screenUserCancel_ = false;
+    double topWidth_,rightHeight_;
+    int pixel300m_;
+    QGraphicsScene* m_scene = nullptr;
+    int generatedRectCount_ = 0;
+    QImage bigImage_;   // 最终拼接的大图
+    QMutex imgMutex_;   // 多线程写入保护
+    int tileStartX_ = 0;
+    int tileStartY_ = 0;
+
+
 
 };
 

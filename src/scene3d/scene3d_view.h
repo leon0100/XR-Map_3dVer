@@ -345,8 +345,8 @@ private:
 public:
     Q_INVOKABLE void setScreenMode(bool isScreen);
     void setCurrentMapLevel(int mapLevel);
-    Q_PROPERTY(QObject* screetShot READ screetShot CONSTANT)
-    QObject* screetShot() { return &screetShot_; }
+    Q_PROPERTY(QWidget* screetShot READ screetShot CONSTANT)
+    QWidget* screetShot() { return &screetShot_; }
 
 
     ScreetShot screetShot_;

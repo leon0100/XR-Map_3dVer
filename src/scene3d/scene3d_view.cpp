@@ -93,8 +93,11 @@ GraphicsScene3dView::GraphicsScene3dView() :
 GraphicsScene3dView::~GraphicsScene3dView()
 {
 #ifdef SCENE_TESTING
-    testingTimer_->stop();
-    delete testingTimer_;
+    if (testingTimer_) {
+        testingTimer_->stop();
+        delete testingTimer_;
+        testingTimer_ = nullptr;
+    }
 #endif
 }
 
@@ -249,7 +252,6 @@ void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal 
     emit currentLonChanged();
 
     QPoint pos = QPoint(x,y);
-
 
 
     if (mouseButton == Qt::LeftButton)
@@ -529,7 +531,7 @@ void GraphicsScene3dView::bottomTrackActionEvent(BottomTrack::ActionEvent action
 void GraphicsScene3dView::setCurrentMapLevel(int mapLevel)
 {
     qDebug() << "mapLevel...." << mapLevel;
-    screetShot_.currentMapLevel_ = mapLevel;
+    screetShot_.currMapLevel_ = mapLevel;
 
 }
 
@@ -1050,7 +1052,7 @@ void GraphicsScene3dView::calculateLatLong(qreal x, qreal y, double& latitude, d
     LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
     latitude = lla.latitude;
     longitude = lla.longitude;
-    // qDebug() << "mousePressTrigger x:" << x << "   y:" << y << "   lati:" << lla.latitude << "   long:" << lla.longitude;
+    qDebug() << "mousePressTrigger x:" << x << "   y:" << y << "   lati:" << lla.latitude << "   long:" << lla.longitude;
 }
 
 void GraphicsScene3dView::updateMapView()

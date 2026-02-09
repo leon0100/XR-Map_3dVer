@@ -1,9 +1,5 @@
-
-
-
-// #include <QGuiApplication>
+#include <QGuiApplication>
 #include <QApplication>
-
 
 
 #include <QQmlContext>
@@ -26,7 +22,6 @@
 #include "themes.h"
 #include "scene_object.h"
 #include "bottom_track.h"
-
 
 Core core;
 Themes theme;
@@ -110,10 +105,10 @@ int main(int argc, char *argv[])
 #endif
 #endif
 
-    QCoreApplication::setOrganizationName("KOGGER");
-    QCoreApplication::setOrganizationDomain("kogger.tech");
-    QCoreApplication::setApplicationName("KoggerApp");
-    QCoreApplication::setApplicationVersion("1-1-1");
+    QCoreApplication::setOrganizationName("Toslon");
+    QCoreApplication::setOrganizationDomain("toslon.tech");
+    QCoreApplication::setApplicationName("ToslonApp");
+    QCoreApplication::setApplicationVersion("0.10");
 
 #if defined(Q_OS_WIN)
     //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

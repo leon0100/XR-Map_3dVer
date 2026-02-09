@@ -161,23 +161,23 @@ Item {
                 backColor: theme.controlBackColor
                 borderColor:  theme.controlBackColor
                 checkedBorderColor: "black"
-                checked: true
+                checked: false
 
                 CMouseOpacityArea {
                     toolTipText: qsTr("Display 2D")
                     onContainsMouseChanged: containsMouse ? mainLayout.highlightAllButtons() : mainLayout.resetButtonOpacity()
                 }
 
-                onClicked: {
-                    if (!visible3DButton.checked && !visible2DButton.checked) {
-                        visible3DButton.checked = true
-                    }
-                }
+                // onClicked: {
+                //     if (!visible3DButton.checked && !visible2DButton.checked) {
+                //         visible3DButton.checked = true
+                //     }
+                // }
 
-                Settings {
-                    id: visible2DSettings
-                    property alias visible2DButtonChecked: visible2DButton.checked
-                }
+                // Settings {
+                //     id: visible2DSettings
+                //     property alias visible2DButtonChecked: visible2DButton.checked
+                // }
             }
 
         }
@@ -203,17 +203,6 @@ Item {
             targetPlot: menu.targetPlot
         }
 
-        /*SceneControlMenu {
-            id:                 sceneControlMenu
-            objectName:         "sceneControlMenu"
-            Layout.alignment: Qt.AlignTop
-            // Layout.topMargin:   10
-            // Layout.alignment:   Qt.AlignLeft
-            // Layout.fillWidth:   true
-            width: settingsWidth
-            implicitWidth: settingsWidth
-            visible:            menu3DSettings.active
-        }*/
     }
 
     function handleChildSignal(langStr) {
