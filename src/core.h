@@ -133,6 +133,8 @@ public slots:
     int  getDataProcessorState() const;
     void initStreamList();
     int  getCurrMapLevel() const;
+    void createDatasetConnections();
+    void createScene3dConnections();
 
 #ifdef FLASHER
     void connectOpenedLinkAsFlasher(QString pn);
@@ -178,10 +180,8 @@ private slots:
 private:
     /*methods*/
     void createMapTileManagerConnections();
-    void createDatasetConnections();
     void createDataProcessor();
     void destroyDataProcessor();
-    void createScene3dConnections();
 
     void setDataProcessorConnections();
     void resetDataProcessorConnections();
@@ -200,27 +200,28 @@ private:
     /*data*/
     Console* consolePtr_;
     // 3d scene controllers
-    std::shared_ptr<BoatTrackControlMenuController> boatTrackControlMenuController_;
+    std::shared_ptr<BoatTrackControlMenuController>    boatTrackControlMenuController_;
     std::shared_ptr<NavigationArrowControlMenuController> navigationArrowControlMenuController_;
-    std::shared_ptr<BottomTrackControlMenuController> bottomTrackControlMenuController_;
-    std::shared_ptr<MpcFilterControlMenuController> mpcFilterControlMenuController_;
-    std::shared_ptr<NpdFilterControlMenuController> npdFilterControlMenuController_;
+    std::shared_ptr<BottomTrackControlMenuController>  bottomTrackControlMenuController_;
+    std::shared_ptr<MpcFilterControlMenuController>    mpcFilterControlMenuController_;
+    std::shared_ptr<NpdFilterControlMenuController>    npdFilterControlMenuController_;
     std::shared_ptr<IsobathsViewControlMenuController> isobathsViewControlMenuController_;
-    std::shared_ptr<MosaicViewControlMenuController> mosaicViewControlMenuController_;
-    std::shared_ptr<ImageViewControlMenuController> imageViewControlMenuController_;
-    std::shared_ptr<MapViewControlMenuController> mapViewControlMenuController_;
-    std::shared_ptr<PointGroupControlMenuController> pointGroupControlMenuController_;
+    std::shared_ptr<MosaicViewControlMenuController>   mosaicViewControlMenuController_;
+    std::shared_ptr<ImageViewControlMenuController>    imageViewControlMenuController_;
+    std::shared_ptr<MapViewControlMenuController>      mapViewControlMenuController_;
+    std::shared_ptr<PointGroupControlMenuController>   pointGroupControlMenuController_;
     std::shared_ptr<PolygonGroupControlMenuController> polygonGroupControlMenuController_;
-    std::shared_ptr<Scene3DControlMenuController> scene3dControlMenuController_;
-    std::shared_ptr<Scene3dToolBarController> scene3dToolBarController_;
-    std::shared_ptr<UsblViewControlMenuController> usblViewControlMenuController_;
-    std::unique_ptr<DeviceManagerWrapper> deviceManagerWrapperPtr_;
-    std::unique_ptr<LinkManagerWrapper> linkManagerWrapperPtr_;
-    std::unique_ptr<map::TileManager> tileManager_;
+    std::shared_ptr<Scene3DControlMenuController>      scene3dControlMenuController_;
+    std::shared_ptr<Scene3dToolBarController>          scene3dToolBarController_;
+    std::shared_ptr<UsblViewControlMenuController>     usblViewControlMenuController_;
+    std::unique_ptr<DeviceManagerWrapper>              deviceManagerWrapperPtr_;
+    std::unique_ptr<LinkManagerWrapper>                linkManagerWrapperPtr_;
+    std::unique_ptr<map::TileManager>                  tileManager_;
     // data processor
     DataProcessor* dataProcessor_;
     QThread* dataProcThread_;
     std::unique_ptr<DataHorizon> dataHorizon_; // this thread
+    // DataHorizon* dataHorizon2_ = nullptr;
 
 #ifdef SEPARATE_READING
     QString tryOpenedfilePath_;

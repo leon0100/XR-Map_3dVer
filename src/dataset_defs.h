@@ -21,7 +21,8 @@
 #define GMTIME(t) _gmtime64(&sec);
 #endif
 
-#define CONSTANTS_RADIUS_OF_EARTH 6371000 /* meters (m) */
+// #define CONSTANTS_RADIUS_OF_EARTH 6371000 /* meters (m) */
+#define CONSTANTS_RADIUS_OF_EARTH 6378137 /* meters (m) */
 #define M_TWOPI_F 6.28318530717958647692f
 #define M_PI_2_F  1.57079632679489661923f
 #define M_RAD_TO_DEG 57.29577951308232087679f

@@ -54,8 +54,10 @@ void BoatTrack::onPositionAdded(uint64_t indx)
     }
 
     const int toIndx = indx;
-    const int fromIndx = lastIndx_;
+    int fromIndx = lastIndx_;
+    fromIndx = 0;
     if (fromIndx >= toIndx) {
+        qDebug() << "fromIndx >= toIndx.................." << fromIndx << "  " << toIndx;
         return;
     }
 
@@ -237,7 +239,6 @@ void BoatTrack::BoatTrackRenderImplementation::render(QOpenGLFunctions *ctx,
         ctx->glDisable(34370);
         ctx->glDisable(34913);
 
-
         shaderProgram->setUniformValue(isPointLoc,    false);
         shaderProgram->setUniformValue(isTriangleLoc, false);
 
@@ -270,6 +271,9 @@ void BoatTrack::BoatTrackRenderImplementation::render(QOpenGLFunctions *ctx,
         shaderProgram->setUniformValue(widthLoc, 12.0f);
 
         QVector<QVector3D> vertices{ boatTrackVertice_, bottomTrackVertice_ };
+        qDebug() << "boatTrackVertice_.sizr:......." << boatTrackVertice_.x() << "  " <<
+            boatTrackVertice_.y() << " " << boatTrackVertice_.z() << "   " <<
+            bottomTrackVertice_.x()  << " " << bottomTrackVertice_.y() << " " << bottomTrackVertice_.z();
 
         ctx->glLineWidth(2);
         shaderProgram->enableAttributeArray(posLoc);

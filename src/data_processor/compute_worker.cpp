@@ -182,7 +182,6 @@ void ComputeWorker::bottomTrackProcessing(const DatasetChannel& ch1, const Datas
 
 void ComputeWorker::processBundle(const WorkBundle& wb)
 {
-
     qDebug() << "ComputeWorker::processBundle: task" << wb.mosaicVec.size();
     // 依次地，传感器自行向外发送信号
     if (!wb.surfaceVec.isEmpty() && !isCanceled()) {

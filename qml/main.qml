@@ -864,13 +864,6 @@ ApplicationWindow  {
                 }
             }
         }
-
-        // Console {
-        //     id:                      console_vis
-        //     visible:                 theme.consoleVisible
-        //     SplitView.minimumHeight: 150
-        //     SplitView.maximumHeight: mainview.height - theme.controlHeight/2 - theme.controlHeight
-        // }
     }
 
 
@@ -1088,33 +1081,6 @@ ApplicationWindow  {
                     implicitWidth: theme.controlHeight
                 }
 
-                // CCombo  {
-                //     id: pilotModeState
-                //     visible: deviceManagerWrapper.pilotModeState >= 0
-                //     model: [
-                //         "Manual",
-                //         "Acro",
-                //         "Steering",
-                //         "Hold",
-                //         "Loiter",
-                //         "Follow",
-                //         "Simple",
-                //         "Dock",
-                //         "Circle",
-                //         "Auto",
-                //         "RTL",
-                //         "SmartRTL",
-                //         "Guided",
-                //         "Mode16",
-                //         "Mode17"
-                //     ]
-                //     currentIndex: deviceManagerWrapper.pilotModeState
-
-                //     onCurrentIndexChanged: {
-                //         if(currentIndex != deviceManagerWrapper.pilotModeState) {
-                //             currentIndex = deviceManagerWrapper.pilotModeState
-                //         }
-                //     }
             }
 
             RowLayout {

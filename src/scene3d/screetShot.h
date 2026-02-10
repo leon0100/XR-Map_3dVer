@@ -124,7 +124,6 @@ public:
     int pixel300m_;
     QGraphicsScene* m_scene = nullptr;
     int generatedRectCount_ = 0;
-    QImage bigImage_;   // 最终拼接的大图
     QMutex imgMutex_;   // 多线程写入保护
     int tileStartX_ = 0;
     int tileStartY_ = 0;

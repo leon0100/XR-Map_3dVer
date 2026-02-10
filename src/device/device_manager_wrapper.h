@@ -10,6 +10,7 @@
 class DeviceManagerWrapper : public QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(DeviceManagerWrapper)
 
 public:
     /*methods*/
@@ -57,6 +58,10 @@ public:
         return averageChartLosses_;
     };
 
+    DeviceManager* getWorkerDeviceManager() const {
+        return workerDeviceManager_;
+    }
+
 public slots:
     Q_INVOKABLE bool isCreatedId(int id) { return getWorker()->isCreatedId(id); };
     void calcAverageChartLosses();
@@ -77,6 +82,7 @@ signals:
 
 private:
     std::unique_ptr<DeviceManager> workerObject_;
+    DeviceManager* workerDeviceManager_ = nullptr;
 #ifdef SEPARATE_READING
     std::unique_ptr<QThread> workerThread_;
     QList<QMetaObject::Connection> deviceManagerConnections_;

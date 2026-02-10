@@ -954,15 +954,9 @@ void GraphicsScene3dView::setQmlAppEngine(QQmlApplicationEngine* engine)
 void GraphicsScene3dView::updateBounds()
 {
     qDebug() << "GraphicsScene3dView::updateBounds........";
-    m_bounds = boatTrack_->bounds()
-                   .merge(isobathsView_->bounds())
-                   .merge(m_bottomTrack->bounds())
-                   .merge(boatTrack_->bounds())
-                   .merge(m_polygonGroup->bounds())
-                   .merge(m_pointGroup->bounds())
-                   .merge(surfaceView_->bounds())
-                   .merge(imageView_->bounds())
-                   .merge(usblView_->bounds());
+    m_bounds = boatTrack_->bounds().merge(isobathsView_->bounds()).merge(m_bottomTrack->bounds())
+                .merge(boatTrack_->bounds()).merge(m_polygonGroup->bounds()).merge(m_pointGroup->bounds())
+                .merge(surfaceView_->bounds()).merge(imageView_->bounds()).merge(usblView_->bounds());
 
     updatePlaneGrid();
 
@@ -1030,28 +1024,35 @@ void GraphicsScene3dView::initAutoDistTimer()
 
 void GraphicsScene3dView::calculateLatLong(qreal x, qreal y, double& latitude, double& longitude)
 {
-    QMatrix4x4 viewModelMatrix = m_camera->m_view * m_model;
-    QRect viewport = boundingRect().toRect();
-    float heightValue = height();
+    // 1. 用完整矩阵 unproject（必须乘 model）
+    QVector3D rayOrigin = QVector3D(x, height() - y, -1.0f) .unproject(m_camera->m_view * m_model,
+                       m_projection,boundingRect().toRect());
 
-    // 计算射线起点和终点
-    QVector3D toOrig = QVector3D(x, heightValue - y, -1.0f).unproject(viewModelMatrix, m_projection, viewport);
-    QVector3D toEnd  = QVector3D(x, heightValue - y,  1.0f).unproject(viewModelMatrix, m_projection, viewport);
+    QVector3D rayEnd = QVector3D(x, height() - y, 1.0f) .unproject(m_camera->m_view * m_model,
+                       m_projection, boundingRect().toRect());
 
-    QVector3D toDir = (toEnd - toOrig).normalized();  // 计算射线方向
+    QVector3D rayDir = (rayEnd - rayOrigin).normalized();
 
-    QVector3D to = calculateIntersectionPoint(toOrig, toDir, 0);   // 计算与地面的交点
+    // 2. 地面高度必须正确
+    float groundZ = 0.0f; // 推荐改成 m_bounds.bottom().z()
 
-    // 转换为 NED 坐标系
+    QVector3D hitPoint = calculateIntersectionPoint(rayOrigin, rayDir, groundZ);
+
+    if (hitPoint == QVector3D())
+        return;
+
+    // 3. hitPoint 本身就是 NED 坐标（不要减相机）
     NED ned;
-    ned.n = to.y();
-    ned.e = to.x();
+    ned.n = hitPoint.x();
+    ned.e = hitPoint.y();
     ned.d = 0;
 
-    // 转换为 LLA 坐标系
+    // 4. 转换成经纬度
     LLA lla(&ned, &m_camera->viewLlaRef_, m_camera->getIsPerspective());
-    latitude = lla.latitude;
+
+    latitude  = lla.latitude;
     longitude = lla.longitude;
+
     qDebug() << "mousePressTrigger x:" << x << "   y:" << y << "   lati:" << lla.latitude << "   long:" << lla.longitude;
 }
 
@@ -1179,11 +1180,13 @@ void GraphicsScene3dView::onPositionAdded(uint64_t indx)
 {
     qDebug() << "GraphicsScene3dView::onPositionAdded................";
     if (!datasetPtr_) {
+        qDebug() << "datasetPtr_.....................";
         return;
     }
 
     auto* epPtr = datasetPtr_->fromIndex(indx);
     if (!epPtr) {
+        qDebug() << "epPtr..............................";
         return;
     }
 
@@ -1881,10 +1884,12 @@ void GraphicsScene3dView::Camera::updateViewMatrix()
     angleToGround_ = 90.f * std::fabs(cu.z());
 
     QMatrix4x4 view;
-    view.lookAt(cf + m_lookAt, m_lookAt, cu.normalized());
+    QVector3D eyePosition = cf + m_lookAt;
+    view.lookAt(eyePosition, m_lookAt, cu.normalized());
     view.scale(1.0f,1.0f,-1.0f);
 
     m_view = std::move(view);
+    m_eye = eyePosition; // 更新相机位置
 }
 
 void GraphicsScene3dView::Camera::checkRotateAngle()
@@ -1952,6 +1957,11 @@ map::CameraTilt GraphicsScene3dView::Camera::getCameraTilt() const
     else {
         return map::CameraTilt::Up;
     }
+}
+
+QVector3D GraphicsScene3dView::Camera::getEyePosition() const
+{
+    return m_eye;
 }
 
 qreal GraphicsScene3dView::Camera::distToFocusPoint() const

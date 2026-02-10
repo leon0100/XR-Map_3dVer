@@ -64,7 +64,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
 {
     Q_UNUSED(type);
     Q_UNUSED(context);
-    core.consoleInfo(msg);
+    // core.consoleInfo(msg);
 }
 
 void setApplicationDisplayName(QGuiApplication& app)
@@ -160,6 +160,8 @@ int main(int argc, char *argv[])
 
     core.consoleInfo("Run...");
     core.setEngine(&engine);
+
+
     //qDebug() << "SQL drivers =" << QSqlDatabase::drivers(); // тут должен появиться QSQLITE
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine,   &QQmlApplicationEngine::objectCreated,
@@ -167,6 +169,7 @@ int main(int argc, char *argv[])
                                     if (!obj && url == objUrl)
                                         QCoreApplication::exit(-1);
                                 }, Qt::QueuedConnection);
+
 
 // file opening on startup
 #ifndef Q_OS_ANDROID

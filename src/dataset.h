@@ -284,6 +284,9 @@ signals:
     void lastDepthChanged();
     void speedChanged();
 
+    void channelListUpdated();
+
+
 protected:
 
     int lastEventTimestamp = 0;

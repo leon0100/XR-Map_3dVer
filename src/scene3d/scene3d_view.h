@@ -76,6 +76,7 @@ public:
         bool  getIsPerspective() const;
         bool  getIsFarAwayFromOriginLla() const;
         map::CameraTilt getCameraTilt() const;
+        QVector3D getEyePosition() const;
 
     private:
         void updateCameraParams();

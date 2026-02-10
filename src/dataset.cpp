@@ -660,7 +660,6 @@ void Dataset::addPosition_CSV(double lat, double lon, int depth)
 
     Position pos;
     pos.lla = LLA(lat, lon);
-
     if (pos.lla.isCoordinatesValid()) {
         if (lastEp->getPositionGNSS().lla.isCoordinatesValid()) {
             lastEp = addNewEpoch();//不断累加帧数的下标index
@@ -670,7 +669,7 @@ void Dataset::addPosition_CSV(double lat, double lon, int depth)
         uint64_t lastIndx = pool_.size() - 1;
         if (!getLlaRef().isInit) {
             LlaRefState llaState = state_ == DatasetState::kUndefined ? LlaRefState::kFile :
-                                    (state_ == DatasetState::kFile ? LlaRefState::kFile :  LlaRefState::kConnection);
+                        (state_ == DatasetState::kFile ? LlaRefState::kFile :  LlaRefState::kConnection);
             setLlaRef(LLARef(pos.lla), llaState);
         }
         lastEp->setPositionLLA(pos);
@@ -681,13 +680,9 @@ void Dataset::addPosition_CSV(double lat, double lon, int depth)
         boatLatitute_ = pos.lla.latitude;
         boatLongitude_ = pos.lla.longitude;
 
-        // qDebug() << "Dataset::addPosition_CSV2222222222222222222222222...........................";
         emit positionAdded(lastIndx);
-
-        //nir:testCSV注释暂时没有影响
-        // emit dataUpdate();
-        // emit lastPositionChanged();
     }
+
 }
 
 void Dataset::addPositionRTK(Position position) {
@@ -713,7 +708,7 @@ void Dataset::addDepth(float depth) {
 }
 
 void Dataset::addGnssVelocity(double h_speed, double course) {
-    qDebug() << "Dataset::addGnssVelocity............";
+    // qDebug() << "Dataset::addGnssVelocity............";
     int pool_index = endIndex();
     if(pool_index < 0) {
         addNewEpoch();

@@ -55,6 +55,7 @@ void Core::setEngine(QQmlApplicationEngine *engine)
     qmlAppEnginePtr_ = engine;
     QObject::connect(qmlAppEnginePtr_, &QQmlApplicationEngine::objectCreated, this, &Core::UILoad, Qt::QueuedConnection);
 
+
     qmlAppEnginePtr_->rootContext()->setContextProperty("BoatTrackControlMenuController",       boatTrackControlMenuController_.get());
     qmlAppEnginePtr_->rootContext()->setContextProperty("NavigationArrowControlMenuController", navigationArrowControlMenuController_.get());
     qmlAppEnginePtr_->rootContext()->setContextProperty("BottomTrackControlMenuController",     bottomTrackControlMenuController_.get());
@@ -460,14 +461,14 @@ bool Core::openXTF(const QByteArray& data)
 }
 
 bool Core::openCSV(QString name, int separatorType, int firstRow, int colTime,
-                   bool isUtcTime, int colLat, int colLon, int colAltitude, int colNorth, int colEast, int colUp)
+                bool isUtcTime, int colLat, int colLon, int colAltitude, int colNorth, int colEast, int colUp)
 {
     QString& filePath = name;
     if (filePath.startsWith("file:")) {
         filePath = QUrl(filePath).toLocalFile();
     }
 
-    qDebug() << "name:.............   " << name;
+    qDebug() << "name:................" << name;
 
     bool isAppend = false;
     bool onCustomEvent = false;
@@ -506,7 +507,59 @@ bool Core::openCSV(QString name, int separatorType, int firstRow, int colTime,
 
         datasetPtr_->setState(Dataset::DatasetState::kFile);
 
-        emit deviceManagerWrapperPtr_->sendOpenFile_CSV(localfilePath);
+        QFile file;
+        const QUrl url(filePath);
+        url.isLocalFile() ? file.setFileName(url.toLocalFile()) : file.setFileName(url.toString());
+        if (!file.open(QIODevice::ReadOnly)) {
+            // emit fileStopsOpening();
+            return;
+        }
+
+        Parsers::FrameParser frameParser;
+        const QUuid someUuid(kFileUuidStr);
+
+        // delAllDev();
+
+        QList<Position> track;
+
+        QTextStream in(&file);
+        int skip_rows = 2;
+
+        QVector<float> vec_CSV;
+        double minZ = 0.0, maxZ = 0.0;
+        while (!in.atEnd()) {
+            QString row = in.readLine();
+            if (skip_rows > 0) {
+                skip_rows--;
+                continue;
+            }
+
+            QStringList columns = row.split(",");
+            track.append(Position());
+
+            track.last().lla.latitude  = columns[5].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
+            track.last().lla.longitude = columns[4].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
+            track.last().lla.altitude  = columns[6].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
+            // track.last().ned.n = columns[1].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
+            // track.last().ned.e = columns[2].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
+            // track.last().ned.d = -columns[3].replace(QLatin1Char(','), QLatin1Char('.')).toDouble();
+
+            minZ = std::min(minZ,track.last().lla.altitude);
+            maxZ = std::max(maxZ, track.last().lla.altitude);
+            vec_CSV.append(track.last().lla.altitude);
+            datasetPtr_->addPosition_CSV(track.last().lla.latitude, track.last().lla.longitude,track.last().lla.altitude);
+            dataHorizon_->onAddedPosition(datasetPtr_->size()-1);
+        }
+        qDebug() << "vec_CSV.size()........." << vec_CSV.size();
+
+        file.close();
+
+        // vru_.cleanVru();
+        // delAllDev();
+        // emit vruChanged();
+
+        QMetaObject::invokeMethod(dataProcessor_, "setIsOpeningFile", Qt::QueuedConnection, Q_ARG(bool, false));
+        onFileStopsOpening_CSV(vec_CSV, minZ, maxZ);
 
         openedfilePath_ = localfilePath;
 
@@ -1180,7 +1233,7 @@ bool Core::getIsSeparateReading() const
 
 void Core::onChannelsUpdated()
 {
-    qDebug() << "Core::onChannelsUpdated()...................";
+    // qDebug() << "Core::onChannelsUpdated()...................";
     auto chs = datasetPtr_->channelsList();
     int chSize = chs.size();
 
@@ -1296,6 +1349,7 @@ void Core::setIsAttitudeExpected(bool state)
 
 void Core::onFileStopsOpening()
 {
+    qDebug() << "Core::onFileStopsOpening...................";
     isFileOpening_ = false;
     emit sendIsFileOpening();
     dataHorizon_->setIsFileOpening(isFileOpening_);
@@ -1303,14 +1357,16 @@ void Core::onFileStopsOpening()
 
 void Core::onFileStopsOpening_CSV(QVector<float>& depthVec, double minZ, double maxZ)
 {
-    datasetPtr_->vec_CSV_ = depthVec;
+    qDebug() << "onFileStopsOpening_CSV..............";
+    datasetPtr_->vec_CSV_  = depthVec;
     datasetPtr_->minDepth_ = minZ;
     datasetPtr_->maxDepth_ = maxZ;
-    isFileOpening_ = false;
+    isFileOpening_         = false;
     emit sendIsFileOpening();
     QMetaObject::invokeMethod(dataProcessor_, "postMinZ", Qt::QueuedConnection, Q_ARG(float, minZ));
     QMetaObject::invokeMethod(dataProcessor_, "postMaxZ", Qt::QueuedConnection, Q_ARG(float, maxZ));
     dataHorizon_->setIsFileOpening(isFileOpening_);
+    scene3dViewPtr_->onPositionAdded(32248);
 }
 
 void Core::onSendMapTextureIdByTileIndx(const map::TileIndex &tileIndx, GLuint textureId)
@@ -1398,37 +1454,65 @@ void Core::createDeviceManagerConnections()
 {
     Qt::ConnectionType deviceManagerConnection = Qt::ConnectionType::DirectConnection;
 
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendFrameInputToLogger, this, &Core::onSendFrameInputToLogger,  deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendFrameInputToLogger,
+                     this, &Core::onSendFrameInputToLogger,  deviceManagerConnection);
 
-    //
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendChartSetup,         datasetPtr_, &Dataset::setChartSetup,   deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendTranscSetup,        datasetPtr_, &Dataset::setTranscSetup,  deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendSoundSpeeed,        datasetPtr_, &Dataset::setSoundSpeed,   deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendChartSetup,
+                     datasetPtr_, &Dataset::setChartSetup,   deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendTranscSetup,
+                     datasetPtr_, &Dataset::setTranscSetup,  deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendSoundSpeeed,
+                     datasetPtr_, &Dataset::setSoundSpeed,   deviceManagerConnection);
 
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::chartComplete,          datasetPtr_, &Dataset::addChart,        deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::rawDataRecieved,        datasetPtr_, &Dataset::rawDataRecieved, deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::distComplete,           datasetPtr_, &Dataset::addDist,         deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::usblSolutionComplete,   datasetPtr_, &Dataset::addUsblSolution, deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::dopplerBeamComlete,     datasetPtr_, &Dataset::addDopplerBeam,  deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::dvlSolutionComplete,    datasetPtr_, &Dataset::addDVLSolution,  deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::upgradeProgressChanged, this,        &Core::upgradeChanged,     deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::eventComplete,          datasetPtr_, &Dataset::addEvent,        deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::rangefinderComplete,    datasetPtr_, &Dataset::addRangefinder,  deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionComplete,       datasetPtr_, &Dataset::addPosition,     deviceManagerConnection);
-     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionComplete_CSV,       datasetPtr_, &Dataset::addPosition_CSV,     deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionCompleteRTK,    datasetPtr_, &Dataset::addPositionRTK,  deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::chartComplete,
+                     datasetPtr_, &Dataset::addChart,        deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::rawDataRecieved,
+                     datasetPtr_, &Dataset::rawDataRecieved, deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::distComplete,
+                     datasetPtr_, &Dataset::addDist,         deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::usblSolutionComplete,
+                     datasetPtr_, &Dataset::addUsblSolution, deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::dopplerBeamComlete,
+                     datasetPtr_, &Dataset::addDopplerBeam,  deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::dvlSolutionComplete,
+                     datasetPtr_, &Dataset::addDVLSolution,  deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::upgradeProgressChanged,
+                     this,        &Core::upgradeChanged,     deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::eventComplete,
+                     datasetPtr_, &Dataset::addEvent,        deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::rangefinderComplete,
+                     datasetPtr_, &Dataset::addRangefinder,  deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionComplete,
+                     datasetPtr_, &Dataset::addPosition,     deviceManagerConnection);
+     QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionComplete_CSV,
+                     datasetPtr_, &Dataset::addPosition_CSV,     deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::positionCompleteRTK,
+                      datasetPtr_, &Dataset::addPositionRTK,  deviceManagerConnection);
 
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::depthComplete,          datasetPtr_, &Dataset::addDepth,        deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::depthComplete,
+                     datasetPtr_, &Dataset::addDepth,        deviceManagerConnection);
 
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::gnssVelocityComplete,   datasetPtr_, &Dataset::addGnssVelocity, deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::attitudeComplete,       datasetPtr_, &Dataset::addAtt,          deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::tempComplete,           datasetPtr_, &Dataset::addTemp,         deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileOpened,             this,        &Core::onFileOpened,       deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::encoderComplete,        datasetPtr_, &Dataset::addEncoder,      deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileStopsOpening,       this,        &Core::onFileStopsOpening, deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileStopsOpening_CSV,       this,        &Core::onFileStopsOpening_CSV, deviceManagerConnection);
-    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendProtoFrame,         &logger_, &Logger::receiveProtoFrame, deviceManagerConnection);
-    QObject::connect(&logger_, &Logger::loggingKlfStarted, deviceManagerWrapperPtr_->getWorker(), &DeviceManager::onLoggingKlfStarted, deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::gnssVelocityComplete,
+                     datasetPtr_, &Dataset::addGnssVelocity, deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::attitudeComplete,
+                     datasetPtr_, &Dataset::addAtt,          deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::tempComplete,
+                     datasetPtr_, &Dataset::addTemp,         deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileOpened,
+                     this,        &Core::onFileOpened,       deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::encoderComplete,
+                     datasetPtr_, &Dataset::addEncoder,      deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileStopsOpening,
+                     this,        &Core::onFileStopsOpening, deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::fileStopsOpening_CSV,
+                     this,        &Core::onFileStopsOpening_CSV, deviceManagerConnection);
+    QObject::connect(deviceManagerWrapperPtr_->getWorkerDeviceManager(), &DeviceManager::fileStopsOpening_CSV,
+                     this,        &Core::onFileStopsOpening_CSV,   deviceManagerConnection);
+
+    QObject::connect(deviceManagerWrapperPtr_->getWorker(), &DeviceManager::sendProtoFrame,
+                     &logger_, &Logger::receiveProtoFrame, deviceManagerConnection);
+    QObject::connect(&logger_, &Logger::loggingKlfStarted, deviceManagerWrapperPtr_->getWorker(),
+                     &DeviceManager::onLoggingKlfStarted, deviceManagerConnection);
 
 }
 #endif
@@ -1443,18 +1527,15 @@ void Core::createLinkManagerConnections()
 
     linkManagerWrapperConnections_.append(QObject::connect(linkManagerWrapperPtr_->getWorker(), &LinkManager::linkOpened,  this, [this]() {
 #ifdef SEPARATE_READING
-                                                                                                                                     tryOpenedfilePath_.clear();
+                                                           tryOpenedfilePath_.clear();
 #endif
-                                                                                                                                     datasetPtr_->setState(Dataset::DatasetState::kConnection);
-                                                                                                                                 }, linkManagerConnection));
+            datasetPtr_->setState(Dataset::DatasetState::kConnection); }, linkManagerConnection));
 
     linkManagerWrapperConnections_.append(QObject::connect(linkManagerWrapperPtr_->getWorker(), &LinkManager::linkClosed,  this, [this]() {
-                                                                                                                                     if (scene3dViewPtr_) {
-                                                                                                                                         scene3dViewPtr_->getNavigationArrowPtr()->resetPositionAndAngle();
-                                                                                                                                     }
-                                                                                                                                 }, linkManagerConnection));
-
-    linkManagerWrapperConnections_.append(QObject::connect(linkManagerWrapperPtr_->getWorker(), &LinkManager::sendDoRequestAll, deviceManagerWrapperPtr_->getWorker(), &DeviceManager::onSendRequestAll, linkManagerConnection));
+            if (scene3dViewPtr_) {
+                scene3dViewPtr_->getNavigationArrowPtr()->resetPositionAndAngle();} }, linkManagerConnection));
+                linkManagerWrapperConnections_.append(QObject::connect(linkManagerWrapperPtr_->getWorker(), &LinkManager::sendDoRequestAll,
+                deviceManagerWrapperPtr_->getWorker(),&DeviceManager::onSendRequestAll, linkManagerConnection));
 }
 
 void Core::removeLinkManagerConnections()
@@ -1570,8 +1651,7 @@ void Core::loadLLARefFromSettings()
         ref.isInit = settings.value("isInit", false).toBool();
         settings.endGroup();
 
-        datasetPtr_->setLlaRef(ref, Dataset::LlaRefState::kUndefined/*kSettings*/); // TODO!!!
-
+        datasetPtr_->setLlaRef(ref, Dataset::LlaRefState::kUndefined);
         //qDebug() << "loaded: " << ref.refLla.latitude << ref.refLla.longitude;
     }
     catch (const std::exception& e) {
@@ -1627,12 +1707,12 @@ void Core::createDatasetConnections()
     QObject::connect(datasetPtr_, &Dataset::channelsUpdated, this,               &Core::onChannelsUpdated);
     QObject::connect(datasetPtr_, &Dataset::redrawEpochs,    this,               &Core::onRedrawEpochs);
 
-    // DataHorizon
     QObject::connect(datasetPtr_, &Dataset::epochAdded,       dataHorizon_.get(), &DataHorizon::onAddedEpoch);
     QObject::connect(datasetPtr_, &Dataset::positionAdded,    dataHorizon_.get(), &DataHorizon::onAddedPosition);
     QObject::connect(datasetPtr_, &Dataset::chartAdded,       dataHorizon_.get(), &DataHorizon::onAddedChart);
     QObject::connect(datasetPtr_, &Dataset::attitudeAdded,    dataHorizon_.get(), &DataHorizon::onAddedAttitude);
     QObject::connect(datasetPtr_, &Dataset::bottomTrackAdded, dataHorizon_.get(), &DataHorizon::onAddedBottomTrack);
+
 }
 
 int Core::getCurrMapLevel() const

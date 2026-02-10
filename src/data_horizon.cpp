@@ -46,7 +46,7 @@ void DataHorizon::setIsFileOpening(bool state)
 {
     qDebug() << "DataHorizon::setIsFileOpening" << state;
     isFileOpening_ = state;
-
+    qDebug() << "positionIndx_................ " << positionIndx_;
     if (!isFileOpening_ && !isSeparateReading_ && emitChanges_) { // emit all
         emit epochAdded(epochIndx_);
         emit positionAdded(positionIndx_);
@@ -66,7 +66,6 @@ void DataHorizon::setIsAttitudeExpected(bool state)
 void DataHorizon::onAddedEpoch(uint64_t indx)
 {
     //qDebug() << "DataHorizon::onAddedEpoch" << indx;
-
     bool beenChanged = epochIndx_ != indx;
 
     epochIndx_ = indx;
@@ -78,6 +77,7 @@ void DataHorizon::onAddedEpoch(uint64_t indx)
 
 void DataHorizon::onAddedPosition(uint64_t indx)
 {
+    // qDebug() << "DataHorizon::onAddedPosition indx: " << indx;
     bool beenChanged = positionIndx_ != indx;
 
     positionIndx_ = indx;

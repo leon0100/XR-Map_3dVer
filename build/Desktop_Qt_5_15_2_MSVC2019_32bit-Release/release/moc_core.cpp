@@ -24,8 +24,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Core_t {
-    QByteArrayData data[130];
-    char stringdata0[1756];
+    QByteArrayData data[132];
+    char stringdata0[1806];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -120,50 +120,52 @@ QT_MOC_LITERAL(82, 1067, 5), // "indxs"
 QT_MOC_LITERAL(83, 1073, 21), // "getDataProcessorState"
 QT_MOC_LITERAL(84, 1095, 14), // "initStreamList"
 QT_MOC_LITERAL(85, 1110, 15), // "getCurrMapLevel"
-QT_MOC_LITERAL(86, 1126, 15), // "getChannel1Name"
-QT_MOC_LITERAL(87, 1142, 15), // "getChannel2Name"
-QT_MOC_LITERAL(88, 1158, 20), // "getConvertedMousePos"
-QT_MOC_LITERAL(89, 1179, 4), // "indx"
-QT_MOC_LITERAL(90, 1184, 6), // "mouseX"
-QT_MOC_LITERAL(91, 1191, 6), // "mouseY"
-QT_MOC_LITERAL(92, 1198, 21), // "setIsAttitudeExpected"
-QT_MOC_LITERAL(93, 1220, 18), // "onFileStopsOpening"
-QT_MOC_LITERAL(94, 1239, 22), // "onFileStopsOpening_CSV"
-QT_MOC_LITERAL(95, 1262, 15), // "QVector<float>&"
-QT_MOC_LITERAL(96, 1278, 8), // "depthVec"
-QT_MOC_LITERAL(97, 1287, 4), // "minZ"
-QT_MOC_LITERAL(98, 1292, 4), // "maxZ"
-QT_MOC_LITERAL(99, 1297, 28), // "onSendMapTextureIdByTileIndx"
-QT_MOC_LITERAL(100, 1326, 14), // "map::TileIndex"
-QT_MOC_LITERAL(101, 1341, 8), // "tileIndx"
-QT_MOC_LITERAL(102, 1350, 6), // "GLuint"
-QT_MOC_LITERAL(103, 1357, 9), // "textureId"
-QT_MOC_LITERAL(104, 1367, 28), // "onDataProcesstorStateChanged"
-QT_MOC_LITERAL(105, 1396, 17), // "DataProcessorType"
-QT_MOC_LITERAL(106, 1414, 24), // "onSendFrameInputToLogger"
-QT_MOC_LITERAL(107, 1439, 4), // "uuid"
-QT_MOC_LITERAL(108, 1444, 5), // "Link*"
-QT_MOC_LITERAL(109, 1450, 4), // "link"
-QT_MOC_LITERAL(110, 1455, 20), // "Parsers::FrameParser"
-QT_MOC_LITERAL(111, 1476, 5), // "frame"
-QT_MOC_LITERAL(112, 1482, 18), // "onZoomLevelChanged"
-QT_MOC_LITERAL(113, 1501, 10), // "isGPSAlive"
-QT_MOC_LITERAL(114, 1512, 13), // "isFactoryMode"
-QT_MOC_LITERAL(115, 1526, 11), // "consoleList"
-QT_MOC_LITERAL(116, 1538, 17), // "ConsoleListModel*"
-QT_MOC_LITERAL(117, 1556, 10), // "loggingKlf"
-QT_MOC_LITERAL(118, 1567, 12), // "isKlfLogging"
-QT_MOC_LITERAL(119, 1580, 10), // "loggingCsv"
-QT_MOC_LITERAL(120, 1591, 6), // "useGPS"
-QT_MOC_LITERAL(121, 1598, 20), // "fixBlackStripesState"
-QT_MOC_LITERAL(122, 1619, 27), // "fixBlackStripesForwardSteps"
-QT_MOC_LITERAL(123, 1647, 28), // "fixBlackStripesBackwardSteps"
-QT_MOC_LITERAL(124, 1676, 13), // "isFileOpening"
-QT_MOC_LITERAL(125, 1690, 17), // "isSeparateReading"
-QT_MOC_LITERAL(126, 1708, 7), // "ch1Name"
-QT_MOC_LITERAL(127, 1716, 7), // "ch2Name"
-QT_MOC_LITERAL(128, 1724, 18), // "dataProcessorState"
-QT_MOC_LITERAL(129, 1743, 12) // "currMapLevel"
+QT_MOC_LITERAL(86, 1126, 24), // "createDatasetConnections"
+QT_MOC_LITERAL(87, 1151, 24), // "createScene3dConnections"
+QT_MOC_LITERAL(88, 1176, 15), // "getChannel1Name"
+QT_MOC_LITERAL(89, 1192, 15), // "getChannel2Name"
+QT_MOC_LITERAL(90, 1208, 20), // "getConvertedMousePos"
+QT_MOC_LITERAL(91, 1229, 4), // "indx"
+QT_MOC_LITERAL(92, 1234, 6), // "mouseX"
+QT_MOC_LITERAL(93, 1241, 6), // "mouseY"
+QT_MOC_LITERAL(94, 1248, 21), // "setIsAttitudeExpected"
+QT_MOC_LITERAL(95, 1270, 18), // "onFileStopsOpening"
+QT_MOC_LITERAL(96, 1289, 22), // "onFileStopsOpening_CSV"
+QT_MOC_LITERAL(97, 1312, 15), // "QVector<float>&"
+QT_MOC_LITERAL(98, 1328, 8), // "depthVec"
+QT_MOC_LITERAL(99, 1337, 4), // "minZ"
+QT_MOC_LITERAL(100, 1342, 4), // "maxZ"
+QT_MOC_LITERAL(101, 1347, 28), // "onSendMapTextureIdByTileIndx"
+QT_MOC_LITERAL(102, 1376, 14), // "map::TileIndex"
+QT_MOC_LITERAL(103, 1391, 8), // "tileIndx"
+QT_MOC_LITERAL(104, 1400, 6), // "GLuint"
+QT_MOC_LITERAL(105, 1407, 9), // "textureId"
+QT_MOC_LITERAL(106, 1417, 28), // "onDataProcesstorStateChanged"
+QT_MOC_LITERAL(107, 1446, 17), // "DataProcessorType"
+QT_MOC_LITERAL(108, 1464, 24), // "onSendFrameInputToLogger"
+QT_MOC_LITERAL(109, 1489, 4), // "uuid"
+QT_MOC_LITERAL(110, 1494, 5), // "Link*"
+QT_MOC_LITERAL(111, 1500, 4), // "link"
+QT_MOC_LITERAL(112, 1505, 20), // "Parsers::FrameParser"
+QT_MOC_LITERAL(113, 1526, 5), // "frame"
+QT_MOC_LITERAL(114, 1532, 18), // "onZoomLevelChanged"
+QT_MOC_LITERAL(115, 1551, 10), // "isGPSAlive"
+QT_MOC_LITERAL(116, 1562, 13), // "isFactoryMode"
+QT_MOC_LITERAL(117, 1576, 11), // "consoleList"
+QT_MOC_LITERAL(118, 1588, 17), // "ConsoleListModel*"
+QT_MOC_LITERAL(119, 1606, 10), // "loggingKlf"
+QT_MOC_LITERAL(120, 1617, 12), // "isKlfLogging"
+QT_MOC_LITERAL(121, 1630, 10), // "loggingCsv"
+QT_MOC_LITERAL(122, 1641, 6), // "useGPS"
+QT_MOC_LITERAL(123, 1648, 20), // "fixBlackStripesState"
+QT_MOC_LITERAL(124, 1669, 27), // "fixBlackStripesForwardSteps"
+QT_MOC_LITERAL(125, 1697, 28), // "fixBlackStripesBackwardSteps"
+QT_MOC_LITERAL(126, 1726, 13), // "isFileOpening"
+QT_MOC_LITERAL(127, 1740, 17), // "isSeparateReading"
+QT_MOC_LITERAL(128, 1758, 7), // "ch1Name"
+QT_MOC_LITERAL(129, 1766, 7), // "ch2Name"
+QT_MOC_LITERAL(130, 1774, 18), // "dataProcessorState"
+QT_MOC_LITERAL(131, 1793, 12) // "currMapLevel"
 
     },
     "Core\0connectionChanged\0\0duplex\0"
@@ -198,9 +200,10 @@ QT_MOC_LITERAL(129, 1743, 12) // "currMapLevel"
     "onChannelsUpdated\0onRedrawEpochs\0"
     "QSet<int>\0indxs\0getDataProcessorState\0"
     "initStreamList\0getCurrMapLevel\0"
-    "getChannel1Name\0getChannel2Name\0"
-    "getConvertedMousePos\0indx\0mouseX\0"
-    "mouseY\0setIsAttitudeExpected\0"
+    "createDatasetConnections\0"
+    "createScene3dConnections\0getChannel1Name\0"
+    "getChannel2Name\0getConvertedMousePos\0"
+    "indx\0mouseX\0mouseY\0setIsAttitudeExpected\0"
     "onFileStopsOpening\0onFileStopsOpening_CSV\0"
     "QVector<float>&\0depthVec\0minZ\0maxZ\0"
     "onSendMapTextureIdByTileIndx\0"
@@ -225,88 +228,90 @@ static const uint qt_meta_data_Core[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      72,   14, // methods
-      17,  678, // properties
+      74,   14, // methods
+      17,  690, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
       10,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  374,    2, 0x06 /* Public */,
-       1,    0,  377,    2, 0x26 /* Public | MethodCloned */,
-       4,    0,  378,    2, 0x06 /* Public */,
-       5,    0,  379,    2, 0x06 /* Public */,
-       6,    0,  380,    2, 0x06 /* Public */,
-       7,    0,  381,    2, 0x06 /* Public */,
-       8,    0,  382,    2, 0x06 /* Public */,
-       9,    0,  383,    2, 0x06 /* Public */,
-      10,    0,  384,    2, 0x06 /* Public */,
-      11,    0,  385,    2, 0x06 /* Public */,
+       1,    1,  384,    2, 0x06 /* Public */,
+       1,    0,  387,    2, 0x26 /* Public | MethodCloned */,
+       4,    0,  388,    2, 0x06 /* Public */,
+       5,    0,  389,    2, 0x06 /* Public */,
+       6,    0,  390,    2, 0x06 /* Public */,
+       7,    0,  391,    2, 0x06 /* Public */,
+       8,    0,  392,    2, 0x06 /* Public */,
+       9,    0,  393,    2, 0x06 /* Public */,
+      10,    0,  394,    2, 0x06 /* Public */,
+      11,    0,  395,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      12,    1,  386,    2, 0x0a /* Public */,
-      14,    0,  389,    2, 0x0a /* Public */,
-      15,    3,  390,    2, 0x0a /* Public */,
-      15,    2,  397,    2, 0x2a /* Public | MethodCloned */,
-      15,    1,  402,    2, 0x2a /* Public | MethodCloned */,
-      19,    0,  405,    2, 0x0a /* Public */,
-      20,    0,  406,    2, 0x0a /* Public */,
-      21,    1,  407,    2, 0x0a /* Public */,
-      23,   11,  410,    2, 0x0a /* Public */,
-      23,   10,  433,    2, 0x2a /* Public | MethodCloned */,
-      23,    9,  454,    2, 0x2a /* Public | MethodCloned */,
-      23,    8,  473,    2, 0x2a /* Public | MethodCloned */,
-      23,    7,  490,    2, 0x2a /* Public | MethodCloned */,
-      23,    6,  505,    2, 0x2a /* Public | MethodCloned */,
-      23,    5,  518,    2, 0x2a /* Public | MethodCloned */,
-      23,    4,  529,    2, 0x2a /* Public | MethodCloned */,
-      23,    3,  538,    2, 0x2a /* Public | MethodCloned */,
-      23,    2,  545,    2, 0x2a /* Public | MethodCloned */,
-      35,    3,  550,    2, 0x0a /* Public */,
-      39,    0,  557,    2, 0x0a /* Public */,
-      40,    2,  558,    2, 0x0a /* Public */,
-      42,    1,  563,    2, 0x0a /* Public */,
-      44,    0,  566,    2, 0x0a /* Public */,
-      45,    1,  567,    2, 0x0a /* Public */,
-      47,    0,  570,    2, 0x0a /* Public */,
-      48,    0,  571,    2, 0x0a /* Public */,
-      49,    0,  572,    2, 0x0a /* Public */,
-      50,    1,  573,    2, 0x0a /* Public */,
-      51,    1,  576,    2, 0x0a /* Public */,
-      53,    1,  579,    2, 0x0a /* Public */,
-      54,    0,  582,    2, 0x0a /* Public */,
-      55,    1,  583,    2, 0x0a /* Public */,
-      56,    0,  586,    2, 0x0a /* Public */,
-      57,    1,  587,    2, 0x0a /* Public */,
-      58,    1,  590,    2, 0x0a /* Public */,
-      59,    1,  593,    2, 0x0a /* Public */,
-      60,    3,  596,    2, 0x0a /* Public */,
-      60,    2,  603,    2, 0x2a /* Public | MethodCloned */,
-      64,    1,  608,    2, 0x0a /* Public */,
-      65,    1,  611,    2, 0x0a /* Public */,
-      67,    1,  614,    2, 0x0a /* Public */,
-      68,    1,  617,    2, 0x0a /* Public */,
-      70,    0,  620,    2, 0x0a /* Public */,
-      71,    2,  621,    2, 0x0a /* Public */,
-      74,    2,  626,    2, 0x0a /* Public */,
-      77,    0,  631,    2, 0x0a /* Public */,
-      78,    0,  632,    2, 0x0a /* Public */,
-      79,    0,  633,    2, 0x0a /* Public */,
-      80,    1,  634,    2, 0x0a /* Public */,
-      83,    0,  637,    2, 0x0a /* Public */,
-      84,    0,  638,    2, 0x0a /* Public */,
-      85,    0,  639,    2, 0x0a /* Public */,
-      86,    0,  640,    2, 0x0a /* Public */,
-      87,    0,  641,    2, 0x0a /* Public */,
-      88,    3,  642,    2, 0x0a /* Public */,
-      92,    1,  649,    2, 0x0a /* Public */,
-      93,    0,  652,    2, 0x08 /* Private */,
-      94,    3,  653,    2, 0x08 /* Private */,
-      99,    2,  660,    2, 0x08 /* Private */,
-     104,    1,  665,    2, 0x08 /* Private */,
-     106,    3,  668,    2, 0x08 /* Private */,
-     112,    1,  675,    2, 0x08 /* Private */,
+      12,    1,  396,    2, 0x0a /* Public */,
+      14,    0,  399,    2, 0x0a /* Public */,
+      15,    3,  400,    2, 0x0a /* Public */,
+      15,    2,  407,    2, 0x2a /* Public | MethodCloned */,
+      15,    1,  412,    2, 0x2a /* Public | MethodCloned */,
+      19,    0,  415,    2, 0x0a /* Public */,
+      20,    0,  416,    2, 0x0a /* Public */,
+      21,    1,  417,    2, 0x0a /* Public */,
+      23,   11,  420,    2, 0x0a /* Public */,
+      23,   10,  443,    2, 0x2a /* Public | MethodCloned */,
+      23,    9,  464,    2, 0x2a /* Public | MethodCloned */,
+      23,    8,  483,    2, 0x2a /* Public | MethodCloned */,
+      23,    7,  500,    2, 0x2a /* Public | MethodCloned */,
+      23,    6,  515,    2, 0x2a /* Public | MethodCloned */,
+      23,    5,  528,    2, 0x2a /* Public | MethodCloned */,
+      23,    4,  539,    2, 0x2a /* Public | MethodCloned */,
+      23,    3,  548,    2, 0x2a /* Public | MethodCloned */,
+      23,    2,  555,    2, 0x2a /* Public | MethodCloned */,
+      35,    3,  560,    2, 0x0a /* Public */,
+      39,    0,  567,    2, 0x0a /* Public */,
+      40,    2,  568,    2, 0x0a /* Public */,
+      42,    1,  573,    2, 0x0a /* Public */,
+      44,    0,  576,    2, 0x0a /* Public */,
+      45,    1,  577,    2, 0x0a /* Public */,
+      47,    0,  580,    2, 0x0a /* Public */,
+      48,    0,  581,    2, 0x0a /* Public */,
+      49,    0,  582,    2, 0x0a /* Public */,
+      50,    1,  583,    2, 0x0a /* Public */,
+      51,    1,  586,    2, 0x0a /* Public */,
+      53,    1,  589,    2, 0x0a /* Public */,
+      54,    0,  592,    2, 0x0a /* Public */,
+      55,    1,  593,    2, 0x0a /* Public */,
+      56,    0,  596,    2, 0x0a /* Public */,
+      57,    1,  597,    2, 0x0a /* Public */,
+      58,    1,  600,    2, 0x0a /* Public */,
+      59,    1,  603,    2, 0x0a /* Public */,
+      60,    3,  606,    2, 0x0a /* Public */,
+      60,    2,  613,    2, 0x2a /* Public | MethodCloned */,
+      64,    1,  618,    2, 0x0a /* Public */,
+      65,    1,  621,    2, 0x0a /* Public */,
+      67,    1,  624,    2, 0x0a /* Public */,
+      68,    1,  627,    2, 0x0a /* Public */,
+      70,    0,  630,    2, 0x0a /* Public */,
+      71,    2,  631,    2, 0x0a /* Public */,
+      74,    2,  636,    2, 0x0a /* Public */,
+      77,    0,  641,    2, 0x0a /* Public */,
+      78,    0,  642,    2, 0x0a /* Public */,
+      79,    0,  643,    2, 0x0a /* Public */,
+      80,    1,  644,    2, 0x0a /* Public */,
+      83,    0,  647,    2, 0x0a /* Public */,
+      84,    0,  648,    2, 0x0a /* Public */,
+      85,    0,  649,    2, 0x0a /* Public */,
+      86,    0,  650,    2, 0x0a /* Public */,
+      87,    0,  651,    2, 0x0a /* Public */,
+      88,    0,  652,    2, 0x0a /* Public */,
+      89,    0,  653,    2, 0x0a /* Public */,
+      90,    3,  654,    2, 0x0a /* Public */,
+      94,    1,  661,    2, 0x0a /* Public */,
+      95,    0,  664,    2, 0x08 /* Private */,
+      96,    3,  665,    2, 0x08 /* Private */,
+     101,    2,  672,    2, 0x08 /* Private */,
+     106,    1,  677,    2, 0x08 /* Private */,
+     108,    3,  680,    2, 0x08 /* Private */,
+     114,    1,  687,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Bool,    3,
@@ -373,35 +378,37 @@ static const uint qt_meta_data_Core[] = {
     QMetaType::Int,
     QMetaType::Void,
     QMetaType::Int,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::QString,
     QMetaType::QString,
-    QMetaType::QVariant, QMetaType::Int, QMetaType::Int, QMetaType::Int,   89,   90,   91,
+    QMetaType::QVariant, QMetaType::Int, QMetaType::Int, QMetaType::Int,   91,   92,   93,
     QMetaType::Void, QMetaType::Bool,   13,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 95, QMetaType::Double, QMetaType::Double,   96,   97,   98,
-    QMetaType::Void, 0x80000000 | 100, 0x80000000 | 102,  101,  103,
-    QMetaType::Void, 0x80000000 | 105,   13,
-    QMetaType::Void, QMetaType::QUuid, 0x80000000 | 108, 0x80000000 | 110,  107,  109,  111,
+    QMetaType::Void, 0x80000000 | 97, QMetaType::Double, QMetaType::Double,   98,   99,  100,
+    QMetaType::Void, 0x80000000 | 102, 0x80000000 | 104,  103,  105,
+    QMetaType::Void, 0x80000000 | 107,   13,
+    QMetaType::Void, QMetaType::QUuid, 0x80000000 | 110, 0x80000000 | 112,  109,  111,  113,
     QMetaType::Void, QMetaType::Int,   66,
 
  // properties: name, type, flags
-     113, QMetaType::Bool, 0x00495001,
-     114, QMetaType::Bool, 0x00095401,
-     115, 0x80000000 | 116, 0x00095409,
-     117, QMetaType::Bool, 0x00095003,
-     118, QMetaType::Bool, 0x00495001,
+     115, QMetaType::Bool, 0x00495001,
+     116, QMetaType::Bool, 0x00095401,
+     117, 0x80000000 | 118, 0x00095409,
      119, QMetaType::Bool, 0x00095003,
-     120, QMetaType::Bool, 0x00095103,
-     121, QMetaType::Bool, 0x00095103,
-     122, QMetaType::Int, 0x00095103,
-     123, QMetaType::Int, 0x00095103,
+     120, QMetaType::Bool, 0x00495001,
+     121, QMetaType::Bool, 0x00095003,
+     122, QMetaType::Bool, 0x00095103,
+     123, QMetaType::Bool, 0x00095103,
+     124, QMetaType::Int, 0x00095103,
+     125, QMetaType::Int, 0x00095103,
       16, QMetaType::QString, 0x00495001,
-     124, QMetaType::Bool, 0x00495001,
-     125, QMetaType::Bool, 0x00095401,
-     126, QMetaType::QString, 0x00495801,
-     127, QMetaType::QString, 0x00495801,
-     128, QMetaType::Int, 0x00495001,
-     129, QMetaType::Int, 0x00495001,
+     126, QMetaType::Bool, 0x00495001,
+     127, QMetaType::Bool, 0x00095401,
+     128, QMetaType::QString, 0x00495801,
+     129, QMetaType::QString, 0x00495801,
+     130, QMetaType::Int, 0x00495001,
+     131, QMetaType::Int, 0x00495001,
 
  // properties: notify_signal_id
        6,
@@ -524,19 +531,21 @@ void Core::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         case 60: _t->initStreamList(); break;
         case 61: { int _r = _t->getCurrMapLevel();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
-        case 62: { QString _r = _t->getChannel1Name();
+        case 62: _t->createDatasetConnections(); break;
+        case 63: _t->createScene3dConnections(); break;
+        case 64: { QString _r = _t->getChannel1Name();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
-        case 63: { QString _r = _t->getChannel2Name();
+        case 65: { QString _r = _t->getChannel2Name();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
-        case 64: { QVariant _r = _t->getConvertedMousePos((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])));
+        case 66: { QVariant _r = _t->getConvertedMousePos((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< QVariant*>(_a[0]) = std::move(_r); }  break;
-        case 65: _t->setIsAttitudeExpected((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 66: _t->onFileStopsOpening(); break;
-        case 67: _t->onFileStopsOpening_CSV((*reinterpret_cast< QVector<float>(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
-        case 68: _t->onSendMapTextureIdByTileIndx((*reinterpret_cast< const map::TileIndex(*)>(_a[1])),(*reinterpret_cast< GLuint(*)>(_a[2]))); break;
-        case 69: _t->onDataProcesstorStateChanged((*reinterpret_cast< const DataProcessorType(*)>(_a[1]))); break;
-        case 70: _t->onSendFrameInputToLogger((*reinterpret_cast< QUuid(*)>(_a[1])),(*reinterpret_cast< Link*(*)>(_a[2])),(*reinterpret_cast< const Parsers::FrameParser(*)>(_a[3]))); break;
-        case 71: _t->onZoomLevelChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 67: _t->setIsAttitudeExpected((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 68: _t->onFileStopsOpening(); break;
+        case 69: _t->onFileStopsOpening_CSV((*reinterpret_cast< QVector<float>(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< double(*)>(_a[3]))); break;
+        case 70: _t->onSendMapTextureIdByTileIndx((*reinterpret_cast< const map::TileIndex(*)>(_a[1])),(*reinterpret_cast< GLuint(*)>(_a[2]))); break;
+        case 71: _t->onDataProcesstorStateChanged((*reinterpret_cast< const DataProcessorType(*)>(_a[1]))); break;
+        case 72: _t->onSendFrameInputToLogger((*reinterpret_cast< QUuid(*)>(_a[1])),(*reinterpret_cast< Link*(*)>(_a[2])),(*reinterpret_cast< const Parsers::FrameParser(*)>(_a[3]))); break;
+        case 73: _t->onZoomLevelChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -549,14 +558,14 @@ void Core::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QSet<int> >(); break;
             }
             break;
-        case 68:
+        case 70:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< map::TileIndex >(); break;
             }
             break;
-        case 70:
+        case 72:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 1:
@@ -709,13 +718,13 @@ int Core::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 72)
+        if (_id < 74)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 72;
+        _id -= 74;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 72)
+        if (_id < 74)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 72;
+        _id -= 74;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

@@ -44,15 +44,14 @@ DataProcessor::DataProcessor(QObject *parent, Dataset* datasetPtr)
     qRegisterMetaType<Dataset*>("Dataset*");
     qRegisterMetaType<std::uint8_t>("std::uint8_t");
 
+    worker_ = new ComputeWorker(this, datasetPtr_);
+    worker_->setDatasetPtr(datasetPtr_);
+    worker_->moveToThread(&computeThread_);
+
     pendingWorkTimer_.setParent(this);
     pendingWorkTimer_.setSingleShot(true);
     pendingWorkTimer_.setInterval(10);
     connect(&pendingWorkTimer_, &QTimer::timeout, this, &DataProcessor::runCoalescedWork);
-
-    worker_ = new ComputeWorker(this, datasetPtr_);
-    worker_->setDatasetPtr(datasetPtr_);
-
-    worker_->moveToThread(&computeThread_);
 
     connect(worker_, &ComputeWorker::jobFinished,          this, &DataProcessor::onWorkerFinished,      Qt::QueuedConnection);
     connect(worker_, &ComputeWorker::bottomTrackStarted,   this, &DataProcessor::onBottomTrackStarted,  Qt::QueuedConnection);
@@ -408,6 +407,8 @@ void DataProcessor::runCoalescedWork()
     const bool wantIsobaths = maskNow & WF_Isobaths;
 
     WorkBundle wb;
+    qDebug() << "wantSurface: " << wantSurface << "  pendingSurfaceIndxs_.size(): " << pendingSurfaceIndxs_
+             <<"   updateIsobaths_:"<<updateIsobaths_ << "  updateMosaic_:" << updateMosaic_;
     if (wantSurface && !pendingSurfaceIndxs_.isEmpty() && (updateIsobaths_ || updateMosaic_)) {
         wb.surfaceVec.reserve(pendingSurfaceIndxs_.size());
 
@@ -422,6 +423,8 @@ void DataProcessor::runCoalescedWork()
         pendingSurfaceIndxs_.clear();
     }
 
+    qDebug() << "wantMosaic:" << wantMosaic << "  pendingMosaicIndxs_.size():" << pendingMosaicIndxs_.size()
+             << "   updateMosaic_: " << updateMosaic_;
     if (wantMosaic && !pendingMosaicIndxs_.isEmpty() && updateMosaic_) {
         auto it = pendingMosaicIndxs_.begin();
         while (it != pendingMosaicIndxs_.end()) {
@@ -441,13 +444,19 @@ void DataProcessor::runCoalescedWork()
         }
     }
 
+    qDebug() << "wantIsobaths: " << wantIsobaths << "   pendingIsobathsWork_:" << pendingIsobathsWork_
+             << "   updateIsobaths_:" << updateIsobaths_ << "   updateMosaic_:" << updateMosaic_;
     if (wantIsobaths && pendingIsobathsWork_ && updateIsobaths_ && !updateMosaic_) {
         wb.doIsobaths = true;
         pendingIsobathsWork_ = false;
     }
 
-    if (wb.surfaceVec.isEmpty() && wb.mosaicVec.isEmpty() && !wb.doIsobaths) {
+
+    qDebug() << "wb.surfaceVec.size():  " << wb.surfaceVec.size() << " " << wb.mosaicVec.size()
+             << "   wb.doIsobaths " << wb.doIsobaths;
+        if (wb.surfaceVec.isEmpty() && wb.mosaicVec.isEmpty() && !wb.doIsobaths) {
         pendingIsobathsWork_ = false;
+        qDebug() <<"pendingIsobathsWork_ = false..........";
         return;
     }
 

@@ -229,7 +229,7 @@ void ScreetShot::httpGetScreen(ImageInfo info)
                 info.img.loadFromData(buf);
                 if (!info.img.isNull()) {
                     // emit GetInterface::getInterface()->update(info);
-                    if (!m_itemGroup.contains(info.z))   // 如果图层不存在则添加
+                    if(!m_itemGroup.contains(info.z))   // 如果图层不存在则添加
                     {
                         auto* item = new GraphItemGroup();
                         m_itemGroup.insert(info.z, item);
@@ -237,8 +237,7 @@ void ScreetShot::httpGetScreen(ImageInfo info)
                     }
 
                     GraphItemGroup* itemGroup = m_itemGroup.value(info.z);
-                    if (itemGroup)
-                    {
+                    if (itemGroup) {
                         itemGroup->addImage(info);
                     }
 
@@ -246,12 +245,11 @@ void ScreetShot::httpGetScreen(ImageInfo info)
                     // emit updateProgressText(m_screenTileCnt_,tileTotalCnt);
                     return;
                 }
-
             }
 
         } else {
             retryCount++;
-            //          qDebug() << "Retry:" << retryCount;
+            // qDebug() << "Retry:" << retryCount;
         }
     }
 
@@ -260,7 +258,6 @@ void ScreetShot::httpGetScreen(ImageInfo info)
         isScreenNetError_ = true;
 
         // emit showNetworkError();
-
     }
 
 }
@@ -286,22 +283,6 @@ void ScreetShot::slot_downloadScreenFinished()
             m_scene->addItem(itemGroup);
         }
 
-
-
-        // 裁剪到框选区域
-        QPoint tlTile = Bing::pixelXYToTileXY(targetRect_.topLeft());
-
-        QRect cropRect(
-            targetRect_.x() - tlTile.x() * 256,
-            targetRect_.y() - tlTile.y() * 256,
-            targetRect_.width(),
-            targetRect_.height()
-            );
-        QImage finalImage = bigImage_.copy(cropRect);
-
-
-
-
         QString baseDir = QCoreApplication::applicationDirPath();
         QDir dir(baseDir);
         dir.mkpath("screetTest");
@@ -312,42 +293,26 @@ void ScreetShot::slot_downloadScreenFinished()
         }
 
         QString bigFile = baseDir + "mosaic.png";
-        finalImage.save(bigFile);
+        QImage image(targetRect_.size(),QImage::Format_RGB16);
+        if (image.isNull()) {
+            qWarning() << "Failed to create QImage. Aborting rendering.";
+            return;
+        }
 
+        {
+            QPainter painter(&image);
+            m_scene->render(&painter, QRectF(0, 0, targetRect_.width(), targetRect_.height()), targetRect_);
+        }
+        image.save(bigFile);
         qDebug() << "Big mosaic saved:" << bigFile;
 
-        // 保存到成员变量
-        bigImage_ = finalImage;
-
-        qDebug() << "bigImage_ size =" << bigImage_.size();
-        qDebug() << "bigImage_ rect =" << bigImage_.rect();
-        qDebug() << "cropRect =" << cropRect;
-        qDebug() << "finalImage size =" << finalImage.size();
-
-
-
-        // QImage image(targetRect_.size(),QImage::Format_RGB16);
-        // if (image.isNull()) {
-        //     qWarning() << "Failed to create QImage. Aborting rendering.";
-        //     return;
-        // }
-
-        // {
-        //     QPainter painter(&image);
-        //     m_scene->render(&painter, QRectF(0, 0, targetRect_.width(), targetRect_.height()), targetRect_);
-        // }
-        // image.save(bigFile);
-        // return;
-
-
-
-
+        return;
 
 
 
         // 划分 targetRect_ 为小正方形
         double pixel1m = targetRect_.width() / topWidth_;
-        //   qDebug() << mapLevel << "级下， 1米的像素值: " << pixel1m << " " << targetRect_.height()/rightLen_;
+        // qDebug() << mapLevel << "级下， 1米的像素值: " << pixel1m << " " << targetRect_.height()/rightLen_;
         pixel300m_ = pixel1m*300;
         int rows = targetRect_.height() / pixel300m_;
         int cols = targetRect_.width()  / pixel300m_;
@@ -363,10 +328,10 @@ void ScreetShot::slot_downloadScreenFinished()
         {
             for (int col = 0; col < cols; ++col)
             {
-                // if(screenUserCancel_) {
-                //     generatedRectCount_ = kmzCount;
-                //     break;
-                // }
+                if(screenUserCancel_) {
+                    generatedRectCount_ = kmzCount;
+                    break;
+                }
                 QPointF topLeft(targetRect_.x()+col * pixel300m_, targetRect_.y()+row * pixel300m_);
                 QPointF bottomRight(targetRect_.x()+(col+1) * pixel300m_, targetRect_.y()+(row+1) * pixel300m_);
                 QRectF  square(topLeft, bottomRight);
@@ -421,7 +386,6 @@ void ScreetShot::saveScreetShot()
     if (!mapView) {
         return;
     }
-
     double minLat = std::min({topLeftLati_, topRightLati_, bottomRightLati_});
     double maxLat = std::max({topLeftLati_, topRightLati_, bottomRightLati_});
     double minLon = std::min({topLeftLong_, topRightLong_, bottomRightLong_});
@@ -450,19 +414,17 @@ void ScreetShot::saveScreetShot()
     }
 
 
-    qDebug() << "currMapLevel_ =" << currMapLevel_;
-    qDebug() << "Lat range =" << minLat << "~" << maxLat;
-    qDebug() << "Lon range =" << minLon << "~" << maxLon;
+    qDebug() << "currMapLevel_ = " << currMapLevel_;
+    qDebug() << "Lat =" << minLat << "~" << maxLat << "   Lon =" << minLon << "~" << maxLon;
 
-    qDebug() << "lonStartTile =" << lonStartTile << "lonEndTile =" << lonEndTile
-             << "boundaryTile =" << boundaryTile;
+    qDebug() << "lonStartTile =" << lonStartTile << "lonEndTile =" << lonEndTile << "boundaryTile =" << boundaryTile;
     qDebug() << "yStart =" << yStart << "yEnd =" << yEnd;
     qDebug() << "minY =" << minY << "maxY =" << maxY;
 
     map::TileIndex firstTileIndx(xIndices[0], minY, currMapLevel_, provider.getProviderId());
     auto firstTileInfo = provider.indexToTileInfo(firstTileIndx);
     map::TileIndex lastTileIndx(xIndices.last(), maxY, currMapLevel_, provider.getProviderId());
-    auto lastTileInfo = provider.indexToTileInfo(lastTileIndx);
+    auto lastTileInfo  = provider.indexToTileInfo(lastTileIndx);
     double tileMinLat = lastTileInfo.bounds.south;
     double tileMaxLat = firstTileInfo.bounds.north;
     double tileMinLon = firstTileInfo.bounds.west;
@@ -476,16 +438,14 @@ void ScreetShot::saveScreetShot()
     targetRect_ = QRect(0, 0, w, w);
     QPoint topLeft = Bing::latLongToPixelXY(minLon, maxLat, currMapLevel_);
     QPoint bottomRight = Bing::latLongToPixelXY(maxLon, minLat, currMapLevel_);
+    qDebug() << "minLon: " << minLon << "  " << maxLat << "  " << maxLon << "   " << minLat;
     targetRect_.setTopLeft(topLeft);
     targetRect_.setBottomRight(bottomRight);
 
     if(m_scene == nullptr) {
         m_scene = new QGraphicsScene();
-        // this->setSce
+        // this->setScene
     }
-    qDebug() << "scene thread =" << m_scene->thread();
-    qDebug() << "current thread =" << QThread::currentThread();
-
     m_scene->setSceneRect(targetRect_);
     if(targetRect_.isEmpty() || currMapLevel_ > 22 || currMapLevel_ < 0)  return;
 
@@ -495,7 +455,6 @@ void ScreetShot::saveScreetShot()
     m_infos.clear();
     getTitle(targetRect_, currMapLevel_);
     getUrl();
-
 
     isScreenNetError_ = false;
     m_screenTileCnt_ = 0;

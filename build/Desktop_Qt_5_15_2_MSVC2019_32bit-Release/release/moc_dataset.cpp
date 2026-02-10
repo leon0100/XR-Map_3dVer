@@ -25,8 +25,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Dataset_t {
-    QByteArrayData data[149];
-    char stringdata0[1865];
+    QByteArrayData data[150];
+    char stringdata0[1884];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -61,129 +61,130 @@ QT_MOC_LITERAL(22, 230, 19), // "lastPositionChanged"
 QT_MOC_LITERAL(23, 250, 20), // "activeContactChanged"
 QT_MOC_LITERAL(24, 271, 16), // "lastDepthChanged"
 QT_MOC_LITERAL(25, 288, 12), // "speedChanged"
-QT_MOC_LITERAL(26, 301, 17), // "onSonarPosCanCalc"
-QT_MOC_LITERAL(27, 319, 24), // "isValidActiveContactIndx"
-QT_MOC_LITERAL(28, 344, 21), // "isValidBoatCoordinate"
-QT_MOC_LITERAL(29, 366, 16), // "isValidLastDepth"
-QT_MOC_LITERAL(30, 383, 12), // "isValidSpeed"
-QT_MOC_LITERAL(31, 396, 15), // "getBoatLatitude"
-QT_MOC_LITERAL(32, 412, 16), // "getBoatLongitude"
-QT_MOC_LITERAL(33, 429, 16), // "getDistToContact"
-QT_MOC_LITERAL(34, 446, 17), // "getAngleToContact"
-QT_MOC_LITERAL(35, 464, 12), // "getLastDepth"
-QT_MOC_LITERAL(36, 477, 8), // "getSpeed"
-QT_MOC_LITERAL(37, 486, 8), // "addEvent"
-QT_MOC_LITERAL(38, 495, 9), // "timestamp"
-QT_MOC_LITERAL(39, 505, 2), // "id"
-QT_MOC_LITERAL(40, 508, 5), // "unixt"
-QT_MOC_LITERAL(41, 514, 10), // "addEncoder"
-QT_MOC_LITERAL(42, 525, 10), // "angle1_deg"
-QT_MOC_LITERAL(43, 536, 10), // "angle2_deg"
-QT_MOC_LITERAL(44, 547, 10), // "angle3_deg"
-QT_MOC_LITERAL(45, 558, 12), // "addTimestamp"
-QT_MOC_LITERAL(46, 571, 13), // "setChartSetup"
-QT_MOC_LITERAL(47, 585, 8), // "uint16_t"
-QT_MOC_LITERAL(48, 594, 5), // "resol"
-QT_MOC_LITERAL(49, 600, 5), // "count"
-QT_MOC_LITERAL(50, 606, 6), // "offset"
-QT_MOC_LITERAL(51, 613, 14), // "setTranscSetup"
-QT_MOC_LITERAL(52, 628, 4), // "freq"
-QT_MOC_LITERAL(53, 633, 7), // "uint8_t"
-QT_MOC_LITERAL(54, 641, 5), // "pulse"
-QT_MOC_LITERAL(55, 647, 5), // "boost"
-QT_MOC_LITERAL(56, 653, 13), // "setSoundSpeed"
-QT_MOC_LITERAL(57, 667, 8), // "uint32_t"
-QT_MOC_LITERAL(58, 676, 10), // "soundSpeed"
-QT_MOC_LITERAL(59, 687, 14), // "setSonarOffset"
-QT_MOC_LITERAL(60, 702, 1), // "x"
-QT_MOC_LITERAL(61, 704, 1), // "y"
-QT_MOC_LITERAL(62, 706, 1), // "z"
-QT_MOC_LITERAL(63, 708, 23), // "setFixBlackStripesState"
-QT_MOC_LITERAL(64, 732, 5), // "state"
-QT_MOC_LITERAL(65, 738, 30), // "setFixBlackStripesForwardSteps"
-QT_MOC_LITERAL(66, 769, 3), // "val"
-QT_MOC_LITERAL(67, 773, 31), // "setFixBlackStripesBackwardSteps"
-QT_MOC_LITERAL(68, 805, 8), // "addChart"
-QT_MOC_LITERAL(69, 814, 15), // "ChartParameters"
-QT_MOC_LITERAL(70, 830, 11), // "chartParams"
-QT_MOC_LITERAL(71, 842, 26), // "QVector<QVector<uint8_t> >"
-QT_MOC_LITERAL(72, 869, 4), // "data"
-QT_MOC_LITERAL(73, 874, 10), // "resolution"
-QT_MOC_LITERAL(74, 885, 15), // "rawDataRecieved"
-QT_MOC_LITERAL(75, 901, 7), // "RawData"
-QT_MOC_LITERAL(76, 909, 8), // "raw_data"
-QT_MOC_LITERAL(77, 918, 7), // "addDist"
-QT_MOC_LITERAL(78, 926, 4), // "dist"
-QT_MOC_LITERAL(79, 931, 14), // "addRangefinder"
-QT_MOC_LITERAL(80, 946, 8), // "distance"
-QT_MOC_LITERAL(81, 955, 15), // "addUsblSolution"
-QT_MOC_LITERAL(82, 971, 31), // "IDBinUsblSolution::UsblSolution"
-QT_MOC_LITERAL(83, 1003, 14), // "addDopplerBeam"
-QT_MOC_LITERAL(84, 1018, 23), // "IDBinDVL::BeamSolution*"
-QT_MOC_LITERAL(85, 1042, 5), // "beams"
-QT_MOC_LITERAL(86, 1048, 3), // "cnt"
-QT_MOC_LITERAL(87, 1052, 14), // "addDVLSolution"
-QT_MOC_LITERAL(88, 1067, 21), // "IDBinDVL::DVLSolution"
-QT_MOC_LITERAL(89, 1089, 11), // "dvlSolution"
-QT_MOC_LITERAL(90, 1101, 6), // "addAtt"
-QT_MOC_LITERAL(91, 1108, 3), // "yaw"
-QT_MOC_LITERAL(92, 1112, 5), // "pitch"
-QT_MOC_LITERAL(93, 1118, 4), // "roll"
-QT_MOC_LITERAL(94, 1123, 11), // "addPosition"
-QT_MOC_LITERAL(95, 1135, 3), // "lat"
-QT_MOC_LITERAL(96, 1139, 3), // "lon"
-QT_MOC_LITERAL(97, 1143, 9), // "unix_time"
-QT_MOC_LITERAL(98, 1153, 7), // "int32_t"
-QT_MOC_LITERAL(99, 1161, 7), // "nanosec"
-QT_MOC_LITERAL(100, 1169, 15), // "addPosition_CSV"
-QT_MOC_LITERAL(101, 1185, 5), // "depth"
-QT_MOC_LITERAL(102, 1191, 14), // "addPositionRTK"
-QT_MOC_LITERAL(103, 1206, 8), // "Position"
-QT_MOC_LITERAL(104, 1215, 8), // "position"
-QT_MOC_LITERAL(105, 1224, 8), // "addDepth"
-QT_MOC_LITERAL(106, 1233, 15), // "addGnssVelocity"
-QT_MOC_LITERAL(107, 1249, 7), // "h_speed"
-QT_MOC_LITERAL(108, 1257, 6), // "course"
-QT_MOC_LITERAL(109, 1264, 7), // "addTemp"
-QT_MOC_LITERAL(110, 1272, 6), // "temp_c"
-QT_MOC_LITERAL(111, 1279, 14), // "mergeGnssTrack"
-QT_MOC_LITERAL(112, 1294, 15), // "QList<Position>"
-QT_MOC_LITERAL(113, 1310, 5), // "track"
-QT_MOC_LITERAL(114, 1316, 12), // "resetDataset"
-QT_MOC_LITERAL(115, 1329, 18), // "resetRenderBuffers"
-QT_MOC_LITERAL(116, 1348, 19), // "resetDistProcessing"
-QT_MOC_LITERAL(117, 1368, 16), // "setChannelOffset"
-QT_MOC_LITERAL(118, 1385, 17), // "spatialProcessing"
-QT_MOC_LITERAL(119, 1403, 14), // "usblProcessing"
-QT_MOC_LITERAL(120, 1418, 11), // "beaconTrack"
-QT_MOC_LITERAL(121, 1430, 18), // "QVector<QVector3D>"
-QT_MOC_LITERAL(122, 1449, 12), // "beaconTrack1"
-QT_MOC_LITERAL(123, 1462, 10), // "setScene3D"
-QT_MOC_LITERAL(124, 1473, 20), // "GraphicsScene3dView*"
-QT_MOC_LITERAL(125, 1494, 14), // "scene3dViewPtr"
-QT_MOC_LITERAL(126, 1509, 14), // "setRefPosition"
-QT_MOC_LITERAL(127, 1524, 11), // "epoch_index"
-QT_MOC_LITERAL(128, 1536, 6), // "Epoch*"
-QT_MOC_LITERAL(129, 1543, 9), // "ref_epoch"
-QT_MOC_LITERAL(130, 1553, 26), // "setRefPositionByFirstValid"
-QT_MOC_LITERAL(131, 1580, 28), // "getFirstEpochByValidPosition"
-QT_MOC_LITERAL(132, 1609, 16), // "channelsNameList"
-QT_MOC_LITERAL(133, 1626, 15), // "interpolateData"
-QT_MOC_LITERAL(134, 1642, 9), // "fromStart"
-QT_MOC_LITERAL(135, 1652, 15), // "onDistCompleted"
-QT_MOC_LITERAL(136, 1668, 6), // "epIndx"
-QT_MOC_LITERAL(137, 1675, 29), // "onLastBottomTrackEpochChanged"
-QT_MOC_LITERAL(138, 1705, 16), // "BottomTrackParam"
-QT_MOC_LITERAL(139, 1722, 3), // "btP"
-QT_MOC_LITERAL(140, 1726, 12), // "boatLatitude"
-QT_MOC_LITERAL(141, 1739, 13), // "boatLongitude"
-QT_MOC_LITERAL(142, 1753, 13), // "distToContact"
-QT_MOC_LITERAL(143, 1767, 14), // "angleToContact"
-QT_MOC_LITERAL(144, 1782, 24), // "isActiveContactIndxValid"
-QT_MOC_LITERAL(145, 1807, 21), // "isBoatCoordinateValid"
-QT_MOC_LITERAL(146, 1829, 16), // "isLastDepthValid"
-QT_MOC_LITERAL(147, 1846, 12), // "isSpeedValid"
-QT_MOC_LITERAL(148, 1859, 5) // "speed"
+QT_MOC_LITERAL(26, 301, 18), // "channelListUpdated"
+QT_MOC_LITERAL(27, 320, 17), // "onSonarPosCanCalc"
+QT_MOC_LITERAL(28, 338, 24), // "isValidActiveContactIndx"
+QT_MOC_LITERAL(29, 363, 21), // "isValidBoatCoordinate"
+QT_MOC_LITERAL(30, 385, 16), // "isValidLastDepth"
+QT_MOC_LITERAL(31, 402, 12), // "isValidSpeed"
+QT_MOC_LITERAL(32, 415, 15), // "getBoatLatitude"
+QT_MOC_LITERAL(33, 431, 16), // "getBoatLongitude"
+QT_MOC_LITERAL(34, 448, 16), // "getDistToContact"
+QT_MOC_LITERAL(35, 465, 17), // "getAngleToContact"
+QT_MOC_LITERAL(36, 483, 12), // "getLastDepth"
+QT_MOC_LITERAL(37, 496, 8), // "getSpeed"
+QT_MOC_LITERAL(38, 505, 8), // "addEvent"
+QT_MOC_LITERAL(39, 514, 9), // "timestamp"
+QT_MOC_LITERAL(40, 524, 2), // "id"
+QT_MOC_LITERAL(41, 527, 5), // "unixt"
+QT_MOC_LITERAL(42, 533, 10), // "addEncoder"
+QT_MOC_LITERAL(43, 544, 10), // "angle1_deg"
+QT_MOC_LITERAL(44, 555, 10), // "angle2_deg"
+QT_MOC_LITERAL(45, 566, 10), // "angle3_deg"
+QT_MOC_LITERAL(46, 577, 12), // "addTimestamp"
+QT_MOC_LITERAL(47, 590, 13), // "setChartSetup"
+QT_MOC_LITERAL(48, 604, 8), // "uint16_t"
+QT_MOC_LITERAL(49, 613, 5), // "resol"
+QT_MOC_LITERAL(50, 619, 5), // "count"
+QT_MOC_LITERAL(51, 625, 6), // "offset"
+QT_MOC_LITERAL(52, 632, 14), // "setTranscSetup"
+QT_MOC_LITERAL(53, 647, 4), // "freq"
+QT_MOC_LITERAL(54, 652, 7), // "uint8_t"
+QT_MOC_LITERAL(55, 660, 5), // "pulse"
+QT_MOC_LITERAL(56, 666, 5), // "boost"
+QT_MOC_LITERAL(57, 672, 13), // "setSoundSpeed"
+QT_MOC_LITERAL(58, 686, 8), // "uint32_t"
+QT_MOC_LITERAL(59, 695, 10), // "soundSpeed"
+QT_MOC_LITERAL(60, 706, 14), // "setSonarOffset"
+QT_MOC_LITERAL(61, 721, 1), // "x"
+QT_MOC_LITERAL(62, 723, 1), // "y"
+QT_MOC_LITERAL(63, 725, 1), // "z"
+QT_MOC_LITERAL(64, 727, 23), // "setFixBlackStripesState"
+QT_MOC_LITERAL(65, 751, 5), // "state"
+QT_MOC_LITERAL(66, 757, 30), // "setFixBlackStripesForwardSteps"
+QT_MOC_LITERAL(67, 788, 3), // "val"
+QT_MOC_LITERAL(68, 792, 31), // "setFixBlackStripesBackwardSteps"
+QT_MOC_LITERAL(69, 824, 8), // "addChart"
+QT_MOC_LITERAL(70, 833, 15), // "ChartParameters"
+QT_MOC_LITERAL(71, 849, 11), // "chartParams"
+QT_MOC_LITERAL(72, 861, 26), // "QVector<QVector<uint8_t> >"
+QT_MOC_LITERAL(73, 888, 4), // "data"
+QT_MOC_LITERAL(74, 893, 10), // "resolution"
+QT_MOC_LITERAL(75, 904, 15), // "rawDataRecieved"
+QT_MOC_LITERAL(76, 920, 7), // "RawData"
+QT_MOC_LITERAL(77, 928, 8), // "raw_data"
+QT_MOC_LITERAL(78, 937, 7), // "addDist"
+QT_MOC_LITERAL(79, 945, 4), // "dist"
+QT_MOC_LITERAL(80, 950, 14), // "addRangefinder"
+QT_MOC_LITERAL(81, 965, 8), // "distance"
+QT_MOC_LITERAL(82, 974, 15), // "addUsblSolution"
+QT_MOC_LITERAL(83, 990, 31), // "IDBinUsblSolution::UsblSolution"
+QT_MOC_LITERAL(84, 1022, 14), // "addDopplerBeam"
+QT_MOC_LITERAL(85, 1037, 23), // "IDBinDVL::BeamSolution*"
+QT_MOC_LITERAL(86, 1061, 5), // "beams"
+QT_MOC_LITERAL(87, 1067, 3), // "cnt"
+QT_MOC_LITERAL(88, 1071, 14), // "addDVLSolution"
+QT_MOC_LITERAL(89, 1086, 21), // "IDBinDVL::DVLSolution"
+QT_MOC_LITERAL(90, 1108, 11), // "dvlSolution"
+QT_MOC_LITERAL(91, 1120, 6), // "addAtt"
+QT_MOC_LITERAL(92, 1127, 3), // "yaw"
+QT_MOC_LITERAL(93, 1131, 5), // "pitch"
+QT_MOC_LITERAL(94, 1137, 4), // "roll"
+QT_MOC_LITERAL(95, 1142, 11), // "addPosition"
+QT_MOC_LITERAL(96, 1154, 3), // "lat"
+QT_MOC_LITERAL(97, 1158, 3), // "lon"
+QT_MOC_LITERAL(98, 1162, 9), // "unix_time"
+QT_MOC_LITERAL(99, 1172, 7), // "int32_t"
+QT_MOC_LITERAL(100, 1180, 7), // "nanosec"
+QT_MOC_LITERAL(101, 1188, 15), // "addPosition_CSV"
+QT_MOC_LITERAL(102, 1204, 5), // "depth"
+QT_MOC_LITERAL(103, 1210, 14), // "addPositionRTK"
+QT_MOC_LITERAL(104, 1225, 8), // "Position"
+QT_MOC_LITERAL(105, 1234, 8), // "position"
+QT_MOC_LITERAL(106, 1243, 8), // "addDepth"
+QT_MOC_LITERAL(107, 1252, 15), // "addGnssVelocity"
+QT_MOC_LITERAL(108, 1268, 7), // "h_speed"
+QT_MOC_LITERAL(109, 1276, 6), // "course"
+QT_MOC_LITERAL(110, 1283, 7), // "addTemp"
+QT_MOC_LITERAL(111, 1291, 6), // "temp_c"
+QT_MOC_LITERAL(112, 1298, 14), // "mergeGnssTrack"
+QT_MOC_LITERAL(113, 1313, 15), // "QList<Position>"
+QT_MOC_LITERAL(114, 1329, 5), // "track"
+QT_MOC_LITERAL(115, 1335, 12), // "resetDataset"
+QT_MOC_LITERAL(116, 1348, 18), // "resetRenderBuffers"
+QT_MOC_LITERAL(117, 1367, 19), // "resetDistProcessing"
+QT_MOC_LITERAL(118, 1387, 16), // "setChannelOffset"
+QT_MOC_LITERAL(119, 1404, 17), // "spatialProcessing"
+QT_MOC_LITERAL(120, 1422, 14), // "usblProcessing"
+QT_MOC_LITERAL(121, 1437, 11), // "beaconTrack"
+QT_MOC_LITERAL(122, 1449, 18), // "QVector<QVector3D>"
+QT_MOC_LITERAL(123, 1468, 12), // "beaconTrack1"
+QT_MOC_LITERAL(124, 1481, 10), // "setScene3D"
+QT_MOC_LITERAL(125, 1492, 20), // "GraphicsScene3dView*"
+QT_MOC_LITERAL(126, 1513, 14), // "scene3dViewPtr"
+QT_MOC_LITERAL(127, 1528, 14), // "setRefPosition"
+QT_MOC_LITERAL(128, 1543, 11), // "epoch_index"
+QT_MOC_LITERAL(129, 1555, 6), // "Epoch*"
+QT_MOC_LITERAL(130, 1562, 9), // "ref_epoch"
+QT_MOC_LITERAL(131, 1572, 26), // "setRefPositionByFirstValid"
+QT_MOC_LITERAL(132, 1599, 28), // "getFirstEpochByValidPosition"
+QT_MOC_LITERAL(133, 1628, 16), // "channelsNameList"
+QT_MOC_LITERAL(134, 1645, 15), // "interpolateData"
+QT_MOC_LITERAL(135, 1661, 9), // "fromStart"
+QT_MOC_LITERAL(136, 1671, 15), // "onDistCompleted"
+QT_MOC_LITERAL(137, 1687, 6), // "epIndx"
+QT_MOC_LITERAL(138, 1694, 29), // "onLastBottomTrackEpochChanged"
+QT_MOC_LITERAL(139, 1724, 16), // "BottomTrackParam"
+QT_MOC_LITERAL(140, 1741, 3), // "btP"
+QT_MOC_LITERAL(141, 1745, 12), // "boatLatitude"
+QT_MOC_LITERAL(142, 1758, 13), // "boatLongitude"
+QT_MOC_LITERAL(143, 1772, 13), // "distToContact"
+QT_MOC_LITERAL(144, 1786, 14), // "angleToContact"
+QT_MOC_LITERAL(145, 1801, 24), // "isActiveContactIndxValid"
+QT_MOC_LITERAL(146, 1826, 21), // "isBoatCoordinateValid"
+QT_MOC_LITERAL(147, 1848, 16), // "isLastDepthValid"
+QT_MOC_LITERAL(148, 1865, 12), // "isSpeedValid"
+QT_MOC_LITERAL(149, 1878, 5) // "speed"
 
     },
     "Dataset\0epochAdded\0\0uint64_t\0indx\0"
@@ -195,18 +196,19 @@ QT_MOC_LITERAL(148, 1859, 5) // "speed"
     "redrawEpochs\0QSet<int>\0indxs\0"
     "lastPositionChanged\0activeContactChanged\0"
     "lastDepthChanged\0speedChanged\0"
-    "onSonarPosCanCalc\0isValidActiveContactIndx\0"
-    "isValidBoatCoordinate\0isValidLastDepth\0"
-    "isValidSpeed\0getBoatLatitude\0"
-    "getBoatLongitude\0getDistToContact\0"
-    "getAngleToContact\0getLastDepth\0getSpeed\0"
-    "addEvent\0timestamp\0id\0unixt\0addEncoder\0"
-    "angle1_deg\0angle2_deg\0angle3_deg\0"
-    "addTimestamp\0setChartSetup\0uint16_t\0"
-    "resol\0count\0offset\0setTranscSetup\0"
-    "freq\0uint8_t\0pulse\0boost\0setSoundSpeed\0"
-    "uint32_t\0soundSpeed\0setSonarOffset\0x\0"
-    "y\0z\0setFixBlackStripesState\0state\0"
+    "channelListUpdated\0onSonarPosCanCalc\0"
+    "isValidActiveContactIndx\0isValidBoatCoordinate\0"
+    "isValidLastDepth\0isValidSpeed\0"
+    "getBoatLatitude\0getBoatLongitude\0"
+    "getDistToContact\0getAngleToContact\0"
+    "getLastDepth\0getSpeed\0addEvent\0timestamp\0"
+    "id\0unixt\0addEncoder\0angle1_deg\0"
+    "angle2_deg\0angle3_deg\0addTimestamp\0"
+    "setChartSetup\0uint16_t\0resol\0count\0"
+    "offset\0setTranscSetup\0freq\0uint8_t\0"
+    "pulse\0boost\0setSoundSpeed\0uint32_t\0"
+    "soundSpeed\0setSonarOffset\0x\0y\0z\0"
+    "setFixBlackStripesState\0state\0"
     "setFixBlackStripesForwardSteps\0val\0"
     "setFixBlackStripesBackwardSteps\0"
     "addChart\0ChartParameters\0chartParams\0"
@@ -248,89 +250,90 @@ static const uint qt_meta_data_Dataset[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      73,   14, // methods
-      10,  638, // properties
+      74,   14, // methods
+      10,  644, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      14,       // signalCount
+      15,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  379,    2, 0x06 /* Public */,
-       5,    1,  382,    2, 0x06 /* Public */,
-       6,    1,  385,    2, 0x06 /* Public */,
-       7,    1,  388,    2, 0x06 /* Public */,
-       8,    1,  391,    2, 0x06 /* Public */,
-       9,    0,  394,    2, 0x06 /* Public */,
-      10,    5,  395,    2, 0x06 /* Public */,
-      17,    0,  406,    2, 0x06 /* Public */,
-      18,    0,  407,    2, 0x06 /* Public */,
-      19,    1,  408,    2, 0x06 /* Public */,
-      22,    0,  411,    2, 0x06 /* Public */,
-      23,    0,  412,    2, 0x06 /* Public */,
-      24,    0,  413,    2, 0x06 /* Public */,
-      25,    0,  414,    2, 0x06 /* Public */,
+       1,    1,  384,    2, 0x06 /* Public */,
+       5,    1,  387,    2, 0x06 /* Public */,
+       6,    1,  390,    2, 0x06 /* Public */,
+       7,    1,  393,    2, 0x06 /* Public */,
+       8,    1,  396,    2, 0x06 /* Public */,
+       9,    0,  399,    2, 0x06 /* Public */,
+      10,    5,  400,    2, 0x06 /* Public */,
+      17,    0,  411,    2, 0x06 /* Public */,
+      18,    0,  412,    2, 0x06 /* Public */,
+      19,    1,  413,    2, 0x06 /* Public */,
+      22,    0,  416,    2, 0x06 /* Public */,
+      23,    0,  417,    2, 0x06 /* Public */,
+      24,    0,  418,    2, 0x06 /* Public */,
+      25,    0,  419,    2, 0x06 /* Public */,
+      26,    0,  420,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      26,    1,  415,    2, 0x0a /* Public */,
-      27,    0,  418,    2, 0x0a /* Public */,
-      28,    0,  419,    2, 0x0a /* Public */,
-      29,    0,  420,    2, 0x0a /* Public */,
-      30,    0,  421,    2, 0x0a /* Public */,
-      31,    0,  422,    2, 0x0a /* Public */,
-      32,    0,  423,    2, 0x0a /* Public */,
-      33,    0,  424,    2, 0x0a /* Public */,
-      34,    0,  425,    2, 0x0a /* Public */,
-      35,    0,  426,    2, 0x0a /* Public */,
-      36,    0,  427,    2, 0x0a /* Public */,
-      37,    3,  428,    2, 0x0a /* Public */,
-      37,    2,  435,    2, 0x2a /* Public | MethodCloned */,
-      41,    3,  440,    2, 0x0a /* Public */,
-      41,    2,  447,    2, 0x2a /* Public | MethodCloned */,
-      41,    1,  452,    2, 0x2a /* Public | MethodCloned */,
-      45,    1,  455,    2, 0x0a /* Public */,
-      46,    4,  458,    2, 0x0a /* Public */,
-      51,    4,  467,    2, 0x0a /* Public */,
-      56,    2,  476,    2, 0x0a /* Public */,
-      59,    3,  481,    2, 0x0a /* Public */,
-      63,    1,  488,    2, 0x0a /* Public */,
-      65,    1,  491,    2, 0x0a /* Public */,
-      67,    1,  494,    2, 0x0a /* Public */,
-      68,    5,  497,    2, 0x0a /* Public */,
-      74,    2,  508,    2, 0x0a /* Public */,
-      77,    2,  513,    2, 0x0a /* Public */,
-      79,    2,  518,    2, 0x0a /* Public */,
-      81,    1,  523,    2, 0x0a /* Public */,
-      83,    2,  526,    2, 0x0a /* Public */,
-      87,    1,  531,    2, 0x0a /* Public */,
-      90,    3,  534,    2, 0x0a /* Public */,
-      94,    4,  541,    2, 0x0a /* Public */,
-      94,    3,  550,    2, 0x2a /* Public | MethodCloned */,
-      94,    2,  557,    2, 0x2a /* Public | MethodCloned */,
-     100,    3,  562,    2, 0x0a /* Public */,
-     102,    1,  569,    2, 0x0a /* Public */,
-     105,    1,  572,    2, 0x0a /* Public */,
-     106,    2,  575,    2, 0x0a /* Public */,
-     109,    1,  580,    2, 0x0a /* Public */,
-     111,    1,  583,    2, 0x0a /* Public */,
-     114,    0,  586,    2, 0x0a /* Public */,
-     115,    0,  587,    2, 0x0a /* Public */,
-     116,    0,  588,    2, 0x0a /* Public */,
-     117,    4,  589,    2, 0x0a /* Public */,
-     118,    0,  598,    2, 0x0a /* Public */,
-     119,    0,  599,    2, 0x0a /* Public */,
-     120,    0,  600,    2, 0x0a /* Public */,
-     122,    0,  601,    2, 0x0a /* Public */,
-     123,    1,  602,    2, 0x0a /* Public */,
-     126,    1,  605,    2, 0x0a /* Public */,
-     126,    1,  608,    2, 0x0a /* Public */,
-     126,    1,  611,    2, 0x0a /* Public */,
-     130,    0,  614,    2, 0x0a /* Public */,
-     131,    0,  615,    2, 0x0a /* Public */,
-     132,    0,  616,    2, 0x0a /* Public */,
-     133,    1,  617,    2, 0x0a /* Public */,
-     135,    3,  620,    2, 0x0a /* Public */,
-     137,    5,  627,    2, 0x0a /* Public */,
+      27,    1,  421,    2, 0x0a /* Public */,
+      28,    0,  424,    2, 0x0a /* Public */,
+      29,    0,  425,    2, 0x0a /* Public */,
+      30,    0,  426,    2, 0x0a /* Public */,
+      31,    0,  427,    2, 0x0a /* Public */,
+      32,    0,  428,    2, 0x0a /* Public */,
+      33,    0,  429,    2, 0x0a /* Public */,
+      34,    0,  430,    2, 0x0a /* Public */,
+      35,    0,  431,    2, 0x0a /* Public */,
+      36,    0,  432,    2, 0x0a /* Public */,
+      37,    0,  433,    2, 0x0a /* Public */,
+      38,    3,  434,    2, 0x0a /* Public */,
+      38,    2,  441,    2, 0x2a /* Public | MethodCloned */,
+      42,    3,  446,    2, 0x0a /* Public */,
+      42,    2,  453,    2, 0x2a /* Public | MethodCloned */,
+      42,    1,  458,    2, 0x2a /* Public | MethodCloned */,
+      46,    1,  461,    2, 0x0a /* Public */,
+      47,    4,  464,    2, 0x0a /* Public */,
+      52,    4,  473,    2, 0x0a /* Public */,
+      57,    2,  482,    2, 0x0a /* Public */,
+      60,    3,  487,    2, 0x0a /* Public */,
+      64,    1,  494,    2, 0x0a /* Public */,
+      66,    1,  497,    2, 0x0a /* Public */,
+      68,    1,  500,    2, 0x0a /* Public */,
+      69,    5,  503,    2, 0x0a /* Public */,
+      75,    2,  514,    2, 0x0a /* Public */,
+      78,    2,  519,    2, 0x0a /* Public */,
+      80,    2,  524,    2, 0x0a /* Public */,
+      82,    1,  529,    2, 0x0a /* Public */,
+      84,    2,  532,    2, 0x0a /* Public */,
+      88,    1,  537,    2, 0x0a /* Public */,
+      91,    3,  540,    2, 0x0a /* Public */,
+      95,    4,  547,    2, 0x0a /* Public */,
+      95,    3,  556,    2, 0x2a /* Public | MethodCloned */,
+      95,    2,  563,    2, 0x2a /* Public | MethodCloned */,
+     101,    3,  568,    2, 0x0a /* Public */,
+     103,    1,  575,    2, 0x0a /* Public */,
+     106,    1,  578,    2, 0x0a /* Public */,
+     107,    2,  581,    2, 0x0a /* Public */,
+     110,    1,  586,    2, 0x0a /* Public */,
+     112,    1,  589,    2, 0x0a /* Public */,
+     115,    0,  592,    2, 0x0a /* Public */,
+     116,    0,  593,    2, 0x0a /* Public */,
+     117,    0,  594,    2, 0x0a /* Public */,
+     118,    4,  595,    2, 0x0a /* Public */,
+     119,    0,  604,    2, 0x0a /* Public */,
+     120,    0,  605,    2, 0x0a /* Public */,
+     121,    0,  606,    2, 0x0a /* Public */,
+     123,    0,  607,    2, 0x0a /* Public */,
+     124,    1,  608,    2, 0x0a /* Public */,
+     127,    1,  611,    2, 0x0a /* Public */,
+     127,    1,  614,    2, 0x0a /* Public */,
+     127,    1,  617,    2, 0x0a /* Public */,
+     131,    0,  620,    2, 0x0a /* Public */,
+     132,    0,  621,    2, 0x0a /* Public */,
+     133,    0,  622,    2, 0x0a /* Public */,
+     134,    1,  623,    2, 0x0a /* Public */,
+     136,    3,  626,    2, 0x0a /* Public */,
+     138,    5,  633,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -343,6 +346,7 @@ static const uint qt_meta_data_Dataset[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 20,   21,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -360,66 +364,66 @@ static const uint qt_meta_data_Dataset[] = {
     QMetaType::Float,
     QMetaType::Float,
     QMetaType::Float,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   38,   39,   40,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   38,   39,
-    QMetaType::Void, QMetaType::Float, QMetaType::Float, QMetaType::Float,   42,   43,   44,
-    QMetaType::Void, QMetaType::Float, QMetaType::Float,   42,   43,
-    QMetaType::Void, QMetaType::Float,   42,
-    QMetaType::Void, QMetaType::Int,   38,
-    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 47, 0x80000000 | 47, 0x80000000 | 47,   12,   48,   49,   50,
-    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 47, 0x80000000 | 53, 0x80000000 | 53,   12,   52,   54,   55,
-    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 57,   12,   58,
-    QMetaType::Void, QMetaType::Float, QMetaType::Float, QMetaType::Float,   60,   61,   62,
-    QMetaType::Void, QMetaType::Bool,   64,
-    QMetaType::Void, QMetaType::Int,   66,
-    QMetaType::Void, QMetaType::Int,   66,
-    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 69, 0x80000000 | 71, QMetaType::Float, QMetaType::Float,   12,   70,   72,   73,   50,
-    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 75,   12,   76,
-    QMetaType::Void, 0x80000000 | 11, QMetaType::Int,   12,   78,
-    QMetaType::Void, 0x80000000 | 11, QMetaType::Float,   12,   80,
-    QMetaType::Void, 0x80000000 | 82,   72,
-    QMetaType::Void, 0x80000000 | 84, 0x80000000 | 47,   85,   86,
-    QMetaType::Void, 0x80000000 | 88,   89,
-    QMetaType::Void, QMetaType::Float, QMetaType::Float, QMetaType::Float,   91,   92,   93,
-    QMetaType::Void, QMetaType::Double, QMetaType::Double, 0x80000000 | 57, 0x80000000 | 98,   95,   96,   97,   99,
-    QMetaType::Void, QMetaType::Double, QMetaType::Double, 0x80000000 | 57,   95,   96,   97,
-    QMetaType::Void, QMetaType::Double, QMetaType::Double,   95,   96,
-    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Int,   95,   96,  101,
-    QMetaType::Void, 0x80000000 | 103,  104,
-    QMetaType::Void, QMetaType::Float,  101,
-    QMetaType::Void, QMetaType::Double, QMetaType::Double,  107,  108,
-    QMetaType::Void, QMetaType::Float,  110,
-    QMetaType::Void, 0x80000000 | 112,  113,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   39,   40,   41,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   39,   40,
+    QMetaType::Void, QMetaType::Float, QMetaType::Float, QMetaType::Float,   43,   44,   45,
+    QMetaType::Void, QMetaType::Float, QMetaType::Float,   43,   44,
+    QMetaType::Void, QMetaType::Float,   43,
+    QMetaType::Void, QMetaType::Int,   39,
+    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 48, 0x80000000 | 48, 0x80000000 | 48,   12,   49,   50,   51,
+    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 48, 0x80000000 | 54, 0x80000000 | 54,   12,   53,   55,   56,
+    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 58,   12,   59,
+    QMetaType::Void, QMetaType::Float, QMetaType::Float, QMetaType::Float,   61,   62,   63,
+    QMetaType::Void, QMetaType::Bool,   65,
+    QMetaType::Void, QMetaType::Int,   67,
+    QMetaType::Void, QMetaType::Int,   67,
+    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 70, 0x80000000 | 72, QMetaType::Float, QMetaType::Float,   12,   71,   73,   74,   51,
+    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 76,   12,   77,
+    QMetaType::Void, 0x80000000 | 11, QMetaType::Int,   12,   79,
+    QMetaType::Void, 0x80000000 | 11, QMetaType::Float,   12,   81,
+    QMetaType::Void, 0x80000000 | 83,   73,
+    QMetaType::Void, 0x80000000 | 85, 0x80000000 | 48,   86,   87,
+    QMetaType::Void, 0x80000000 | 89,   90,
+    QMetaType::Void, QMetaType::Float, QMetaType::Float, QMetaType::Float,   92,   93,   94,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, 0x80000000 | 58, 0x80000000 | 99,   96,   97,   98,  100,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, 0x80000000 | 58,   96,   97,   98,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double,   96,   97,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double, QMetaType::Int,   96,   97,  102,
+    QMetaType::Void, 0x80000000 | 104,  105,
+    QMetaType::Void, QMetaType::Float,  102,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double,  108,  109,
+    QMetaType::Void, QMetaType::Float,  111,
+    QMetaType::Void, 0x80000000 | 113,  114,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 11, QMetaType::Float, QMetaType::Float, QMetaType::Float,   12,   60,   61,   62,
+    QMetaType::Void, 0x80000000 | 11, QMetaType::Float, QMetaType::Float, QMetaType::Float,   12,   61,   62,   63,
     QMetaType::Void,
     QMetaType::Void,
-    0x80000000 | 121,
-    0x80000000 | 121,
-    QMetaType::Void, 0x80000000 | 124,  125,
-    QMetaType::Void, QMetaType::Int,  127,
-    QMetaType::Void, 0x80000000 | 128,  129,
-    QMetaType::Void, 0x80000000 | 103,  104,
+    0x80000000 | 122,
+    0x80000000 | 122,
+    QMetaType::Void, 0x80000000 | 125,  126,
+    QMetaType::Void, QMetaType::Int,  128,
+    QMetaType::Void, 0x80000000 | 129,  130,
+    QMetaType::Void, 0x80000000 | 104,  105,
     QMetaType::Void,
-    0x80000000 | 128,
+    0x80000000 | 129,
     QMetaType::QStringList,
-    QMetaType::Void, QMetaType::Bool,  134,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 11, QMetaType::Float,  136,   12,   78,
-    QMetaType::Void, 0x80000000 | 11, QMetaType::Int, 0x80000000 | 138, QMetaType::Bool, QMetaType::Bool,   12,   66,  139,   15,   16,
+    QMetaType::Void, QMetaType::Bool,  135,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 11, QMetaType::Float,  137,   12,   79,
+    QMetaType::Void, 0x80000000 | 11, QMetaType::Int, 0x80000000 | 139, QMetaType::Bool, QMetaType::Bool,   12,   67,  140,   15,   16,
 
  // properties: name, type, flags
-     140, QMetaType::Float, 0x00495001,
      141, QMetaType::Float, 0x00495001,
      142, QMetaType::Float, 0x00495001,
      143, QMetaType::Float, 0x00495001,
-     144, QMetaType::Bool, 0x00495001,
+     144, QMetaType::Float, 0x00495001,
      145, QMetaType::Bool, 0x00495001,
-     146, QMetaType::Float, 0x00495001,
-     101, QMetaType::Float, 0x00495001,
+     146, QMetaType::Bool, 0x00495001,
      147, QMetaType::Float, 0x00495001,
+     102, QMetaType::Float, 0x00495001,
      148, QMetaType::Float, 0x00495001,
+     149, QMetaType::Float, 0x00495001,
 
  // properties: notify_signal_id
       10,
@@ -456,79 +460,80 @@ void Dataset::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 11: _t->activeContactChanged(); break;
         case 12: _t->lastDepthChanged(); break;
         case 13: _t->speedChanged(); break;
-        case 14: _t->onSonarPosCanCalc((*reinterpret_cast< uint64_t(*)>(_a[1]))); break;
-        case 15: { bool _r = _t->isValidActiveContactIndx();
+        case 14: _t->channelListUpdated(); break;
+        case 15: _t->onSonarPosCanCalc((*reinterpret_cast< uint64_t(*)>(_a[1]))); break;
+        case 16: { bool _r = _t->isValidActiveContactIndx();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 16: { bool _r = _t->isValidBoatCoordinate();
+        case 17: { bool _r = _t->isValidBoatCoordinate();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 17: { bool _r = _t->isValidLastDepth();
+        case 18: { bool _r = _t->isValidLastDepth();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 18: { bool _r = _t->isValidSpeed();
+        case 19: { bool _r = _t->isValidSpeed();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 19: { float _r = _t->getBoatLatitude();
+        case 20: { float _r = _t->getBoatLatitude();
             if (_a[0]) *reinterpret_cast< float*>(_a[0]) = std::move(_r); }  break;
-        case 20: { float _r = _t->getBoatLongitude();
+        case 21: { float _r = _t->getBoatLongitude();
             if (_a[0]) *reinterpret_cast< float*>(_a[0]) = std::move(_r); }  break;
-        case 21: { float _r = _t->getDistToContact();
+        case 22: { float _r = _t->getDistToContact();
             if (_a[0]) *reinterpret_cast< float*>(_a[0]) = std::move(_r); }  break;
-        case 22: { float _r = _t->getAngleToContact();
+        case 23: { float _r = _t->getAngleToContact();
             if (_a[0]) *reinterpret_cast< float*>(_a[0]) = std::move(_r); }  break;
-        case 23: { float _r = _t->getLastDepth();
+        case 24: { float _r = _t->getLastDepth();
             if (_a[0]) *reinterpret_cast< float*>(_a[0]) = std::move(_r); }  break;
-        case 24: { float _r = _t->getSpeed();
+        case 25: { float _r = _t->getSpeed();
             if (_a[0]) *reinterpret_cast< float*>(_a[0]) = std::move(_r); }  break;
-        case 25: _t->addEvent((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 26: _t->addEvent((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 27: _t->addEncoder((*reinterpret_cast< float(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3]))); break;
-        case 28: _t->addEncoder((*reinterpret_cast< float(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
-        case 29: _t->addEncoder((*reinterpret_cast< float(*)>(_a[1]))); break;
-        case 30: _t->addTimestamp((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 31: _t->setChartSetup((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< uint16_t(*)>(_a[2])),(*reinterpret_cast< uint16_t(*)>(_a[3])),(*reinterpret_cast< uint16_t(*)>(_a[4]))); break;
-        case 32: _t->setTranscSetup((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< uint16_t(*)>(_a[2])),(*reinterpret_cast< uint8_t(*)>(_a[3])),(*reinterpret_cast< uint8_t(*)>(_a[4]))); break;
-        case 33: _t->setSoundSpeed((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< uint32_t(*)>(_a[2]))); break;
-        case 34: _t->setSonarOffset((*reinterpret_cast< float(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3]))); break;
-        case 35: _t->setFixBlackStripesState((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 36: _t->setFixBlackStripesForwardSteps((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 37: _t->setFixBlackStripesBackwardSteps((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 38: _t->addChart((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< const ChartParameters(*)>(_a[2])),(*reinterpret_cast< const QVector<QVector<uint8_t> >(*)>(_a[3])),(*reinterpret_cast< float(*)>(_a[4])),(*reinterpret_cast< float(*)>(_a[5]))); break;
-        case 39: _t->rawDataRecieved((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< RawData(*)>(_a[2]))); break;
-        case 40: _t->addDist((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 41: _t->addRangefinder((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
-        case 42: _t->addUsblSolution((*reinterpret_cast< IDBinUsblSolution::UsblSolution(*)>(_a[1]))); break;
-        case 43: _t->addDopplerBeam((*reinterpret_cast< IDBinDVL::BeamSolution*(*)>(_a[1])),(*reinterpret_cast< uint16_t(*)>(_a[2]))); break;
-        case 44: _t->addDVLSolution((*reinterpret_cast< IDBinDVL::DVLSolution(*)>(_a[1]))); break;
-        case 45: _t->addAtt((*reinterpret_cast< float(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3]))); break;
-        case 46: _t->addPosition((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< uint32_t(*)>(_a[3])),(*reinterpret_cast< int32_t(*)>(_a[4]))); break;
-        case 47: _t->addPosition((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< uint32_t(*)>(_a[3]))); break;
-        case 48: _t->addPosition((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
-        case 49: _t->addPosition_CSV((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 50: _t->addPositionRTK((*reinterpret_cast< Position(*)>(_a[1]))); break;
-        case 51: _t->addDepth((*reinterpret_cast< float(*)>(_a[1]))); break;
-        case 52: _t->addGnssVelocity((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
-        case 53: _t->addTemp((*reinterpret_cast< float(*)>(_a[1]))); break;
-        case 54: _t->mergeGnssTrack((*reinterpret_cast< QList<Position>(*)>(_a[1]))); break;
-        case 55: _t->resetDataset(); break;
-        case 56: _t->resetRenderBuffers(); break;
-        case 57: _t->resetDistProcessing(); break;
-        case 58: _t->setChannelOffset((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3])),(*reinterpret_cast< float(*)>(_a[4]))); break;
-        case 59: _t->spatialProcessing(); break;
-        case 60: _t->usblProcessing(); break;
-        case 61: { QVector<QVector3D> _r = _t->beaconTrack();
+        case 26: _t->addEvent((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 27: _t->addEvent((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 28: _t->addEncoder((*reinterpret_cast< float(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3]))); break;
+        case 29: _t->addEncoder((*reinterpret_cast< float(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
+        case 30: _t->addEncoder((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 31: _t->addTimestamp((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 32: _t->setChartSetup((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< uint16_t(*)>(_a[2])),(*reinterpret_cast< uint16_t(*)>(_a[3])),(*reinterpret_cast< uint16_t(*)>(_a[4]))); break;
+        case 33: _t->setTranscSetup((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< uint16_t(*)>(_a[2])),(*reinterpret_cast< uint8_t(*)>(_a[3])),(*reinterpret_cast< uint8_t(*)>(_a[4]))); break;
+        case 34: _t->setSoundSpeed((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< uint32_t(*)>(_a[2]))); break;
+        case 35: _t->setSonarOffset((*reinterpret_cast< float(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3]))); break;
+        case 36: _t->setFixBlackStripesState((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 37: _t->setFixBlackStripesForwardSteps((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 38: _t->setFixBlackStripesBackwardSteps((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 39: _t->addChart((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< const ChartParameters(*)>(_a[2])),(*reinterpret_cast< const QVector<QVector<uint8_t> >(*)>(_a[3])),(*reinterpret_cast< float(*)>(_a[4])),(*reinterpret_cast< float(*)>(_a[5]))); break;
+        case 40: _t->rawDataRecieved((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< RawData(*)>(_a[2]))); break;
+        case 41: _t->addDist((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 42: _t->addRangefinder((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2]))); break;
+        case 43: _t->addUsblSolution((*reinterpret_cast< IDBinUsblSolution::UsblSolution(*)>(_a[1]))); break;
+        case 44: _t->addDopplerBeam((*reinterpret_cast< IDBinDVL::BeamSolution*(*)>(_a[1])),(*reinterpret_cast< uint16_t(*)>(_a[2]))); break;
+        case 45: _t->addDVLSolution((*reinterpret_cast< IDBinDVL::DVLSolution(*)>(_a[1]))); break;
+        case 46: _t->addAtt((*reinterpret_cast< float(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3]))); break;
+        case 47: _t->addPosition((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< uint32_t(*)>(_a[3])),(*reinterpret_cast< int32_t(*)>(_a[4]))); break;
+        case 48: _t->addPosition((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< uint32_t(*)>(_a[3]))); break;
+        case 49: _t->addPosition((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
+        case 50: _t->addPosition_CSV((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 51: _t->addPositionRTK((*reinterpret_cast< Position(*)>(_a[1]))); break;
+        case 52: _t->addDepth((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 53: _t->addGnssVelocity((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
+        case 54: _t->addTemp((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 55: _t->mergeGnssTrack((*reinterpret_cast< QList<Position>(*)>(_a[1]))); break;
+        case 56: _t->resetDataset(); break;
+        case 57: _t->resetRenderBuffers(); break;
+        case 58: _t->resetDistProcessing(); break;
+        case 59: _t->setChannelOffset((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< float(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3])),(*reinterpret_cast< float(*)>(_a[4]))); break;
+        case 60: _t->spatialProcessing(); break;
+        case 61: _t->usblProcessing(); break;
+        case 62: { QVector<QVector3D> _r = _t->beaconTrack();
             if (_a[0]) *reinterpret_cast< QVector<QVector3D>*>(_a[0]) = std::move(_r); }  break;
-        case 62: { QVector<QVector3D> _r = _t->beaconTrack1();
+        case 63: { QVector<QVector3D> _r = _t->beaconTrack1();
             if (_a[0]) *reinterpret_cast< QVector<QVector3D>*>(_a[0]) = std::move(_r); }  break;
-        case 63: _t->setScene3D((*reinterpret_cast< GraphicsScene3dView*(*)>(_a[1]))); break;
-        case 64: _t->setRefPosition((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 65: _t->setRefPosition((*reinterpret_cast< Epoch*(*)>(_a[1]))); break;
-        case 66: _t->setRefPosition((*reinterpret_cast< Position(*)>(_a[1]))); break;
-        case 67: _t->setRefPositionByFirstValid(); break;
-        case 68: { Epoch* _r = _t->getFirstEpochByValidPosition();
+        case 64: _t->setScene3D((*reinterpret_cast< GraphicsScene3dView*(*)>(_a[1]))); break;
+        case 65: _t->setRefPosition((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 66: _t->setRefPosition((*reinterpret_cast< Epoch*(*)>(_a[1]))); break;
+        case 67: _t->setRefPosition((*reinterpret_cast< Position(*)>(_a[1]))); break;
+        case 68: _t->setRefPositionByFirstValid(); break;
+        case 69: { Epoch* _r = _t->getFirstEpochByValidPosition();
             if (_a[0]) *reinterpret_cast< Epoch**>(_a[0]) = std::move(_r); }  break;
-        case 69: { QStringList _r = _t->channelsNameList();
+        case 70: { QStringList _r = _t->channelsNameList();
             if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = std::move(_r); }  break;
-        case 70: _t->interpolateData((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 71: _t->onDistCompleted((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< const ChannelId(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3]))); break;
-        case 72: _t->onLastBottomTrackEpochChanged((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< const BottomTrackParam(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< bool(*)>(_a[5]))); break;
+        case 71: _t->interpolateData((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 72: _t->onDistCompleted((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< const ChannelId(*)>(_a[2])),(*reinterpret_cast< float(*)>(_a[3]))); break;
+        case 73: _t->onLastBottomTrackEpochChanged((*reinterpret_cast< const ChannelId(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< const BottomTrackParam(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< bool(*)>(_a[5]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -642,6 +647,13 @@ void Dataset::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
                 return;
             }
         }
+        {
+            using _t = void (Dataset::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Dataset::channelListUpdated)) {
+                *result = 14;
+                return;
+            }
+        }
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty) {
@@ -696,13 +708,13 @@ int Dataset::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 73)
+        if (_id < 74)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 73;
+        _id -= 74;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 73)
+        if (_id < 74)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 73;
+        _id -= 74;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
@@ -813,6 +825,12 @@ void Dataset::lastDepthChanged()
 void Dataset::speedChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 13, nullptr);
+}
+
+// SIGNAL 14
+void Dataset::channelListUpdated()
+{
+    QMetaObject::activate(this, &staticMetaObject, 14, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

@@ -27,8 +27,8 @@ public:
     Q_INVOKABLE float vruVoltage();
     Q_INVOKABLE float vruCurrent();
     Q_INVOKABLE float vruVelocityH();
-    Q_INVOKABLE int pilotArmState();
-    Q_INVOKABLE int pilotModeState();
+    Q_INVOKABLE int   pilotArmState();
+    Q_INVOKABLE int   pilotModeState();
     QList<DevQProperty*> getDevList();
     QList<DevQProperty*> getDevList(BoardVersion ver);
     int calcAverageChartLosses();
