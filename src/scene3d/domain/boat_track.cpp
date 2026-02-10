@@ -55,7 +55,7 @@ void BoatTrack::onPositionAdded(uint64_t indx)
 
     const int toIndx = indx;
     int fromIndx = lastIndx_;
-    fromIndx = 0;
+    // fromIndx = 0;
     if (fromIndx >= toIndx) {
         qDebug() << "fromIndx >= toIndx.................." << fromIndx << "  " << toIndx;
         return;
@@ -70,6 +70,7 @@ void BoatTrack::onPositionAdded(uint64_t indx)
         if (auto* ep = datasetPtr_->fromIndex(i); ep) {
             if (auto posNed = ep->getPositionGNSS().ned; posNed.isCoordinatesValid()) {
                 prepData.push_back(QVector3D(posNed.n, posNed.e, 0));
+                // qDebug() << "posNed.n:  " << posNed.n << "    posNed.e:" << posNed.e;
             }
         }
     }

@@ -1366,7 +1366,7 @@ void Core::onFileStopsOpening_CSV(QVector<float>& depthVec, double minZ, double 
     QMetaObject::invokeMethod(dataProcessor_, "postMinZ", Qt::QueuedConnection, Q_ARG(float, minZ));
     QMetaObject::invokeMethod(dataProcessor_, "postMaxZ", Qt::QueuedConnection, Q_ARG(float, maxZ));
     dataHorizon_->setIsFileOpening(isFileOpening_);
-    scene3dViewPtr_->onPositionAdded(32248);
+    scene3dViewPtr_->onPositionAdded(dataHorizon_->getPositionIndx());
 }
 
 void Core::onSendMapTextureIdByTileIndx(const map::TileIndex &tileIndx, GLuint textureId)

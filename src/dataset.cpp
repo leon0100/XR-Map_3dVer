@@ -677,10 +677,10 @@ void Dataset::addPosition_CSV(double lat, double lon, int depth)
 
         lastEp->setPositionDataType(DataType::kRaw);
 
-        boatLatitute_ = pos.lla.latitude;
+        boatLatitute_  = pos.lla.latitude;
         boatLongitude_ = pos.lla.longitude;
 
-        emit positionAdded(lastIndx);
+        // emit positionAdded(lastIndx); //nie:test
     }
 
 }
