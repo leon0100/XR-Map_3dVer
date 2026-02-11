@@ -1257,7 +1257,7 @@ void GraphicsScene3dView::InFboRenderer::render()
     m_renderer->render();
 
 
-    //nie:test     ✅ 截图逻辑
+    //nie:test     截图逻辑
     if(view_->screenshotPending_)
     {
         qDebug() << "Screenshot triggered.................";

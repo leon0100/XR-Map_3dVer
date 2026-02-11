@@ -2369,6 +2369,13 @@ debug\moc_core.cpp: ..\..\src\core.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -9036,6 +9043,13 @@ debug\moc_scene3d_view.cpp: ..\..\src\scene3d\scene3d_view.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		debug\mocinclude.opt \
 		debug\moc_predefs.h \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\bin\moc.exe
@@ -9339,6 +9353,13 @@ debug\moc_screetShot.cpp: ..\..\src\scene3d\screetShot.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QtMath \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		debug\mocinclude.opt \
 		debug\moc_predefs.h \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\bin\moc.exe
@@ -11650,6 +11671,13 @@ debug\core.obj: ..\..\src\core.cpp ..\..\src\core.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -12165,6 +12193,13 @@ debug\dataset.obj: ..\..\src\dataset.cpp ..\..\src\dataset.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -12913,6 +12948,13 @@ debug\epoch.obj: ..\..\src\epoch.cpp ..\..\src\epoch.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -13508,6 +13550,13 @@ debug\id_binnary.obj: ..\..\src\id_binnary.cpp ..\..\src\id_binnary.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -14023,6 +14072,13 @@ debug\logger.obj: ..\..\src\logger.cpp ..\..\src\logger.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -14147,10 +14203,43 @@ debug\main.obj: ..\..\src\main.cpp ..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\ms
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qsharedpointer_impl.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qsize.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qmargins.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQml\QQmlContext \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQml\qqmlcontext.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QApplication \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qapplication.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qtwidgetsglobal.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qtwidgets-config.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qcursor.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qdesktopwidget.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qwidget.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpaintdevice.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qrect.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpalette.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qcolor.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qrgb.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qrgba64.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qbrush.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qmatrix.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpolygon.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qregion.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qdatastream.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qline.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtransform.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qimage.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpixelformat.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpixmap.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qfont.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qfontmetrics.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qfontinfo.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qsizepolicy.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qkeysequence.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qevent.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qurl.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qurlquery.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qfile.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qfiledevice.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qvector2d.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtouchdevice.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQml\QQmlContext \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQml\qqmlcontext.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQml\qjsvalue.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQml\qtqmlglobal.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQml\qtqml-config.h \
@@ -14183,8 +14272,6 @@ debug\main.obj: ..\..\src\main.cpp ..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\ms
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QResource \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qresource.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QFile \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qfile.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qfiledevice.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QByteArray \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQuick\QQuickWindow \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQuick\qquickwindow.h \
@@ -14203,14 +14290,12 @@ debug\main.obj: ..\..\src\main.cpp ..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\ms
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qopengles2ext.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qopenglext.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QRectF \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qrect.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QMatrix4x4 \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qmatrix4x4.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qvector3d.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qvector4d.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qquaternion.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qgenericmatrix.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qdatastream.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qwindow.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QObject \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QEvent \
@@ -14219,23 +14304,6 @@ debug\main.obj: ..\..\src\main.cpp ..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\ms
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qsurface.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qsurfaceformat.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qicon.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpixmap.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpaintdevice.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qcolor.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qrgb.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qrgba64.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qimage.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpixelformat.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtransform.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qmatrix.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpolygon.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qregion.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\qline.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qcursor.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qevent.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qkeysequence.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qvector2d.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtouchdevice.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtSql\QSql \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtSql\qtsqlglobal.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtSql\qtsql-config.h \
@@ -14251,7 +14319,6 @@ debug\main.obj: ..\..\src\main.cpp ..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\ms
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQuick\qquickitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtQml\qqmlcomponent.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QList \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qfont.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qaccessible.h \
 		..\..\src\dataset.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QVector3D \
@@ -14301,9 +14368,6 @@ debug\main.obj: ..\..\src\main.cpp ..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\ms
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpen.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qbrush.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qfontinfo.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qfontmetrics.h \
 		..\..\src\scene2d\plot2D_aim.h \
 		..\..\src\scene2d\plot2D_plot_layer.h \
 		..\..\src\scene2d\plot2D_attitude.h \
@@ -14399,11 +14463,6 @@ debug\main.obj: ..\..\src\main.cpp ..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\ms
 		..\..\src\scene3d\domain\isobaths_view.h \
 		..\..\src\scene3d\screetShot.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QWidget \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qwidget.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qtwidgetsglobal.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qtwidgets-config.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpalette.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qsizepolicy.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QCursor \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtConcurrent\QtConcurrent \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtConcurrent\QtConcurrentDepends \
@@ -14558,6 +14617,13 @@ debug\main.obj: ..\..\src\main.cpp ..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\ms
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -15203,6 +15269,13 @@ debug\stream_list.obj: ..\..\src\stream_list.cpp ..\..\src\stream_list.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -15787,6 +15860,13 @@ debug\location_reader.obj: ..\..\src\location_reader.cpp ..\..\src\location_read
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -21240,7 +21320,14 @@ debug\boat_track_control_menu_controller.obj: ..\..\src\scene3d\controllers\boat
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\bottom_track_control_menu_controller.obj: ..\..\src\scene3d\controllers\bottom_track_control_menu_controller.cpp ..\..\src\scene3d\controllers\bottom_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
@@ -21658,6 +21745,13 @@ debug\bottom_track_control_menu_controller.obj: ..\..\src\scene3d\controllers\bo
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\core\qml_object_names.h
 
 debug\image_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\image_view_control_menu_controller.cpp ..\..\src\scene3d\controllers\image_view_control_menu_controller.h \
@@ -22075,7 +22169,14 @@ debug\image_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\imag
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\map_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\map_view_control_menu_controller.cpp ..\..\src\scene3d\controllers\map_view_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
@@ -22492,7 +22593,14 @@ debug\map_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\map_vi
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\mpc_filter_control_menu_controller.obj: ..\..\src\scene3d\controllers\mpc_filter_control_menu_controller.cpp ..\..\src\scene3d\controllers\mpc_filter_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
@@ -22910,7 +23018,14 @@ debug\mpc_filter_control_menu_controller.obj: ..\..\src\scene3d\controllers\mpc_
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\navigation_arrow_control_menu_controller.obj: ..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.cpp ..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
@@ -23327,7 +23442,14 @@ debug\navigation_arrow_control_menu_controller.obj: ..\..\src\scene3d\controller
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\npd_filter_control_menu_controller.obj: ..\..\src\scene3d\controllers\npd_filter_control_menu_controller.cpp ..\..\src\scene3d\controllers\npd_filter_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
@@ -23745,7 +23867,14 @@ debug\npd_filter_control_menu_controller.obj: ..\..\src\scene3d\controllers\npd_
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\point_group_control_menu_controller.obj: ..\..\src\scene3d\controllers\point_group_control_menu_controller.cpp ..\..\src\scene3d\controllers\point_group_control_menu_controller.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QStandardItemModel \
@@ -24162,7 +24291,14 @@ debug\point_group_control_menu_controller.obj: ..\..\src\scene3d\controllers\poi
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\polygon_group_control_menu_controller.obj: ..\..\src\scene3d\controllers\polygon_group_control_menu_controller.cpp ..\..\src\scene3d\controllers\polygon_group_control_menu_controller.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QStandardItemModel \
@@ -24579,7 +24715,14 @@ debug\polygon_group_control_menu_controller.obj: ..\..\src\scene3d\controllers\p
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\qml_component_controller.obj: ..\..\src\scene3d\controllers\qml_component_controller.cpp ..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QObject \
@@ -25051,7 +25194,14 @@ debug\scene3d_control_menu_controller.obj: ..\..\src\scene3d\controllers\scene3d
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\scene3d_toolbar_controller.obj: ..\..\src\scene3d\controllers\scene3d_toolbar_controller.cpp ..\..\src\scene3d\controllers\scene3d_toolbar_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
@@ -25469,6 +25619,13 @@ debug\scene3d_toolbar_controller.obj: ..\..\src\scene3d\controllers\scene3d_tool
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\core\qml_object_names.h
 
 debug\mosaic_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\mosaic_view_control_menu_controller.cpp ..\..\src\scene3d\controllers\mosaic_view_control_menu_controller.h \
@@ -25886,7 +26043,14 @@ debug\mosaic_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\mos
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\isobaths_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\isobaths_view_control_menu_controller.cpp ..\..\src\scene3d\controllers\isobaths_view_control_menu_controller.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QThread \
@@ -26303,7 +26467,14 @@ debug\isobaths_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\i
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\usbl_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\usbl_view_control_menu_controller.cpp ..\..\src\scene3d\controllers\usbl_view_control_menu_controller.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QColor \
@@ -26720,7 +26891,14 @@ debug\usbl_view_control_menu_controller.obj: ..\..\src\scene3d\controllers\usbl_
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\scene_object.obj: ..\..\src\scene3d\core\scene_object.cpp ..\..\src\scene3d\core\scene_object.h \
 		..\..\src\scene3d\domain\cube.h \
@@ -27273,6 +27451,13 @@ debug\boat_track.obj: ..\..\src\scene3d\domain\boat_track.cpp ..\..\src\scene3d\
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\events\epoch_event.h
 
 debug\bottom_track.obj: ..\..\src\scene3d\domain\bottom_track.cpp ..\..\src\scene3d\domain\bottom_track.h \
@@ -27689,6 +27874,13 @@ debug\bottom_track.obj: ..\..\src\scene3d\domain\bottom_track.cpp ..\..\src\scen
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\events\epoch_event.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QOpenGLExtraFunctions \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qopenglextrafunctions.h
@@ -28659,7 +28851,14 @@ debug\image_view.obj: ..\..\src\scene3d\domain\image_view.cpp ..\..\src\scene3d\
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
-		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h
 
 debug\map_view.obj: ..\..\src\scene3d\domain\map_view.cpp ..\..\src\scene3d\domain\map_view.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QString \
@@ -31397,6 +31596,13 @@ debug\scene3d_renderer.obj: ..\..\src\scene3d\scene3d_renderer.cpp ..\..\src\sce
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QMatrix4x4 \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QOpenGLExtraFunctions \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qopenglextrafunctions.h \
@@ -31820,6 +32026,13 @@ debug\scene3d_view.obj: ..\..\src\scene3d\scene3d_view.cpp ..\..\src\scene3d\sce
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPainter \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QOpenGLFramebufferObject \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qopenglframebufferobject.h \
 		..\..\src\scene3d\scene3d_renderer.h \
@@ -32127,6 +32340,13 @@ debug\screetShot.obj: ..\..\src\scene3d\screetShot.cpp ..\..\src\scene3d\screetS
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qpainter.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\qtextoption.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QtMath \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QDebug \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QDateTime \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\QDir \
@@ -32776,6 +32996,13 @@ debug\dev_driver.obj: ..\..\src\device\dev_driver.cpp ..\..\src\device\dev_drive
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
@@ -33303,6 +33530,13 @@ debug\device_manager.obj: ..\..\src\device\device_manager.cpp ..\..\src\device\d
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\QGraphicsRectItem \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtWidgets\qgraphicsitem.h \
 		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\QPen \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipreader_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtguiglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qglobal_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qconfig_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtCore\5.15.2\QtCore\private\qtcore-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qtgui-config_p.h \
+		..\..\..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\include\QtGui\5.15.2\QtGui\private\qzipwriter_p.h \
 		..\..\src\scene3d\controllers\boat_track_control_menu_controller.h \
 		..\..\src\scene3d\controllers\qml_component_controller.h \
 		..\..\src\scene3d\controllers\navigation_arrow_control_menu_controller.h \
