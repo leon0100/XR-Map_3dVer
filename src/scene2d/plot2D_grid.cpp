@@ -90,14 +90,14 @@ bool Plot2DGrid::draw(Plot2D* parent, Dataset* dataset)
         }
         float distance = NAN;
 
-        if (lastEpoch != NULL && isfinite(lastEpoch->rangeFinder())) {
+        if (lastEpoch != NULL && qIsFinite(lastEpoch->rangeFinder())) {
             distance = lastEpoch->rangeFinder();
         }
-        else if (preLastEpoch != NULL && isfinite(preLastEpoch->rangeFinder())) {
+        else if (preLastEpoch != NULL && qIsFinite(preLastEpoch->rangeFinder())) {
             distance = preLastEpoch->rangeFinder();
         }
 
-        if (isfinite(distance)) {
+        if (qIsFinite(distance)) {
             pen.setColor(QColor(250, 100, 0));
             p->setPen(pen);
             p->setFont(QFont("Asap", 40, QFont::Normal));
@@ -123,16 +123,16 @@ bool Plot2DGrid::draw(Plot2D* parent, Dataset* dataset)
 
         // qDebug() << "Plot temp def: " << temp;
 
-        // if (lastEpoch != NULL && isfinite(lastEpoch->temperatureAvail())) {
+        // if (lastEpoch != NULL && qIsFinite(lastEpoch->temperatureAvail())) {
         //     temp = lastEpoch->temperature();
         //     qDebug() << "Plot temp one: " << temp;
         // }
-        // else if (preLastEpoch != NULL && isfinite(preLastEpoch->temperatureAvail())) {
+        // else if (preLastEpoch != NULL && qIsFinite(preLastEpoch->temperatureAvail())) {
         //     temp = preLastEpoch->temperature();
         //     qDebug() << "Plot temp sec: " << temp;
         // } else if() {
 
-        // if (lastEpoch != NULL && isfinite(lastEpoch->temperatureAvail())) {
+        // if (lastEpoch != NULL && qIsFinite(lastEpoch->temperatureAvail())) {
         //     temp = preLastEpoch->temperature();
         //     qDebug() << "Plot temp sec: " << temp;
         // }
@@ -140,7 +140,7 @@ bool Plot2DGrid::draw(Plot2D* parent, Dataset* dataset)
         // }
         // qDebug() << "Plot temp end: " << temp;
 
-        if (temperatureVisible_ && isfinite(temp)) {
+        if (temperatureVisible_ && qIsFinite(temp)) {
             pen.setColor(QColor(80, 200, 0));
             p->setPen(pen);
             p->setFont(QFont("Asap", 40, QFont::Normal));

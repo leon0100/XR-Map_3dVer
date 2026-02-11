@@ -2,7 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 Rectangle {
-    id: menu
+    id: toolBar_XR
+    objectName:  "toolBar_XR"
     height: 30
     width: parent ? parent.width : 400
     color: "#f5f5f5"
@@ -181,7 +182,7 @@ Rectangle {
 
         MenuButton { //等值线
             id: contourBtn
-            icon.source: "qrc:/icons/contour.png"
+            icon.source: "qrc:/XR/contour.png"
             CMouseOpacityArea {
                 id: btn6
                 toolTipText: qsTr("Contours")
@@ -224,11 +225,11 @@ Rectangle {
     DeviceSettingsViewer {
         id: devSettings
         visible: menuSettings.active
-        // height: menu.height
         menuWidth: settingsWidth
         x: 8
         y: 30
     }
+
 
     //settings按钮显示出来
     DisplaySettingsViewer {
@@ -237,9 +238,8 @@ Rectangle {
         menuWidth: settingsWidth
         x: 8
         y: 30
-        targetPlot: menu.targetPlot
+        targetPlot: toolBar_XR.targetPlot
     }
-
 
 
 }

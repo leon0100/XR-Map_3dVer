@@ -253,8 +253,8 @@ void Contacts::mouseMoveEvent(Qt::MouseButtons buttons, qreal x, qreal y)
     for (auto it = contactBounds_.begin(); it != contactBounds_.end(); ++it) {
         auto rect = it.value();
 
-        if (!std::isfinite(rect.x()) ||
-            !std::isfinite(rect.y())) {
+        if (!qIsFinite(rect.x()) ||
+            !qIsFinite(rect.y())) {
             continue;
         }
 
@@ -375,7 +375,7 @@ void Contacts::ContactsRenderImplementation::render(QOpenGLFunctions *ctx,
     ctx->glEnable(34913);
 
     for (auto it = points_.begin(); it != points_.end(); ++it) {
-        if (!isfinite(it->lat) || !isfinite(it->lon)) {
+        if (!qIsFinite(it->lat) || !qIsFinite(it->lon)) {
             continue;
         }
 

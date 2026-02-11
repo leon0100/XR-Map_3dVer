@@ -61,7 +61,7 @@ public:
 
         Position bottomPoint;
 
-        bool isDist() const { return isfinite(distance); }
+        bool isDist() const { return qIsFinite(distance); }
         void setDistance(float dist, DistanceSource src = DistanceSource::DistanceSourceNone) { distance = dist; source = src; }
         void clearDistance(DistanceSource src = DistanceSource::DistanceSourceNone) { distance = NAN; source = src; }
         void resetDistance() { distance = NAN; source = DistanceSource::DistanceSourceNone; }
@@ -175,7 +175,7 @@ public:
 
     void setDepth(float depth);
     float getDepth();
-    bool isDepthAvail() { return isfinite(depth_); }
+    bool isDepthAvail() { return qIsFinite(depth_); }
 
 
     void setPositionDataType(DataType dataType);
@@ -303,7 +303,7 @@ public:
                 const auto &echogramList = it.value();
                 for (const auto& ech : echogramList) {
                     float r = ech.range();
-                    if (std::isfinite(r) && (!std::isfinite(maxRange) || r > maxRange)) {
+                    if (qIsFinite(r) && (!qIsFinite(maxRange) || r > maxRange)) {
                         maxRange = r;
                         break;
                     }
@@ -317,7 +317,7 @@ public:
                     const auto& chChartsCRef = charts_[ch];
                     for (const auto& ech : chChartsCRef) {
                         float r = ech.range();
-                        if (std::isfinite(r) && (!std::isfinite(result) || r > result)) {
+                        if (qIsFinite(r) && (!qIsFinite(result) || r > result)) {
                             result = r;
                             break;
                         }
@@ -329,17 +329,17 @@ public:
             const float r1 = extractMaxFromChannel(channel);
             const float r2 = extractMaxFromChannel(channel2);
 
-            if (std::isfinite(r1)) {
+            if (qIsFinite(r1)) {
                 maxRange = r1;
             }
-            if (std::isfinite(r2) && (!std::isfinite(maxRange) || r2 > maxRange)) {
+            if (qIsFinite(r2) && (!qIsFinite(maxRange) || r2 > maxRange)) {
                 maxRange = r2;
             }
         }
 
         if (!rangefinders_.isEmpty()) {
             float r3 = rangefinders_.first();
-            if (std::isfinite(r3) && (!std::isfinite(maxRange) || r3 > maxRange)) {
+            if (qIsFinite(r3) && (!qIsFinite(maxRange) || r3 > maxRange)) {
                 maxRange = r3;
             }
         }
@@ -360,7 +360,7 @@ public:
             for (auto it = charts_.cbegin(); it != charts_.cend(); ++it) {
                 for (const auto& iEchogram : it.value()) {
                     double distance = iEchogram.bottomProcessing.getDistance();
-                    if (std::isfinite(distance)) {
+                    if (qIsFinite(distance)) {
                         return distance;
                     }
                 }
@@ -369,7 +369,7 @@ public:
             const auto& chart = charts_[channelId];
             for (const auto& ech : chart) {
                 double distance = ech.bottomProcessing.getDistance();
-                if (std::isfinite(distance)) {
+                if (qIsFinite(distance)) {
                     return distance;
                 }
             }
@@ -588,7 +588,7 @@ protected:
         DataType dataType;
 
         bool isAvail() {
-            return isfinite(yaw) && isfinite(pitch) && isfinite(roll);
+            return qIsFinite(yaw) && qIsFinite(pitch) && qIsFinite(roll);
         }
     } _attitude;
 
@@ -618,7 +618,7 @@ protected:
         float e2 = NAN;
         float e3 = NAN;
         bool isSeted() {
-            return isfinite(e1) || isfinite(e2) || isfinite(e3);
+            return qIsFinite(e1) || qIsFinite(e2) || qIsFinite(e3);
         }
     } _encoder;
 

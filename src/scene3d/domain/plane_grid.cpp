@@ -2,9 +2,10 @@
 #include "draw_utils.h"
 //#include <text_renderer.h>
 
-PlaneGrid::PlaneGrid(QObject *parent)
-    : SceneObject(new PlaneGridRenderImplementation, parent)
-{}
+PlaneGrid::PlaneGrid(QObject *parent) : SceneObject(new PlaneGridRenderImplementation, parent)
+{
+
+}
 
 void PlaneGrid::setPlane(const Plane &plane)
 {

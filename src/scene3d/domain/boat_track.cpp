@@ -69,7 +69,8 @@ void BoatTrack::onPositionAdded(uint64_t indx)
     for (int i = fromIndx + 1; i <= toIndx; ++i) {
         if (auto* ep = datasetPtr_->fromIndex(i); ep) {
             if (auto posNed = ep->getPositionGNSS().ned; posNed.isCoordinatesValid()) {
-                prepData.push_back(QVector3D(posNed.n, posNed.e, 0));
+                // 添加小的Z轴偏移，确保轨迹线显示在瓦片地图上方
+                prepData.push_back(QVector3D(posNed.n, posNed.e, 1.0f));  // Z轴偏移1米
             }
         }
     }
@@ -106,7 +107,7 @@ void BoatTrack::selectEpoch(int epochIndex)
 
             if (datasetPtr_) {
                 if (auto datasetChannels = datasetPtr_->channelsList(); !datasetChannels.isEmpty()) {
-                    if (float distance = -1.f * static_cast<float>(epoch->distProccesing(datasetChannels.first().channelId_)); isfinite(distance)) {
+                    if (float distance = -1.f * static_cast<float>(epoch->distProccesing(datasetChannels.first().channelId_)); qIsFinite(distance)) {
                         r->bottomTrackVertice_ = QVector3D(sonarPosNed.n, sonarPosNed.e, distance); //
                         beenBottomSelected = true;
                     }

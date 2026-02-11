@@ -66,6 +66,8 @@ signals:
     void screetToolBarShowChanged();
     void cancelScreetShot();
 
+    void signalScreetGraphics();
+
 
 public:
     void setCurrentMapLevel(int mapLevel);
@@ -127,6 +129,13 @@ public:
     QMutex imgMutex_;   // 多线程写入保护
     int tileStartX_ = 0;
     int tileStartY_ = 0;
+
+
+
+
+    bool screenshotPending_ = false;
+    QString screenshotPath_;
+    QMutex screenshotMutex_;
 
 
 

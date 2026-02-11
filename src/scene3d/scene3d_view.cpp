@@ -82,6 +82,8 @@ GraphicsScene3dView::GraphicsScene3dView() :
 
     QObject::connect(this, &GraphicsScene3dView::cameraIsMoved, this, &GraphicsScene3dView::updateMapView, Qt::DirectConnection);
     QObject::connect(this, &GraphicsScene3dView::cameraIsMoved, this, &GraphicsScene3dView::updateViews, Qt::DirectConnection);
+    connect(&screetShot_, &ScreetShot::signalScreetGraphics, this, &GraphicsScene3dView::slotScreetGraphics,
+                     Qt::DirectConnection);
 
     updatePlaneGrid();
 
@@ -735,7 +737,7 @@ void GraphicsScene3dView::setLastEpochFocusView(bool useAngle, bool useNavigator
 
     if (useAngle && !isNorth_) {
         const float yawDeg = datasetPtr_->getLastYaw();
-        if (std::isfinite(yawDeg)) {
+        if (qIsFinite(yawDeg)) {
             const float targetYaw = -yawDeg * static_cast<float>(M_PI) / 180.0f;
 
             if (!m_camera->navYawInited_) {
@@ -1178,7 +1180,7 @@ void GraphicsScene3dView::updateViews()
 
 void GraphicsScene3dView::onPositionAdded(uint64_t indx)
 {
-    qDebug() << "GraphicsScene3dView::onPositionAdded................";
+    qDebug() << "GraphicsScene3dView::onPositionAdded................" << indx;
     if (!datasetPtr_) {
         qDebug() << "datasetPtr_.....................";
         return;
@@ -1198,7 +1200,7 @@ void GraphicsScene3dView::onPositionAdded(uint64_t indx)
     boatTrack_->onPositionAdded(indx); // 船到这边来
 
     //下面这几行暂时注释掉，因为不影响轨迹测试
-    // if (float lastYaw = datasetPtr_->getLastYaw(); std::isfinite(lastYaw)) {
+    // if (float lastYaw = datasetPtr_->getLastYaw(); qIsFinite(lastYaw)) {
     //     navigationArrow_->setPositionAndAngle(QVector3D(boatPos.ned.n, boatPos.ned.e,
     //                            !isfinite(boatPos.ned.d) ? 0.f : boatPos.ned.d), lastYaw - 90.f); // 船到这边来
     // }
@@ -1230,6 +1232,15 @@ void GraphicsScene3dView::setIsNorth(bool state)
     emit cameraIsMoved();
 }
 
+void GraphicsScene3dView::slotScreetGraphics()
+{
+    QMutexLocker locker(&screenshotMutex_);
+    screenshotPending_ = true;
+    screenshotPath_ = ".";
+
+    update(); // 触发下一帧 render()
+}
+
 //---------------------Renderer---------------------------//
 GraphicsScene3dView::InFboRenderer::InFboRenderer() :
     QQuickFramebufferObject::Renderer(),
@@ -1244,11 +1255,37 @@ GraphicsScene3dView::InFboRenderer::~InFboRenderer()
 void GraphicsScene3dView::InFboRenderer::render()
 {
     m_renderer->render();
+
+
+    //nie:test     ✅ 截图逻辑
+    if(view_->screenshotPending_)
+    {
+        qDebug() << "Screenshot triggered.................";
+
+        QImage img = framebufferObject()->toImage();
+
+        QString baseDir = QCoreApplication::applicationDirPath();
+        QString filePath = baseDir + "/2026_02_11.png";
+
+        bool ok = img.save(filePath);
+
+        if(ok)
+            qDebug() << "Screenshot saved successfully:" << filePath;
+        else
+            qDebug() << "Screenshot save FAILED!";
+
+        view_->screenshotPending_ = false;
+    }
+
+    update(); // 刷新
 }
 
 void GraphicsScene3dView::InFboRenderer::synchronize(QQuickFramebufferObject * fbo)
 {
     auto view = qobject_cast<GraphicsScene3dView*>(fbo);
+
+    view_ = static_cast<GraphicsScene3dView*>(fbo);
+
 
     if (!view) {
         return;

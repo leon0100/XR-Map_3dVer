@@ -1,7 +1,7 @@
 #include "dataset.h"
 
 #include "core.h"
-extern Core core;
+extern Core* corePtr;
 
 
 Dataset::Dataset() :
@@ -12,6 +12,7 @@ Dataset::Dataset() :
 {
     qRegisterMetaType<ChannelId>("ChannelId");
     resetDataset();
+    pool_.clear();
 }
 
 Dataset::~Dataset()
@@ -121,7 +122,7 @@ void Dataset::addEvent(int timestamp, int id, int unixt) {
     lastEventTimestamp = timestamp;
     lastEventId = id;
 
-    addNewEpoch();
+    // addNewEpoch();
 
     {
         QWriteLocker wl(&poolMtx_);
@@ -137,7 +138,7 @@ void Dataset::addEncoder(float angle1_deg, float angle2_deg, float angle3_deg) {
         return;
     }
     if(last_epoch->isEncodersSeted()) {
-        last_epoch = addNewEpoch();
+        // last_epoch = addNewEpoch();
     }
 
     last_epoch->setEncoders(angle1_deg, angle2_deg, angle3_deg);
@@ -402,7 +403,7 @@ void Dataset::addRangefinder(const ChannelId& channelId, float distance)
         return;
     }
     if (epoch->distAvail()) {
-        epoch = addNewEpoch();
+        // epoch = addNewEpoch();
     }
 
     setLastDepth(distance);
@@ -415,7 +416,7 @@ void Dataset::addRangefinder(const ChannelId& channelId, float distance)
 void Dataset::addUsblSolution(IDBinUsblSolution::UsblSolution data) {
     int pool_index = endIndex();
     if(pool_index < 0 || pool_[pool_index].isUsblSolutionAvailable() == true) {
-        addNewEpoch();
+        // addNewEpoch();
         pool_index = endIndex();
     }
 
@@ -500,7 +501,7 @@ void Dataset::addDopplerBeam(IDBinDVL::BeamSolution *beams, uint16_t cnt) {
     int pool_index = endIndex();
 
     if(pool_index < 0 || (pool_[pool_index].isDopplerBeamAvail() == true)) { //
-        addNewEpoch();
+        // addNewEpoch();
     }
 
     pool_index = endIndex();
@@ -513,7 +514,7 @@ void Dataset::addDVLSolution(IDBinDVL::DVLSolution dvlSolution) {
     int pool_index = endIndex();
 
     if(pool_index < 0 || (pool_[pool_index].isDopplerBeamAvail() == false)) { //
-        addNewEpoch();
+        // addNewEpoch();
         pool_index = endIndex();
     }
 
@@ -565,94 +566,93 @@ void Dataset::addAtt(float yaw, float pitch, float roll)
 
 void Dataset::addPosition(double lat, double lon, uint32_t unix_time, int32_t nanosec)
 {
-    Epoch* lastEp = last();
-    if (!lastEp) {
-        return;
-    }
+    // Epoch* lastEp = last();
+    // if (!lastEp) {
+    //     return;
+    // }
 
-    Position pos;
-    pos.lla = LLA(lat, lon);
-    pos.time = DateTime(unix_time, nanosec);
-    const bool oneHzNoTimestamp = (unix_time == 0 && nanosec == 0);
+    // Position pos;
+    // pos.lla = LLA(lat, lon);
+    // pos.time = DateTime(unix_time, nanosec);
+    // const bool oneHzNoTimestamp = (unix_time == 0 && nanosec == 0);
 
-    if (pos.lla.isCoordinatesValid()) {
-        if (lastEp->getPositionGNSS().lla.isCoordinatesValid()) {
-            lastEp = addNewEpoch();
-        }
-        uint64_t lastIndx = pool_.size() - 1;
-        if (!getLlaRef().isInit) {
-            LlaRefState llaState = state_ == DatasetState::kUndefined ? LlaRefState::kFile :
-                        (state_ == DatasetState::kFile ? LlaRefState::kFile :  LlaRefState::kConnection);
-            setLlaRef(LLARef(pos.lla), llaState);
-        }
-        lastEp->setPositionLLA(pos);
-        lastEp->setPositionRef(&_llaRef);
-        // qDebug() << "_llaRef: longitude:" << _llaRef.refLla.longitude << "  latitude:" <<
-        //     _llaRef.refLla.latitude << "  " << _llaRef.refLla.altitude;
+    // if (pos.lla.isCoordinatesValid()) {
+    //     if (lastEp->getPositionGNSS().lla.isCoordinatesValid()) {
+    //         lastEp = addNewEpoch();
+    //     }
+    //     uint64_t lastIndx = pool_.size() - 1;
+    //     if (!getLlaRef().isInit) {
+    //         LlaRefState llaState = state_ == DatasetState::kUndefined ? LlaRefState::kFile :
+    //                     (state_ == DatasetState::kFile ? LlaRefState::kFile :  LlaRefState::kConnection);
+    //         setLlaRef(LLARef(pos.lla), llaState);
+    //     }
+    //     lastEp->setPositionLLA(pos);
+    //     lastEp->setPositionRef(&_llaRef);
+    //     // qDebug() << "_llaRef: longitude:" << _llaRef.refLla.longitude << "  latitude:" <<
+    //     //     _llaRef.refLla.latitude << "  " << _llaRef.refLla.altitude;
 
-        lastEp->setPositionDataType(DataType::kRaw);
-        interpolator_.interpolatePos(false);
+    //     lastEp->setPositionDataType(DataType::kRaw);
+    //     interpolator_.interpolatePos(false);
 
-        if (Epoch* prevEp = lastlast(); prevEp) {
-            const auto& prev = prevEp->getPositionGNSS();
-            if (prev.lla.isCoordinatesValid()) {
-                const double dist = distanceMetersLLA(prev.lla.latitude, prev.lla.longitude, pos.lla.latitude,  pos.lla.longitude);
+    //     if (Epoch* prevEp = lastlast(); prevEp) {
+    //         const auto& prev = prevEp->getPositionGNSS();
+    //         if (prev.lla.isCoordinatesValid()) {
+    //             const double dist = distanceMetersLLA(prev.lla.latitude, prev.lla.longitude, pos.lla.latitude,  pos.lla.longitude);
 
-                if (oneHzNoTimestamp) {
-                    speed_ = (dist / 0.1) * 3.6; // TODO: kostyl
-                }
-                else {
-                    const auto& c = pos.time;
-                    const auto& p = prev.time;
+    //             if (oneHzNoTimestamp) {
+    //                 speed_ = (dist / 0.1) * 3.6; // TODO: kostyl
+    //             }
+    //             else {
+    //                 const auto& c = pos.time;
+    //                 const auto& p = prev.time;
 
-                    int64_t dsec  = int64_t(c.sec)     - int64_t(p.sec);
-                    int64_t dnano = int64_t(c.nanoSec) - int64_t(p.nanoSec);
-                    if (dnano < 0) {
-                        dsec -= 1;
-                        dnano += 1000000000;
-                    }
+    //                 int64_t dsec  = int64_t(c.sec)     - int64_t(p.sec);
+    //                 int64_t dnano = int64_t(c.nanoSec) - int64_t(p.nanoSec);
+    //                 if (dnano < 0) {
+    //                     dsec -= 1;
+    //                     dnano += 1000000000;
+    //                 }
 
-                    double dt = double(dsec) + double(dnano) * 1e-9;
-                    if (dt <= 0.0) {
-                        dt = 1.0;
-                    }
+    //                 double dt = double(dsec) + double(dnano) * 1e-9;
+    //                 if (dt <= 0.0) {
+    //                     dt = 1.0;
+    //                 }
 
-                    speed_ = (dist / dt) * 3.6;
-                }
+    //                 speed_ = (dist / dt) * 3.6;
+    //             }
 
-                emit speedChanged();
-            }
-        }
+    //             emit speedChanged();
+    //         }
+    //     }
 
-        //qDebug() << "add pos for" << lastIndx;
+    //     //qDebug() << "add pos for" << lastIndx;
 
-        boatLatitute_ = pos.lla.latitude;
-        boatLongitude_ = pos.lla.longitude;
+    //     boatLatitute_ = pos.lla.latitude;
+    //     boatLongitude_ = pos.lla.longitude;
 
-        if (isValidActiveContactIndx()) {
-            if (auto* ep = fromIndex(activeContactIndx_); ep) {
-                const double latTarget = ep->contact_.lat;
-                const double lonTarget = ep->contact_.lon;
-                const double latBoat   = pos.lla.latitude;
-                const double lonBoat   = pos.lla.longitude;
-                distToActiveContact_ = distanceMetersLLA(latBoat, lonBoat, latTarget, lonTarget);
+    //     if (isValidActiveContactIndx()) {
+    //         if (auto* ep = fromIndex(activeContactIndx_); ep) {
+    //             const double latTarget = ep->contact_.lat;
+    //             const double lonTarget = ep->contact_.lon;
+    //             const double latBoat   = pos.lla.latitude;
+    //             const double lonBoat   = pos.lla.longitude;
+    //             distToActiveContact_ = distanceMetersLLA(latBoat, lonBoat, latTarget, lonTarget);
 
-                const double yawDeg = _lastYaw;
-                if (std::isfinite(yawDeg)) {
-                    angleToActiveContact_ = angleToTargetDeg(latBoat, lonBoat, latTarget, lonTarget, yawDeg);
-                }
-            }
-        }
-        emit positionAdded(lastIndx);
-        emit dataUpdate();
-        emit lastPositionChanged();
-    }
+    //             const double yawDeg = _lastYaw;
+    //             if (qIsFinite(yawDeg)) {
+    //                 angleToActiveContact_ = angleToTargetDeg(latBoat, lonBoat, latTarget, lonTarget, yawDeg);
+    //             }
+    //         }
+    //     }
+    //     emit positionAdded(lastIndx);
+    //     emit dataUpdate();
+    //     emit lastPositionChanged();
+    // }
 }
 
 
 void Dataset::addPosition_CSV(double lat, double lon, int depth)
 {
-    // qDebug() << "Dataset::addPosition_CSV1111111111111111111111111...........................";
     Epoch* lastEp = last();
     if (!lastEp) {
         return;
@@ -662,10 +662,11 @@ void Dataset::addPosition_CSV(double lat, double lon, int depth)
     pos.lla = LLA(lat, lon);
     if (pos.lla.isCoordinatesValid()) {
         if (lastEp->getPositionGNSS().lla.isCoordinatesValid()) {
-            lastEp = addNewEpoch();//不断累加帧数的下标index
+            lastEp = addNewEpoch();  //不断累加帧数的下标index
             lastEp->setDistProcesing_CSV(depth);
         }
 
+        // qDebug() << "pool_size().............................. " << pool_.size();
         uint64_t lastIndx = pool_.size() - 1;
         if (!getLlaRef().isInit) {
             LlaRefState llaState = state_ == DatasetState::kUndefined ? LlaRefState::kFile :
@@ -677,7 +678,7 @@ void Dataset::addPosition_CSV(double lat, double lon, int depth)
 
         lastEp->setPositionDataType(DataType::kRaw);
 
-        boatLatitute_ = pos.lla.latitude;
+        boatLatitute_  = pos.lla.latitude;
         boatLongitude_ = pos.lla.longitude;
 
         emit positionAdded(lastIndx);
@@ -699,7 +700,7 @@ void Dataset::addDepth(float depth) {
         return;
     }
     if(last_epoch->isDepthAvail()) {
-        last_epoch = addNewEpoch();
+        // last_epoch = addNewEpoch();
     }
 
     setLastDepth(depth);
@@ -711,11 +712,11 @@ void Dataset::addGnssVelocity(double h_speed, double course) {
     // qDebug() << "Dataset::addGnssVelocity............";
     int pool_index = endIndex();
     if(pool_index < 0) {
-        addNewEpoch();
+        // addNewEpoch();
         pool_index = endIndex();
     }
 
-//    if(isfinite(_pool[pool_index].gnssHSpeed())) {
+//    if(qIsFinite(_pool[pool_index].gnssHSpeed())) {
 //        makeNewEpoch();
 //        pool_index = endIndex();
 //    }
@@ -1106,7 +1107,7 @@ void Dataset::validateChannelList(const ChannelId &channelId, uint8_t subChannel
 
         if (indx != -1) {
             if (channelsSetup_[indx].portName_.isEmpty()) {
-                auto links = core.getLinkNames();
+                auto links = corePtr->getLinkNames();
                 if (links.contains(channelId.uuid)) {
                     channelsSetup_[indx].portName_ = links[channelId.uuid];
                 }
@@ -1116,7 +1117,7 @@ void Dataset::validateChannelList(const ChannelId &channelId, uint8_t subChannel
         }
         else {
             auto newDCh = DatasetChannel(channelId, subChannelId);
-            auto links = core.getLinkNames();
+            auto links = corePtr->getLinkNames();
 
             if (links.contains(channelId.uuid)) {
                 newDCh.portName_ = links[channelId.uuid];

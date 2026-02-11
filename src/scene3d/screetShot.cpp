@@ -17,9 +17,6 @@
 ScreetShot::ScreetShot(QWidget *parent) : QWidget{parent}
 {
     this->hide();
-    qDebug() << "ScreetShot created in thread:" << QThread::currentThread();
-    qDebug() << "Main thread:" << qApp->thread();
-    qDebug() << "QApplication exists:" << (qApp != nullptr);
 }
 
 QRectF ScreetShot::getSelectionRect() const
@@ -309,7 +306,6 @@ void ScreetShot::slot_downloadScreenFinished()
         return;
 
 
-
         // 划分 targetRect_ 为小正方形
         double pixel1m = targetRect_.width() / topWidth_;
         // qDebug() << mapLevel << "级下， 1米的像素值: " << pixel1m << " " << targetRect_.height()/rightLen_;
@@ -382,6 +378,17 @@ void ScreetShot::slot_downloadScreenFinished()
 
 void ScreetShot::saveScreetShot()
 {
+    emit signalScreetGraphics();
+
+
+
+
+
+
+
+
+
+
     auto mapView = mapView_.lock();
     if (!mapView) {
         return;

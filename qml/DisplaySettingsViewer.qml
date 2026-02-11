@@ -28,6 +28,7 @@ MenuScroll {
                 targetPlot: scrollBar.targetPlot
                 width: menuWidth
             }
+
         }
     }
 

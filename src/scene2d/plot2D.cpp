@@ -258,7 +258,7 @@ void Plot2D::setDataChannel(bool fromGui, const ChannelId& channel, uint8_t subC
     if (datasetPtr_) {
         datasetPtr_->getMaxDistanceRange(&from, &to, channel, subChannel1, channel2, subChannel2);
 
-        if (isfinite(from) && isfinite(to) && (to - from) > 0) {
+        if (qIsFinite(from) && qIsFinite(to) && (to - from) > 0) {
             cursor_.distance.set(from, to);
         }
     }
@@ -798,7 +798,7 @@ bool Plot2D::setContact(int indx, const QString& text)
             ep->contact_.depth            = cursor_distance;
         }
         else { // side scan
-            if (!std::isfinite(bottomTrack)) {
+            if (!qIsFinite(bottomTrack)) {
                 ep->contact_.depth            = 0;
             }
             else  if (std::fabs(cursor_distance) < std::fabs(bottomTrack)) {
@@ -995,7 +995,7 @@ void Plot2D::reRangeDistance()
             Epoch* epoch = datasetPtr_->fromIndex(i);
             if (epoch != NULL) {
                 float epoch_range = epoch->getMaxRange(cursor_.channel1);
-                if (!isfinite(max_range) || max_range < epoch_range) {
+                if (!qIsFinite(max_range) || max_range < epoch_range) {
                     max_range = epoch_range;
                 }
             }
@@ -1007,7 +1007,7 @@ void Plot2D::reRangeDistance()
             Epoch* epoch = datasetPtr_->fromIndex(cursor_.getIndex(i));
             if(epoch != NULL) {
                 float epoch_range = epoch->getMaxRange(cursor_.channel1);
-                if(!isfinite(max_range) || max_range < epoch_range) {
+                if(!qIsFinite(max_range) || max_range < epoch_range) {
                     max_range = epoch_range;
                 }
             }
@@ -1019,14 +1019,14 @@ void Plot2D::reRangeDistance()
             Epoch* epoch = datasetPtr_->fromIndex(cursor_.getIndex(i));
             if(epoch != NULL) {
                 float epoch_range = epoch->getMaxRange(cursor_.channel1);
-                if(!isfinite(max_range) || max_range < epoch_range) {
+                if(!qIsFinite(max_range) || max_range < epoch_range) {
                     max_range = epoch_range;
                 }
             }
         }
     }
 
-    if (isfinite(max_range)) {
+    if (qIsFinite(max_range)) {
         const float dist = std::round(std::abs(max_range));
         cursor_.distance.to = dist;
 

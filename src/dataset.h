@@ -312,7 +312,7 @@ protected:
 
     float _lastYaw = 0, _lastPitch = 0, _lastRoll = 0;
     float lastTemp_ = NAN;
-
+public:
     Epoch* addNewEpoch();
 
     GraphicsScene3dView* scene3dViewPtr_ = nullptr;

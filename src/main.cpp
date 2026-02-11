@@ -23,7 +23,8 @@
 #include "scene_object.h"
 #include "bottom_track.h"
 
-Core core;
+
+Core* corePtr = nullptr;  // 改为指针，延迟初始化
 Themes theme;
 QTranslator translator;
 QVector<QString> availableLanguages{"en", "ru", "pl"};
@@ -128,16 +129,13 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(format);
 
     QApplication app(argc, argv);
-
-    //qDebug() << "Lib paths:" << QCoreApplication::libraryPaths();
-    //qDebug() << "SQL drivers:" << QSqlDatabase::drivers();
+    corePtr = new Core();   // 在QApplication创建后初始化，避免QEventLoop错误
 
     QCoreApplication::addLibraryPath(QStringLiteral("assets:/qt/plugins"));
     QCoreApplication::addLibraryPath(QStringLiteral(":/android_rcc_bundle/plugins"));
-    //qputenv("QT_DEBUG_PLUGINS", "1");
-    //qDebug() << "libraryPaths =" << QCoreApplication::libraryPaths();
+
     loadLanguage(app);
-    core.initStreamList();
+    corePtr->initStreamList();
 
     QQuickStyle::setStyle("Basic");
 
@@ -151,46 +149,42 @@ int main(int argc, char *argv[])
 
     registerQmlMetaTypes();
 
-    engine.rootContext()->setContextProperty("dataset", core.getDatasetPtr());
-    engine.rootContext()->setContextProperty("core", &core);
+    engine.rootContext()->setContextProperty("dataset", corePtr->getDatasetPtr());
+    engine.rootContext()->setContextProperty("core", corePtr);
     engine.rootContext()->setContextProperty("theme", &theme);
-    engine.rootContext()->setContextProperty("linkManagerWrapper", core.getLinkManagerWrapperPtr());
-    engine.rootContext()->setContextProperty("deviceManagerWrapper", core.getDeviceManagerWrapperPtr());
-    engine.rootContext()->setContextProperty("logViewer", core.getConsolePtr());
+    engine.rootContext()->setContextProperty("linkManagerWrapper", corePtr->getLinkManagerWrapperPtr());
+    engine.rootContext()->setContextProperty("deviceManagerWrapper", corePtr->getDeviceManagerWrapperPtr());
+    engine.rootContext()->setContextProperty("logViewer", corePtr->getConsolePtr());
 
-    core.consoleInfo("Run...");
-    core.setEngine(&engine);
+    corePtr->consoleInfo("Run...");
+    corePtr->setEngine(&engine);
 
 
     //qDebug() << "SQL drivers =" << QSqlDatabase::drivers(); // тут должен появиться QSQLITE
     const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine,   &QQmlApplicationEngine::objectCreated,
-                     &app,      [url](QObject *obj, const QUrl &objUrl) {
-                                    if (!obj && url == objUrl)
-                                        QCoreApplication::exit(-1);
-                                }, Qt::QueuedConnection);
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,[url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)  QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
 
 
 // file opening on startup
 #ifndef Q_OS_ANDROID
     if (argc > 1) {
-        QObject::connect(&engine,   &QQmlApplicationEngine::objectCreated,
-                         &core,     [&argv]() {
-                                        core.openLogFile(argv[1], false, true);
-                                    }, Qt::QueuedConnection);
+        QObject::connect(&engine,   &QQmlApplicationEngine::objectCreated, corePtr,     [&argv]() {
+            corePtr->openLogFile(argv[1], false, true);
+        }, Qt::QueuedConnection);
     }
 #endif
 
-    QObject::connect(&app,  &QGuiApplication::aboutToQuit,
-                     &core, [&]() {
-                                core.saveLLARefToSettings();
-                                core.removeLinkManagerConnections();
-                                core.stopLinkManagerTimer();
+    QObject::connect(&app,  &QGuiApplication::aboutToQuit, corePtr, [&]() {
+            corePtr->saveLLARefToSettings();
+            corePtr->removeLinkManagerConnections();
+            corePtr->stopLinkManagerTimer();
 #ifdef SEPARATE_READING
-                                void removeDeviceManagerConnections();
-                                core.stopDeviceManagerThread();
+                                corePtr->removeDeviceManagerConnections();
+                                corePtr->stopDeviceManagerThread();
 #endif
-                            });
+    });
 
     engine.load(url);
     qCritical() << "App is created";

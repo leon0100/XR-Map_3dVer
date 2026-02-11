@@ -448,7 +448,7 @@ void MosaicProcessor::updateData(const QVector<int>& indxs)
 
         auto pos = epoch.getSonarPosition().ned;
         auto yaw = epoch.yaw();
-        if (isfinite(pos.n) && isfinite(pos.e) && isfinite(yaw)) {
+        if (qIsFinite(pos.n) && qIsFinite(pos.e) && qIsFinite(yaw)) {
             bool acceptedEven = false, acceptedOdd = false;
             double azRad = qDegreesToRadians(yaw);
             if (segFIsValid) {
@@ -553,8 +553,8 @@ void MosaicProcessor::updateData(const QVector<int>& indxs)
         if (!segFCharts || !segSCharts) {
             continue;
         }
-        if (!isfinite(segFCharts->bottomProcessing.getDistance()) ||
-            !isfinite(segSCharts->bottomProcessing.getDistance())) {
+        if (!qIsFinite(segFCharts->bottomProcessing.getDistance()) ||
+            !qIsFinite(segSCharts->bottomProcessing.getDistance())) {
             continue;
         }
         if (segFCharts->amplitude.size() != segFCharts->compensated.size()) {

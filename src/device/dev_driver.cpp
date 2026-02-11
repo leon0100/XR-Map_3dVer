@@ -3,7 +3,7 @@
 #include <core.h>
 #include <QXmlStreamWriter>
 
-extern Core core;
+extern Core* corePtr;
 
 DevDriver::DevDriver(QObject *parent)
     : QObject(parent),
@@ -1302,7 +1302,7 @@ void DevDriver::fwUpgradeProcess() {
         emit upgradingFirmwareDoneDM();
 
 #ifndef SEPARATE_READING
-        core.consoleInfo("Upgrade: done");
+        corePtr->consoleInfo("Upgrade: done");
 #endif
         restartState();
     }
@@ -1323,12 +1323,12 @@ void DevDriver::receivedUpdate(Parsers::Type type, Parsers::Version ver, Parsers
 
                 if(prog.type == 1) {
 #ifndef SEPARATE_READING
-                    core.consoleInfo(QString("Upgrade: back offset condition error with device msg/offset %1 %2, host msg/offset %3 %4").arg(prog.lastNumMsg).arg(prog.lastOffset).arg(idUpdate->currentNumPacket()).arg(idUpdate->currentFwOffset()));
+                    corePtr->consoleInfo(QString("Upgrade: back offset condition error with device msg/offset %1 %2, host msg/offset %3 %4").arg(prog.lastNumMsg).arg(prog.lastOffset).arg(idUpdate->currentNumPacket()).arg(idUpdate->currentFwOffset()));
 #endif
                 }
                 else if(prog.type == 2) {
 #ifndef SEPARATE_READING
-                    core.consoleInfo(QString("Upgrade: forward offset condition error with device msg/offset %1 %2, host msg/offset %3 %4").arg(prog.lastNumMsg).arg(prog.lastOffset).arg(idUpdate->currentNumPacket()).arg(idUpdate->currentFwOffset()));
+                    corePtr->consoleInfo(QString("Upgrade: forward offset condition error with device msg/offset %1 %2, host msg/offset %3 %4").arg(prog.lastNumMsg).arg(prog.lastOffset).arg(idUpdate->currentNumPacket()).arg(idUpdate->currentFwOffset()));
 #endif
                     idUpdate->setUpgradeNewPoint(prog.lastNumMsg, prog.lastOffset);
                 }
@@ -1337,7 +1337,7 @@ void DevDriver::receivedUpdate(Parsers::Type type, Parsers::Version ver, Parsers
             } else {
                 // if( m_state.in_boot) {
 #ifndef SEPARATE_READING
-                    core.consoleInfo("Upgrade: critical error!");
+                    corePtr->consoleInfo("Upgrade: critical error!");
 #endif
                 m_upgrade_status = failUpgrade;
 
@@ -1358,7 +1358,7 @@ void DevDriver::receivedUpdate(Parsers::Type type, Parsers::Version ver, Parsers
         } else {
             if( m_state.in_update && m_bootloaderLagacyMode) {
 #ifndef SEPARATE_READING
-                core.consoleInfo("Upgrade: lagacy mode error");
+                corePtr->consoleInfo("Upgrade: lagacy mode error");
 #endif
                 m_upgrade_status = failUpgrade;
 
@@ -1386,7 +1386,7 @@ void DevDriver::receivedNav(Parsers::Type type, Parsers::Version ver, Parsers::R
     if(resp == respNone) {
         if(ver == v1) {
 #ifndef SEPARATE_READING
-            core.consoleInfo(QString("ROV: yaw: %1, pitch: %2, roll: %3, lat: %4, lon: %5, depth: %6")
+            corePtr->consoleInfo(QString("ROV: yaw: %1, pitch: %2, roll: %3, lat: %4, lon: %5, depth: %6")
                             .arg(idNav->yaw()).arg(idNav->pitch()).arg(idNav->roll())
                             .arg(idNav->latitude()).arg(idNav->longitude()).arg(idNav->depth())
             );
@@ -1474,7 +1474,7 @@ void DevDriver::process() {
                 if(m_state.in_update && !m_bootloaderLagacyMode) {
                     if(curr_time - _lastUpgradeAnswerTime > _timeoutUpgradeAnswerTime && _timeoutUpgradeAnswerTime > 0) {
 #ifndef SEPARATE_READING
-                        core.consoleInfo("Upgrade: timeout error!");
+                        corePtr->consoleInfo("Upgrade: timeout error!");
 #endif
                         idUpdate->putUpdate(false);
                     }

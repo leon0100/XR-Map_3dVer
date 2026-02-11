@@ -47,7 +47,7 @@ void DataHorizon::setIsFileOpening(bool state)
     qDebug() << "DataHorizon::setIsFileOpening" << state;
     isFileOpening_ = state;
     qDebug() << "positionIndx_................ " << positionIndx_;
-    if (!isFileOpening_ && !isSeparateReading_ && emitChanges_) { // emit all
+    if (!isFileOpening_ && !isSeparateReading_ && emitChanges_) {
         emit epochAdded(epochIndx_);
         emit positionAdded(positionIndx_);
         emit chartAdded(chartIndx_);

@@ -51,14 +51,14 @@ QVector<RayHit> Ray::pickAsVertex(std::weak_ptr<SceneObject> object)
     hit.setObject(object);
 
     auto lastDistance{ sharedObject->cdata().first().distanceToLine(m_origin, m_direction) };
-    if (!std::isfinite(lastDistance)) {
+    if (!qIsFinite(lastDistance)) {
         lastDistance = FLT_MAX;
     }
 
     for (int i = 1; i < size; ++i) {
         auto p{ sharedObject->cdata().at(i) };
         auto currDistance{ p.distanceToLine(m_origin, m_direction) };
-        if (!std::isfinite(currDistance))  currDistance = FLT_MAX;
+        if (!qIsFinite(currDistance))  currDistance = FLT_MAX;
 
         if (currDistance < lastDistance) {
             lastDistance = currDistance;

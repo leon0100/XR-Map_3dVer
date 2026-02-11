@@ -167,7 +167,7 @@ void SurfaceView::saveVerticesToFile(const QString &path)
             continue;
         }
 
-        if (!std::isfinite(v.x()) || !std::isfinite(v.y()) || !std::isfinite(v.z())) {
+        if (!qIsFinite(v.x()) || !qIsFinite(v.y()) || !qIsFinite(v.z())) {
             continue;
         }
 
@@ -177,7 +177,7 @@ void SurfaceView::saveVerticesToFile(const QString &path)
         if (llaRef_.isInit) {
             NED ned(v.x(), v.y(), v.z());
             LLA lla(&ned, &llaRef_);
-            if (std::isfinite(lla.latitude) && std::isfinite(lla.longitude)) {
+            if (qIsFinite(lla.latitude) && qIsFinite(lla.longitude)) {
                 lat = lla.latitude;
                 lon = lla.longitude;
             }

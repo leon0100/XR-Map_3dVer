@@ -73,7 +73,7 @@ public:
                 }
 
                 float yaw = epoch->yaw();
-                if(isfinite(yaw)) {
+                if(qIsFinite(yaw)) {
                     pingheader.SensorHeading = yaw;
                     pingheader.Yaw = yaw;
                 }

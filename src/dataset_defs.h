@@ -128,9 +128,9 @@ typedef struct NED NED;
 typedef struct LLARef LLARef;
 
 typedef struct LLA {
-    double latitude;
-    double longitude;
-    double altitude;
+    double latitude = NAN;
+    double longitude = NAN;
+    double altitude = NAN;
 
     PositionSource source = PositionSourceNone;
     AltitudeSource altSource = AltitudeSourceNone;
@@ -150,9 +150,9 @@ typedef struct LLA {
 
     LLA& operator=(const LLA& other) {
         if (this != &other) {
-            latitude = other.latitude;
+            latitude  = other.latitude;
             longitude = other.longitude;
-            altitude = other.altitude;
+            altitude  = other.altitude;
         }
         return *this;
     }
@@ -160,11 +160,11 @@ typedef struct LLA {
     inline LLA(const NED* ned, const LLARef* ref, bool spherical = true);
 
     bool isValid() const {
-        return isfinite(latitude) && isfinite(longitude) && isfinite(altitude);
+        return qIsFinite(latitude) && qIsFinite(longitude) && qIsFinite(altitude);
     }
 
     bool isCoordinatesValid() const {
-        return isfinite(latitude) && isfinite(longitude);
+        return qIsFinite(latitude) && qIsFinite(longitude);
     }
 } LLA;
 
@@ -208,8 +208,8 @@ typedef struct  LLARef {
     }
 
     friend bool operator==(const LLARef& lhs, const LLARef& rhs) {
-        if (!std::isfinite(lhs.refLla.latitude) || !std::isfinite(lhs.refLla.longitude) ||
-            !std::isfinite(rhs.refLla.latitude) || !std::isfinite(rhs.refLla.longitude)) {
+        if (!qIsFinite(lhs.refLla.latitude) || !qIsFinite(lhs.refLla.longitude) ||
+            !qIsFinite(rhs.refLla.latitude) || !qIsFinite(rhs.refLla.longitude)) {
             return false;
         }
         return qFuzzyCompare(1.0 + lhs.refLla.latitude, 1.0 + rhs.refLla.latitude) &&
@@ -273,18 +273,18 @@ typedef struct NED {
     }
 
     bool isValid() {
-        return isfinite(n) && isfinite(e) && isfinite(d);
+        return qIsFinite(n) && qIsFinite(e) && qIsFinite(d);
     }
 
     bool isCoordinatesValid() const {
-        return isfinite(n) && isfinite(e);
+        return qIsFinite(n) && qIsFinite(e);
     }
 } NED;
 
 LLA::LLA(const NED* ned, const LLARef* ref, bool spherical)
 {
     if (spherical) {
-        if (!ned || !ref || !std::isfinite(ned->n) || !std::isfinite(ned->e) || !std::isfinite(ned->d)) {
+        if (!ned || !ref || !qIsFinite(ned->n) || !qIsFinite(ned->e) || !qIsFinite(ned->d)) {
             return;
         }
 
@@ -321,7 +321,7 @@ LLA::LLA(const NED* ned, const LLARef* ref, bool spherical)
         altitude = ref->refLla.altitude - ned->d;
     }
     else { // mercator
-        if (!ned || !ref || !std::isfinite(ned->n) || !std::isfinite(ned->e) || !std::isfinite(ned->d)) {
+        if (!ned || !ref || !qIsFinite(ned->n) || !qIsFinite(ned->e) || !qIsFinite(ned->d)) {
             return;
         }
 

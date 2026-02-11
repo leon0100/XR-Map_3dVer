@@ -9,7 +9,6 @@ class GraphicsScene3dView;
 class MosaicViewControlMenuController : public QmlComponentController
 {
     Q_OBJECT
-
 public:
     explicit MosaicViewControlMenuController(QObject *parent = nullptr);
 

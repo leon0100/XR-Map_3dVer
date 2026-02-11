@@ -116,7 +116,7 @@ void GraphicsScene3dRenderer::render()
     drawObjects();
 
     TextRenderer::instance();
-    TextRenderer::instance().setColor("white");
+    TextRenderer::instance().setColor("white");  
 }
 
 void GraphicsScene3dRenderer::drawObjects()
@@ -149,8 +149,10 @@ void GraphicsScene3dRenderer::drawObjects()
 
     bool isOut = m_camera.getIsFarAwayFromOriginLla();
 
+    // 先渲染瓦片地图作为背景层
     mapViewRenderImpl_.render(this, m_model, view, m_projection, m_shaderProgramMap);
 
+    // 启用深度测试，渲染3D对象
     glEnable(GL_DEPTH_TEST);
     if (!isOut) {
         if (gridVisibility_) {
@@ -161,17 +163,23 @@ void GraphicsScene3dRenderer::drawObjects()
         m_polygonGroupRenderImpl.render(this, m_projection * view * m_model, m_shaderProgramMap);
         usblViewRenderImpl_.render(this, m_projection * view * m_model, m_shaderProgramMap);
     }
-    glDisable(GL_DEPTH_TEST);
-
-    if (isOut) {
-        return;
-    }
-
-    glEnable(GL_DEPTH_TEST);
+    
+    // 渲染地形和等值线
     surfaceViewRenderImpl_.render(this,      m_projection * view * m_model, m_shaderProgramMap);  //高度场
     isobathsViewRenderImpl_.render(this,     m_model, view, m_projection, m_shaderProgramMap);   //等值线
     m_bottomTrackRenderImpl.render(this,     m_model, view, m_projection, m_shaderProgramMap);   //原始底迹点
+    
+    // 渲染轨迹线，确保在瓦片地图上方
     m_boatTrackRenderImpl.render(this,       m_model, view, m_projection, m_shaderProgramMap);   //船迹
+    
+    // 重新渲染网格，确保在最上层
+    if (gridVisibility_ && !isOut) {
+        glDisable(GL_DEPTH_TEST);
+        m_planeGridRenderImpl.render(this, m_model, view, m_projection, m_shaderProgramMap);
+        glEnable(GL_DEPTH_TEST);
+    }
+    
+    glDisable(GL_DEPTH_TEST);
 
     // navigation arrow
     {

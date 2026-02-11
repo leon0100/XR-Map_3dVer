@@ -75,7 +75,7 @@ typedef struct DatasetCursor {
         }
 
         bool isValid() {
-            return std::isfinite(from) && std::isfinite(to);
+            return qIsFinite(from) && qIsFinite(to);
         }
     } distance;
 
@@ -86,7 +86,7 @@ typedef struct DatasetCursor {
         void set(float f, float t) {from = f; to = t;}
 
         bool isValid() {
-            return std::isfinite(from) && std::isfinite(to);
+            return qIsFinite(from) && qIsFinite(to);
         }
     } attitude;
 
@@ -97,7 +97,7 @@ typedef struct DatasetCursor {
         void set(float f, float t) {from = f; to = t;}
 
         bool isValid() {
-            return std::isfinite(from) && std::isfinite(to);
+            return qIsFinite(from) && qIsFinite(to);
         }
     } velocity;
 

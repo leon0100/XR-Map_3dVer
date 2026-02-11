@@ -5,7 +5,7 @@
 #include <QStandardPaths>
 #include <QUrl>
 #include "core.h"
-extern Core core;
+extern Core* corePtr;
 
 
 Logger::Logger() :
@@ -49,15 +49,15 @@ bool Logger::startNewKlfLog()
         isOpen = klfLogFile_->open(QIODevice::WriteOnly);
 
         if (isOpen) {
-            core.consoleInfo("Logger dir: " + dir.path());
-            core.consoleInfo("Logger make file: " + klfLogFile_->fileName());
+            corePtr->consoleInfo("Logger dir: " + dir.path());
+            corePtr->consoleInfo("Logger make file: " + klfLogFile_->fileName());
         }
         else {
-            core.consoleInfo("Logger can't make file: " + klfLogFile_->fileName());
+            corePtr->consoleInfo("Logger can't make file: " + klfLogFile_->fileName());
         }
     }
     else {
-        core.consoleInfo("Logger can't make dir");
+        corePtr->consoleInfo("Logger can't make dir");
     }
 
     if (isOpen) {
@@ -70,7 +70,7 @@ bool Logger::startNewKlfLog()
 bool Logger::stopKlfLogging()
 {
     if (isOpenKlf()) {
-        core.consoleInfo("Logger klf stoped");
+        corePtr->consoleInfo("Logger klf stoped");
     }
 
     klfLogFile_->close();
@@ -139,18 +139,18 @@ bool Logger::startNewCsvLog()
         isOpen = csvLogFile_->open(QIODevice::WriteOnly);
 
         if (isOpen) {
-            core.consoleInfo("Logger csv dir: " + dir.path());
-            core.consoleInfo("Logger csv make file: " + csvLogFile_->fileName());
+            corePtr->consoleInfo("Logger csv dir: " + dir.path());
+            corePtr->consoleInfo("Logger csv make file: " + csvLogFile_->fileName());
 
             // connects
             csvData_.csvConnections.append(QObject::connect(datasetPtr_, &Dataset::dataUpdate, this, &Logger::loggingCsvStream, Qt::AutoConnection));
         }
         else {
-            core.consoleInfo("Logger csv can't make file: " + csvLogFile_->fileName());
+            corePtr->consoleInfo("Logger csv can't make file: " + csvLogFile_->fileName());
         }
     }
     else {
-        core.consoleInfo("Logger csv can't make dir");
+        corePtr->consoleInfo("Logger csv can't make dir");
     }
 
     return isOpen;
@@ -363,10 +363,10 @@ bool Logger::creatExportStream(QString name)
     isOpen = exportFile_->open(QIODevice::WriteOnly);
 
     if (isOpen) {
-        core.consoleInfo("Export make file: " + exportFile_->fileName());
+        corePtr->consoleInfo("Export make file: " + exportFile_->fileName());
     }
     else {
-        core.consoleInfo("Export can't make file: " + exportFile_->fileName());
+        corePtr->consoleInfo("Export can't make file: " + exportFile_->fileName());
     }
 
     return isOpen;

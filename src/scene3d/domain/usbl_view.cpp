@@ -96,20 +96,20 @@ void UsblView::UsblViewRenderImplementation::updateBounds()
     for (auto &itmI : tracks_) {
         Cube curr_bounds;
 
-        float z_max{ !std::isfinite(itmI.data_.first().z()) ? 0.f : itmI.data_.first().z() };
+        float z_max{ !qIsFinite(itmI.data_.first().z()) ? 0.f : itmI.data_.first().z() };
         float z_min{ z_max };
-        float x_max{ !std::isfinite(itmI.data_.first().x()) ? 0.f : itmI.data_.first().x() };
+        float x_max{ !qIsFinite(itmI.data_.first().x()) ? 0.f : itmI.data_.first().x() };
         float x_min{ x_max };
-        float y_max{ !std::isfinite(itmI.data_.first().y()) ? 0.f : itmI.data_.first().y() };
+        float y_max{ !qIsFinite(itmI.data_.first().y()) ? 0.f : itmI.data_.first().y() };
         float y_min{ y_max };
 
         for (auto it = itmI.data_.cbegin(); it != itmI.data_.cend(); ++it) {
-            z_min = std::min(z_min, !std::isfinite(it->z()) ? 0.f : it->z());
-            z_max = std::max(z_max, !std::isfinite(it->z()) ? 0.f : it->z());
-            x_min = std::min(x_min, !std::isfinite(it->x()) ? 0.f : it->x());
-            x_max = std::max(x_max, !std::isfinite(it->x()) ? 0.f : it->x());
-            y_min = std::min(y_min, !std::isfinite(it->y()) ? 0.f : it->y());
-            y_max = std::max(y_max, !std::isfinite(it->y()) ? 0.f : it->y());
+            z_min = std::min(z_min, !qIsFinite(it->z()) ? 0.f : it->z());
+            z_max = std::max(z_max, !qIsFinite(it->z()) ? 0.f : it->z());
+            x_min = std::min(x_min, !qIsFinite(it->x()) ? 0.f : it->x());
+            x_max = std::max(x_max, !qIsFinite(it->x()) ? 0.f : it->x());
+            y_min = std::min(y_min, !qIsFinite(it->y()) ? 0.f : it->y());
+            y_max = std::max(y_max, !qIsFinite(it->y()) ? 0.f : it->y());
         }
 
         curr_bounds = Cube(x_min, x_max, y_min, y_max, z_min, z_max);

@@ -160,6 +160,9 @@ public:
         QString checkOpenGLError() const;
 
         std::unique_ptr <GraphicsScene3dRenderer> m_renderer;
+
+
+        GraphicsScene3dView* view_ = nullptr; // ✅保存
     };
 
     enum ActiveMode{
@@ -259,6 +262,8 @@ public Q_SLOTS:
     void onPositionAdded(uint64_t indx);
     void setIsNorth(bool state);
 
+    void slotScreetGraphics();
+
 signals:
     void sendRectRequest(QVector<LLA> rect, bool isPerspective, LLARef viewLlaRef, bool moveUp, map::CameraTilt tiltCam);
     void sendLlaRef(LLARef viewLlaRef);
@@ -351,6 +356,10 @@ public:
 
 
     ScreetShot screetShot_;
+    bool screenshotPending_ = false;
+    QString screenshotPath_ = ".20260211.png";
+    QMutex screenshotMutex_;
+
 };
 
 #endif // GRAPHICSSCENE3DVIEW_H

@@ -113,7 +113,7 @@ void IsobathsProcessor::edgeIntersection(const QVector3D& a,const QVector3D& b, 
     }
 
     float t = (L - zA) / (zB - zA);
-    if (std::isfinite(t)) {
+    if (qIsFinite(t)) {
         out << (A + t * (B - A));
     }
 }

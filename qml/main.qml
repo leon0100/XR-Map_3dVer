@@ -45,7 +45,7 @@ ApplicationWindow  {
            // 监听自定义信号
            onOpenClicked: {
                console.log("Open clicked")
-               // 这里可以调用 C++ / QML 的打开逻辑
+               // C++/QML 的打开逻辑
                // core.openLogFile("", false, false)
            }
 
@@ -805,6 +805,7 @@ ApplicationWindow  {
 
                         Component.onCompleted: {
                             waterViewFirst.setIndx(waterViewFirst.indx);
+                            toolBarXR.targetPlot = waterViewFirst
                         }
                     }
 
@@ -1201,4 +1202,5 @@ ApplicationWindow  {
             }
         }
     }
+
 }

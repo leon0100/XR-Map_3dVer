@@ -385,7 +385,7 @@ void SurfaceProcessor::onUpdatedBottomTrackData(const QVector<QPair<char, int>> 
         }
 
         const QVector3D& point = bTrData[itm.second];
-        if (!std::isfinite(point.z())) continue;
+        if (!qIsFinite(point.z())) continue;
         processOneCenter(point);
     }
 
