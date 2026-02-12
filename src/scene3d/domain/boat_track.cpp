@@ -69,13 +69,10 @@ void BoatTrack::onPositionAdded(uint64_t indx)
     for (int i = fromIndx + 1; i <= toIndx; ++i) {
         if (auto* ep = datasetPtr_->fromIndex(i); ep) {
             if (auto posNed = ep->getPositionGNSS().ned; posNed.isCoordinatesValid()) {
-<<<<<<< HEAD
                 // 添加小的Z轴偏移，确保轨迹线显示在瓦片地图上方
                 prepData.push_back(QVector3D(posNed.n, posNed.e, 1.0f));  // Z轴偏移1米
-=======
                 prepData.push_back(QVector3D(posNed.n, posNed.e, 0));
                 // qDebug() << "posNed.n:  " << posNed.n << "    posNed.e:" << posNed.e;
->>>>>>> 8367c843a1907a5e4be8f9991798b1a0140da504
             }
         }
     }

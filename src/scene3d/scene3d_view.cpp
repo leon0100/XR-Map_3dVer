@@ -232,6 +232,9 @@ QVector3D GraphicsScene3dView::calculateIntersectionPoint(const QVector3D &rayOr
     return retVal;
 }
 
+
+
+
 void GraphicsScene3dView::switchToBottomTrackVertexComboSelectionMode(qreal x, qreal y)
 {
     switchedToBottomTrackVertexComboSelectionMode_ = true;
@@ -247,6 +250,12 @@ void GraphicsScene3dView::switchToBottomTrackVertexComboSelectionMode(qreal x, q
 void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal x, qreal y, Qt::Key keyboardKey)
 {
     Q_UNUSED(keyboardKey)
+
+    // 方法1：直接使用 QQuickItem 的方法
+    qDebug() << "this->width,height:" << this->width() << " x " << this->height();
+    // 方法2：使用 boundingRect()
+    qDebug() << "boundingRect:" << boundingRect().width() << " x " << boundingRect().height();
+
 
     //当前点x,y的经纬度坐标
     calculateLatLong(x, y, currentLat_, currentLon_);
@@ -571,9 +580,7 @@ void GraphicsScene3dView::setScreenMode(bool isScreen)
         screetShot_.setSelectionRectVisible(false);
         // clearScreenShot();
     }
-
 }
-
 
 
 void GraphicsScene3dView::setTrackLastData(bool state)
@@ -1234,11 +1241,46 @@ void GraphicsScene3dView::setIsNorth(bool state)
 
 void GraphicsScene3dView::slotScreetGraphics()
 {
-    QMutexLocker locker(&screenshotMutex_);
-    screenshotPending_ = true;
-    screenshotPath_ = ".";
+    // 创建一个LLA矩形区域来定义请求的范围
+    double minLat = std::min({screetShot_.topLeftLati_, screetShot_.topRightLati_, screetShot_.bottomRightLati_});
+    double maxLat = std::max({screetShot_.topLeftLati_, screetShot_.topRightLati_, screetShot_.bottomRightLati_});
+    double minLon = std::min({screetShot_.topLeftLong_, screetShot_.topRightLong_, screetShot_.bottomRightLong_});
+    double maxLon = std::max({screetShot_.topLeftLong_, screetShot_.topRightLong_, screetShot_.bottomRightLong_});
 
-    update(); // 触发下一帧 render()
+    QVector<LLA> request;  //745大概是17等级的地图
+    request.append(LLA(maxLat, minLon, 745));  // 左上角
+    request.append(LLA(maxLat, maxLon, 745));  // 右上角
+    request.append(LLA(minLat, maxLon, 745));  // 右下角
+    request.append(LLA(minLat, minLon, 745));  // 左下角
+
+    // 获取当前视角参考点
+    LLARef viewLlaRef;
+    if (datasetPtr_) {
+        viewLlaRef = datasetPtr_->getLlaRef();
+    } else {
+        viewLlaRef = m_camera->yerevanLla;
+    }
+
+    // 发送请求以获取指定区域和等级的瓦片
+    emit sendRectRequest(request, false, viewLlaRef, false, map::CameraTilt::Up);
+
+
+
+
+
+    // 由于瓦片加载是异步的，需要等待瓦片加载完成后再截图
+    QTimer::singleShot(2000, [this]() {
+        // 使用现有的截图功能保存当前视图  触发截图
+        QMutexLocker locker(&screenshotMutex_);
+        screenshotPending_ = true;
+
+        QQuickFramebufferObject::update(); // 触发下一帧渲染
+    });
+
+
+    // QQuickFramebufferObject::update();
+
+
 }
 
 //---------------------Renderer---------------------------//
@@ -1255,7 +1297,6 @@ GraphicsScene3dView::InFboRenderer::~InFboRenderer()
 void GraphicsScene3dView::InFboRenderer::render()
 {
     m_renderer->render();
-
 
     //nie:test     截图逻辑
     if(view_->screenshotPending_)
@@ -1738,8 +1779,10 @@ void GraphicsScene3dView::Camera::zoom(qreal delta)
         distForMapView_ = m_distToFocusPoint;
     }
 
-    bool preIsPersp{ false };
+    bool preIsPersp = {false};
     distToGround_ = std::max(0.0f, std::fabs(-cosf(m_rotAngle.y()) * m_distToFocusPoint));
+    qDebug() << "distToGround_:" << distToGround_ << "     distForMapView_: " << distForMapView_;
+
     float perspEdge = viewPtr_ ? viewPtr_->perspectiveEdge_ : 5000.0f;
     preIsPersp = distToGround_ < perspEdge;
     bool projectionChanged    =  isPerspective_ !=  preIsPersp;

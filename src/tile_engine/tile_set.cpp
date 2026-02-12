@@ -54,10 +54,7 @@ void TileSet::onNewRequest(const QSet<TileIndex>& request, ZoomState zoomState, 
     QSet<TileIndex> filtDbReq;
     for (const auto& reqTileIndx : request) {
         if (auto* rTile = getTileByIndx(reqTileIndx); rTile) {
-            bool inLoading = dbReq_.contains(reqTileIndx) ||
-                             dwReq_.contains(reqTileIndx) ||
-                             dbSvd_.contains(reqTileIndx);
-
+            bool inLoading = dbReq_.contains(reqTileIndx) || dwReq_.contains(reqTileIndx) || dbSvd_.contains(reqTileIndx);
             if (!rTile->getHasValidImage() && !inLoading) {
                 filtDbReq.insert(reqTileIndx);
                 tryCopyImage(rTile);

@@ -681,7 +681,7 @@ void Dataset::addPosition_CSV(double lat, double lon, int depth)
         boatLatitute_  = pos.lla.latitude;
         boatLongitude_ = pos.lla.longitude;
 
-        // emit positionAdded(lastIndx); //nie:test
+        emit positionAdded(lastIndx); //nie:test
     }
 
 }

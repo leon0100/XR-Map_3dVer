@@ -21,7 +21,7 @@ class TileGoogleProvider : public TileProvider
 public:
     TileGoogleProvider();
 
-    int32_t heightToTileZ(float height) const override final;
+    int32_t heightToTileZ(float height) const override final;  //距离地面高度转换成地图等级z
     int32_t lonToTileX(double lon, int z) const override final;
     std::tuple<int32_t, int32_t, int32_t> lonToTileXWithWrapAndBoundary(const double lonStart, const double lonEnd, const int z) const override final;
     int32_t latToTileY(double lat, int z) const override final;

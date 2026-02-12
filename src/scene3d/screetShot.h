@@ -16,9 +16,29 @@
 #include <QGraphicsScene>
 
 
-#include "graphicscompute.h"
 #include  "QtGui/private/qzipreader_p.h"
 #include  "QtGui/private/qzipwriter_p.h"
+
+
+
+
+enum class ResizeMode { None, Move, Top, Bottom, Left, Right, TopLeft, TopRight, BottomLeft, BottomRight };
+
+#define _180_PI (57.2957795131f)
+#define _PI_180 (0.01745329252f)
+#define RE 6371004
+#define g_EarthRadius 6378137   // 赤道半径
+#define POINT_REPEATITIVE 361.0f
+
+
+#ifndef PI
+#define PI (3.1415926535898)
+#endif
+
+
+
+
+
 
 
 
@@ -88,7 +108,7 @@ private:
     QString getLengthChEn(double distance,int decimalPlaces = 2);
     void getTitle(QRect rect, int level);
     void getUrl();
-    void httpGetScreen(ImageInfo info);
+    // void httpGetScreen(ImageInfo info);
 
 
     bool createKmlFile(QString kmlPath,QString imageName,double north,double south,double east,double west);
@@ -112,23 +132,23 @@ public:
     double topLeftLong_, topLeftLati_, topRightLong_, topRightLati_, bottomRightLong_, bottomRightLati_;
     bool screetToolBarShow_ = false;
 
-    std::weak_ptr<MapView> mapView_;
-    QRect targetRect_;
-    QFuture<void> m_future; //异步计算的结果
-    QString m_url = GOOGlE_MAP_COM;
-    QSet<quint64> m_exist;        // 已经存在的瓦片地图编号
-    QVector<ImageInfo> m_infos;   // 需要下载的瓦片地图信息
-    int m_completedDownloads_ = 0,m_screenTileCnt_ = 0;
-    bool interruptTile_ = false,isScreenNetError_ = false;
-    QHash<quint16, GraphItemGroup*> m_itemGroup;   // 瓦片图元组
-    bool screenUserCancel_ = false;
+    // std::weak_ptr<MapView> mapView_;
+    // QRect targetRect_;
+    // QFuture<void> m_future; //异步计算的结果
+    // QString m_url = GOOGlE_MAP_COM;
+    // QSet<quint64> m_exist;        // 已经存在的瓦片地图编号
+    // QVector<ImageInfo> m_infos;   // 需要下载的瓦片地图信息
+    // int m_completedDownloads_ = 0,m_screenTileCnt_ = 0;
+    // bool interruptTile_ = false,isScreenNetError_ = false;
+    // QHash<quint16, GraphItemGroup*> m_itemGroup;   // 瓦片图元组
+    // bool screenUserCancel_ = false;
     double topWidth_,rightHeight_;
-    int pixel300m_;
-    QGraphicsScene* m_scene = nullptr;
-    int generatedRectCount_ = 0;
-    QMutex imgMutex_;   // 多线程写入保护
-    int tileStartX_ = 0;
-    int tileStartY_ = 0;
+    // int pixel300m_;
+    // QGraphicsScene* m_scene = nullptr;
+    // int generatedRectCount_ = 0;
+    // QMutex imgMutex_;   // 多线程写入保护
+    // int tileStartX_ = 0;
+    // int tileStartY_ = 0;
 
 
 
@@ -136,6 +156,10 @@ public:
     bool screenshotPending_ = false;
     QString screenshotPath_;
     QMutex screenshotMutex_;
+
+
+    //现在采用FBO分块离屏渲染的方式截图
+
 
 
 

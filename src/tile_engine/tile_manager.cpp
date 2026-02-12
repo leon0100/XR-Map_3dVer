@@ -79,14 +79,15 @@ void TileManager::getRectRequest(QVector<LLA> request, bool isPerspective, LLARe
         // LLARect -> tileIndx
         LLA lla(itm.latitude, itm.longitude, 0.0f);
         auto tileIndx = tileProvider_.get()->llaToTileIndex(lla, tileProvider_.get()->heightToTileZ(itm.altitude));
+        // qDebug() << "tileIndx........" << tileIndx.x_ << "  " << tileIndx.y_ << "   " << tileIndx.z_;
 
         minX = std::min(minX, tileIndx.x_);
         maxX = std::max(maxX, tileIndx.x_);
         minY = std::min(minY, tileIndx.y_);
         maxY = std::max(maxY, tileIndx.y_);
 
-        if (itm.latitude > maxLat) maxLat = itm.latitude;
-        if (itm.latitude < minLat) minLat = itm.latitude;
+        if (itm.latitude  > maxLat) maxLat = itm.latitude;
+        if (itm.latitude  < minLat) minLat = itm.latitude;
         if (itm.longitude > maxLon) maxLon = itm.longitude;
         if (itm.longitude < minLon) minLon = itm.longitude;
 
@@ -133,7 +134,7 @@ void TileManager::getRectRequest(QVector<LLA> request, bool isPerspective, LLARe
             }
         }
 
-        /*
+    /*
         // using camera tilt TODO: sec break
         auto addFunc = [&](int x, int y) -> bool {
             if (cntReq > reqSize) {
@@ -189,7 +190,7 @@ void TileManager::getRectRequest(QVector<LLA> request, bool isPerspective, LLARe
             }
             break;
         }
-        }*/
+    }*/
     }
     //else {
     //    reqSize = (boundaryTile - lonStartTile + 1) * (maxY - minY + 1) +
