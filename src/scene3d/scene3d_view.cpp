@@ -9,6 +9,7 @@
 #include "map_defs.h"
 
 
+/*--------------------------------------------GraphicsScene3dView-------------------------------------------------*/
 GraphicsScene3dView::GraphicsScene3dView() :
     QQuickFramebufferObject(),
     m_camera(std::make_shared<Camera>(this)),
@@ -82,9 +83,12 @@ GraphicsScene3dView::GraphicsScene3dView() :
 
     QObject::connect(this, &GraphicsScene3dView::cameraIsMoved, this, &GraphicsScene3dView::updateMapView, Qt::DirectConnection);
     QObject::connect(this, &GraphicsScene3dView::cameraIsMoved, this, &GraphicsScene3dView::updateViews, Qt::DirectConnection);
-    connect(&screetShot_, &ScreetShot::signalScreetGraphics, this, &GraphicsScene3dView::slotScreetGraphics,
-                     Qt::DirectConnection);
 
+    connect(&screetShot_, &ScreetShot::signalScreetGraphics, this, &GraphicsScene3dView::slotScreetGraphics, Qt::DirectConnection);
+    // 连接信号，在GUI线程触发更新
+    connect(this, &GraphicsScene3dView::requestRenderUpdate, this, [this]() {
+        QQuickFramebufferObject::update();
+    }, Qt::QueuedConnection);
     updatePlaneGrid();
 
 #ifdef SCENE_TESTING
@@ -232,9 +236,6 @@ QVector3D GraphicsScene3dView::calculateIntersectionPoint(const QVector3D &rayOr
     return retVal;
 }
 
-
-
-
 void GraphicsScene3dView::switchToBottomTrackVertexComboSelectionMode(qreal x, qreal y)
 {
     switchedToBottomTrackVertexComboSelectionMode_ = true;
@@ -250,12 +251,6 @@ void GraphicsScene3dView::switchToBottomTrackVertexComboSelectionMode(qreal x, q
 void GraphicsScene3dView::mousePressTrigger(Qt::MouseButtons mouseButton, qreal x, qreal y, Qt::Key keyboardKey)
 {
     Q_UNUSED(keyboardKey)
-
-    // 方法1：直接使用 QQuickItem 的方法
-    qDebug() << "this->width,height:" << this->width() << " x " << this->height();
-    // 方法2：使用 boundingRect()
-    qDebug() << "boundingRect:" << boundingRect().width() << " x " << boundingRect().height();
-
 
     //当前点x,y的经纬度坐标
     calculateLatLong(x, y, currentLat_, currentLon_);
@@ -580,7 +575,9 @@ void GraphicsScene3dView::setScreenMode(bool isScreen)
         screetShot_.setSelectionRectVisible(false);
         // clearScreenShot();
     }
+
 }
+
 
 
 void GraphicsScene3dView::setTrackLastData(bool state)
@@ -744,7 +741,7 @@ void GraphicsScene3dView::setLastEpochFocusView(bool useAngle, bool useNavigator
 
     if (useAngle && !isNorth_) {
         const float yawDeg = datasetPtr_->getLastYaw();
-        if (qIsFinite(yawDeg)) {
+        if (std::isfinite(yawDeg)) {
             const float targetYaw = -yawDeg * static_cast<float>(M_PI) / 180.0f;
 
             if (!m_camera->navYawInited_) {
@@ -963,9 +960,15 @@ void GraphicsScene3dView::setQmlAppEngine(QQmlApplicationEngine* engine)
 void GraphicsScene3dView::updateBounds()
 {
     qDebug() << "GraphicsScene3dView::updateBounds........";
-    m_bounds = boatTrack_->bounds().merge(isobathsView_->bounds()).merge(m_bottomTrack->bounds())
-                .merge(boatTrack_->bounds()).merge(m_polygonGroup->bounds()).merge(m_pointGroup->bounds())
-                .merge(surfaceView_->bounds()).merge(imageView_->bounds()).merge(usblView_->bounds());
+    m_bounds = boatTrack_->bounds()
+                   .merge(isobathsView_->bounds())
+                   .merge(m_bottomTrack->bounds())
+                   .merge(boatTrack_->bounds())
+                   .merge(m_polygonGroup->bounds())
+                   .merge(m_pointGroup->bounds())
+                   .merge(surfaceView_->bounds())
+                   .merge(imageView_->bounds())
+                   .merge(usblView_->bounds());
 
     updatePlaneGrid();
 
@@ -1035,10 +1038,10 @@ void GraphicsScene3dView::calculateLatLong(qreal x, qreal y, double& latitude, d
 {
     // 1. 用完整矩阵 unproject（必须乘 model）
     QVector3D rayOrigin = QVector3D(x, height() - y, -1.0f) .unproject(m_camera->m_view * m_model,
-                       m_projection,boundingRect().toRect());
+                                                                      m_projection,boundingRect().toRect());
 
     QVector3D rayEnd = QVector3D(x, height() - y, 1.0f) .unproject(m_camera->m_view * m_model,
-                       m_projection, boundingRect().toRect());
+                                                                  m_projection, boundingRect().toRect());
 
     QVector3D rayDir = (rayEnd - rayOrigin).normalized();
 
@@ -1187,15 +1190,13 @@ void GraphicsScene3dView::updateViews()
 
 void GraphicsScene3dView::onPositionAdded(uint64_t indx)
 {
-    qDebug() << "GraphicsScene3dView::onPositionAdded................" << indx;
+    qDebug() << "GraphicsScene3dView::onPositionAdded................";
     if (!datasetPtr_) {
-        qDebug() << "datasetPtr_.....................";
         return;
     }
 
     auto* epPtr = datasetPtr_->fromIndex(indx);
     if (!epPtr) {
-        qDebug() << "epPtr..............................";
         return;
     }
 
@@ -1207,7 +1208,7 @@ void GraphicsScene3dView::onPositionAdded(uint64_t indx)
     boatTrack_->onPositionAdded(indx); // 船到这边来
 
     //下面这几行暂时注释掉，因为不影响轨迹测试
-    // if (float lastYaw = datasetPtr_->getLastYaw(); qIsFinite(lastYaw)) {
+    // if (float lastYaw = datasetPtr_->getLastYaw(); std::isfinite(lastYaw)) {
     //     navigationArrow_->setPositionAndAngle(QVector3D(boatPos.ned.n, boatPos.ned.e,
     //                            !isfinite(boatPos.ned.d) ? 0.f : boatPos.ned.d), lastYaw - 90.f); // 船到这边来
     // }
@@ -1239,6 +1240,7 @@ void GraphicsScene3dView::setIsNorth(bool state)
     emit cameraIsMoved();
 }
 
+
 void GraphicsScene3dView::slotScreetGraphics()
 {
     // 创建一个LLA矩形区域来定义请求的范围
@@ -1247,12 +1249,18 @@ void GraphicsScene3dView::slotScreetGraphics()
     double minLon = std::min({screetShot_.topLeftLong_, screetShot_.topRightLong_, screetShot_.bottomRightLong_});
     double maxLon = std::max({screetShot_.topLeftLong_, screetShot_.topRightLong_, screetShot_.bottomRightLong_});
 
-    QVector<LLA> request;  //745大概是17等级的地图
-    request.append(LLA(maxLat, minLon, 745));  // 左上角
-    request.append(LLA(maxLat, maxLon, 745));  // 右上角
-    request.append(LLA(minLat, maxLon, 745));  // 右下角
-    request.append(LLA(minLat, minLon, 745));  // 左下角
-
+    mapLevel_ = 17;
+    int w = int(qPow(2, mapLevel_)*256);
+    targetRect_ = QRect(0, 0, w, w);
+    QPoint topLeft = screetShot_.latLongToPixelXY(minLon, maxLat, mapLevel_);
+    targetRect_.setTopLeft(topLeft);
+    QPoint bottomRight = screetShot_.latLongToPixelXY(maxLon, minLat, mapLevel_);
+    targetRect_.setBottomRight(bottomRight);
+    // qDebug() << "startLon_" << startLon_ << " startLati_:" << startLati_ << " " << endLon_ << " " << endLati_;
+    //计算当前一米需要的像素值
+    double pixel1m = targetRect_.width() / screetShot_.topWidth_;
+    qDebug() << mapLevel_ << "级下, 1米的像素值: " << pixel1m << " " << targetRect_.height()/screetShot_.rightHeight_;
+    pixel300m_ = pixel1m*300;
     // 获取当前视角参考点
     LLARef viewLlaRef;
     if (datasetPtr_) {
@@ -1261,27 +1269,186 @@ void GraphicsScene3dView::slotScreetGraphics()
         viewLlaRef = m_camera->yerevanLla;
     }
 
-    // 发送请求以获取指定区域和等级的瓦片
-    emit sendRectRequest(request, false, viewLlaRef, false, map::CameraTilt::Up);
 
+    // 划分 targetRect_ 为小正方形
+    int rows = targetRect_.height() / pixel300m_;
+    int cols = targetRect_.width() / pixel300m_;
+    int kmzCount = rows*cols;
+    // objScreenProgress_->setProperty("infoText", tr(" XMAP Generating..."));
+    // objScreenProgress_->setProperty("maxValue",kmzCount);
+    // qmlScreenProgress_->show();
+    // qmlScreenProgress_->raise();
+    screenshotQueue_.clear();
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < cols; ++col) {
+            // if(screenUserCancel_){
+                // generatedRectCount_ = kmzCount;
+                // break;
+            // }
+            QPointF topLeft(targetRect_.x()+col * pixel300m_, targetRect_.y()+row * pixel300m_);
+            QPointF bottomRight(targetRect_.x()+(col+1) * pixel300m_, targetRect_.y()+(row+1) * pixel300m_);
+            QRectF square(topLeft, bottomRight);
+            qDebug() << col << "  " << row << "Square:" << square.topLeft() << "->" << square.bottomRight();
+            double topLeftLon,topLeftLati,btmRightLon,btmRightLati, topRightLon,topRightLati;
+            screetShot_.pixelXYToLatLong(square.topLeft().toPoint(),mapLevel_,topLeftLon,topLeftLati);
+            screetShot_.pixelXYToLatLong(square.bottomRight().toPoint(),mapLevel_,btmRightLon,btmRightLati);
+            screetShot_.pixelXYToLatLong(square.topRight(), mapLevel_, topRightLon, topRightLati);
+            // screetShot_.pixelXYToLatLong(square.bottomLeft(), mapLevel_, bottomLeftLon, bottomLeftLon);
+             // if(isAmapSource_){
+             // Mars2Wgs(topLeftLon,topLeftLati,&topLeftLon,&topLeftLati);
+            // Mars2Wgs(btmRightLon,btmRightLati,&btmRightLon,&btmRightLati);
+            // }
+            QString baseDir = QCoreApplication::applicationDirPath() + "/screetTest/";
+            rowStr_ = QString::number(row + 1);
+            colStr_ = QString::number(col + 1);
+            QString imagPathName = baseDir + rowStr_ + "_" + colStr_ + ".png";
+            QString fileName = baseDir + rowStr_ + "_" + colStr_ +".kml";
+            QString imageName = rowStr_ + "_" + colStr_ + ".png";
+            bool createKMl = screetShot_.createKmlFile(fileName,imageName,topLeftLati, btmRightLati,btmRightLon, topLeftLon);
+            if(!createKMl) {
+                qDebug() << "createKMl failed";
+                return;
+            }
 
+            // 创建一个LLA矩形区域来定义请求的范围
+            double minLat = std::min({topLeftLati, topRightLati, btmRightLati});
+            double maxLat = std::max({topLeftLati, topRightLati, btmRightLati});
+            double minLon = std::min({topLeftLon,  topRightLon,  btmRightLon});
+            double maxLon = std::max({topLeftLon,  topRightLon,  btmRightLon});
 
+            ScreenshotTask task(row, col, mapLevel_, minLat, maxLat, minLon, maxLon, baseDir); // 添加截图任务到队列
+            screenshotQueue_.enqueue(task);
 
+        }
+    }
 
-    // 由于瓦片加载是异步的，需要等待瓦片加载完成后再截图
-    QTimer::singleShot(2000, [this]() {
-        // 使用现有的截图功能保存当前视图  触发截图
-        QMutexLocker locker(&screenshotMutex_);
-        screenshotPending_ = true;
-
-        QQuickFramebufferObject::update(); // 触发下一帧渲染
-    });
-
-
-    // QQuickFramebufferObject::update();
-
+    // 如果当前没有在处理任务，开始处理
+    if (!isProcessingScreenshot_) {
+        processNextScreenshotTask();
+    }
 
 }
+
+
+void GraphicsScene3dView::processNextScreenshotTask()
+{
+    QMutexLocker locker(&screenshotQueueMutex_);
+
+    if (screenshotQueue_.isEmpty()) {
+        isProcessingScreenshot_ = false;
+        qDebug() << "Screenshot queue is empty, processing complete.";
+        // emit screenshotQueueFinished();
+        return;
+    }
+
+    isProcessingScreenshot_ = true;
+    currentScreenshotTask_ = screenshotQueue_.dequeue();
+
+    locker.unlock();
+
+    // 开始处理当前任务
+    startScreenshotTask(currentScreenshotTask_);
+}
+
+void GraphicsScene3dView::startScreenshotTask(const ScreenshotTask& task)
+{
+    rowStr_ = QString::number(task.row + 1);
+    colStr_ = QString::number(task.col + 1);
+
+    // 1. 计算目标区域中心
+    double centerLat = (task.minLat + task.maxLat) / 2.0;
+    double centerLon = (task.minLon + task.maxLon) / 2.0;
+
+    // 2. 更新视图参考点
+    LLA newViewLla(centerLat, centerLon, 0.0);
+    m_camera->viewLlaRef_ = LLARef(newViewLla);
+
+    // 3. 重置 lookAt 为原点（相对于新参考点）
+    m_camera->m_lookAt = QVector3D(0.0f, 0.0f, 0.0f);
+
+    // 4. 根据目标地图等级设置相机高度
+    constexpr double GOOGLE_TILE_CONSTANT = 126543000.03392;
+    int targetLevel = mapLevel_;
+    double targetHeight = GOOGLE_TILE_CONSTANT / std::pow(2.0, targetLevel);
+    qDebug() << "Target level:" << targetLevel << "Target height:" << targetHeight;
+    targetHeight = 745;
+
+    m_camera->m_distToFocusPoint = static_cast<float>(targetHeight);
+    m_camera->distForMapView_ = static_cast<float>(targetHeight);
+    m_camera->distToGround_ = static_cast<float>(targetHeight);
+
+    // 5. 更新相机矩阵
+    m_camera->updateCameraParams();
+    m_camera->updateViewMatrix();
+
+
+    // 设置等高线视图的相机距离（影响标签大小）
+    // 触发等高线重新计算
+    if (dataProcessorPtr_) {
+        waitingForIsobaths_ = true;
+
+        float targetLineStepSize = calculateLineStepSizeForLevel(targetLevel);
+        dataProcessorPtr_->setSurfaceIsobathsStepSize(targetLineStepSize);
+        dataProcessorPtr_->setUpdateIsobaths(true);
+    }
+    if (isobathsView_) {
+        isobathsView_->setCameraDistToFocusPoint(static_cast<float>(targetHeight));
+    }
+
+
+    // ===== 然后发送瓦片请求 =====
+
+    QVector<LLA> request;
+    request.append(LLA(task.maxLat, task.minLon, targetHeight));
+    request.append(LLA(task.maxLat, task.maxLon, targetHeight));
+    request.append(LLA(task.minLat, task.maxLon, targetHeight));
+    request.append(LLA(task.minLat, task.minLon, targetHeight));
+
+    LLARef viewLlaRef = m_camera->viewLlaRef_;
+
+    screenshotRetryCount_ = 0;
+    emit sendRectRequest(request, false, viewLlaRef, false, map::CameraTilt::Up);
+
+    QMutexLocker locker(&screenshotMutex_);
+    screenshotPending_ = true;
+    QQuickFramebufferObject::update();
+}
+
+// 判断瓦片是否渲染完成的完整方法
+bool GraphicsScene3dView::isTilesRenderComplete()
+{
+    if (!mapView_) {
+        return false;
+    }
+
+    // 获取渲染实现
+    auto* renderImpl = static_cast<MapView::MapViewRenderImplementation*>(mapView_->m_renderImpl);
+    if (!renderImpl) {
+        return false;
+    }
+
+    // 条件1: 待初始化队列必须为空（所有新瓦片纹理已上传到GPU）
+    bool initEmpty = renderImpl->pendingInit_.isEmpty();
+
+    // 条件2: 待更新队列必须为空（所有瓦片图像更新已完成）
+    bool updateEmpty = renderImpl->pendingUpdate_.isEmpty();
+
+    // 条件3: 所有需要渲染的瓦片都有有效的纹理ID
+    bool allTexturesValid = true;
+    for (const auto& [tileIndx, tile] : renderImpl->tilesHash_) {
+        if (tile.getTextureId() == 0) {
+            allTexturesValid = false;
+            break;
+        }
+    }
+
+    if(initEmpty && updateEmpty && allTexturesValid) {
+        QQuickFramebufferObject::update();
+    }
+
+    return initEmpty && updateEmpty && allTexturesValid;
+}
+
 
 //---------------------Renderer---------------------------//
 GraphicsScene3dView::InFboRenderer::InFboRenderer() :
@@ -1298,27 +1465,112 @@ void GraphicsScene3dView::InFboRenderer::render()
 {
     m_renderer->render();
 
-    //nie:test     截图逻辑
-    if(view_->screenshotPending_)
+
+    // if(view_->screenshotPending_)
+    // {
+    //     qDebug() << "Screenshot triggered for row=" << view_->currentScreenshotTask_.row
+    //              << "col=" << view_->currentScreenshotTask_.col;
+
+    //     QImage img = framebufferObject()->toImage();
+
+    //     QString baseDir = QCoreApplication::applicationDirPath();
+    //     QString kmzDir = baseDir + "/screetTest/";
+    //     QString imagPathName = kmzDir + view_->rowStr_ + "_" + view_->colStr_ + ".png";
+    //     QString fileName = kmzDir + view_->rowStr_ + "_" + view_->colStr_ + ".kml";
+
+    //     if (img.save(imagPathName, "PNG")) {
+    //         qDebug() << "Screenshot saved successfully:" << imagPathName;
+    //         QString tmpFileName = fileName;
+    //         QString fileNameXmap = tmpFileName.replace("kml","xmap");
+    //         view_->screetShot_.createXMAPFile(fileName,imagPathName,fileNameXmap);
+    //     } else {
+    //         qDebug() << "Failed to save screenshot:" << imagPathName;
+    //     }
+
+    //     view_->screenshotPending_ = false;
+
+    //     // 截图完成后，处理下一个任务
+    //     QMetaObject::invokeMethod(view_, "processNextScreenshotTask", Qt::QueuedConnection);
+    // }
+
+
+    if (view_->screenshotPending_)
     {
-        qDebug() << "Screenshot triggered.................";
+        auto& r = m_renderer->mapViewRenderImpl_;
 
-        QImage img = framebufferObject()->toImage();
+        bool initEmpty = r.pendingInit_.isEmpty();
+        bool updateEmpty = r.pendingUpdate_.isEmpty();
+        bool allTexturesValid = true;
+        int validCount = 0;
+        int totalCount = r.tilesHash_.size();
 
-        QString baseDir = QCoreApplication::applicationDirPath();
-        QString filePath = baseDir + "/2026_02_11.png";
+        for (const auto& [tileIndx, tile] : r.tilesHash_) {
+            if (tile.getTextureId() != 0) {
+                validCount++;
+            } else {
+                allTexturesValid = false;
+            }
+        }
 
-        bool ok = img.save(filePath);
+        bool isComplete = initEmpty && updateEmpty && allTexturesValid && (totalCount > 0);
 
-        if(ok)
-            qDebug() << "Screenshot saved successfully:" << filePath;
+        // 调试输出
+        qDebug() << "Tile status: pendingInit=" << r.pendingInit_.size()
+                 << "pendingUpdate=" << r.pendingUpdate_.size()
+                 << "validTiles=" << validCount
+                 << "totalTiles=" << totalCount
+                 << "isComplete=" << isComplete;
+
+        if (isComplete)
+        {
+            qDebug() << "Tiles render complete, saving screenshot for row=" << view_->currentScreenshotTask_.row
+                     << "col=" << view_->currentScreenshotTask_.col;
+
+            QImage img = framebufferObject()->toImage();
+
+            QString baseDir = QCoreApplication::applicationDirPath();
+            QString kmzDir = baseDir + "/screetTest/";
+            QString imagPathName = kmzDir + view_->rowStr_ + "_" + view_->colStr_ + ".png";
+            QString fileName = kmzDir + view_->rowStr_ + "_" + view_->colStr_ + ".kml";
+
+            if (img.save(imagPathName, "PNG")) {
+                qDebug() << "Screenshot saved successfully:" << imagPathName;
+                QString tmpFileName = fileName;
+                QString fileNameXmap = tmpFileName.replace("kml", "xmap");
+                view_->screetShot_.createXMAPFile(fileName, imagPathName, fileNameXmap);
+            } else {
+                qDebug() << "Failed to save screenshot:" << imagPathName;
+            }
+
+            view_->screenshotPending_ = false;
+            view_->screenshotRetryCount_ = 0;
+
+            QMetaObject::invokeMethod(view_, "processNextScreenshotTask", Qt::QueuedConnection);
+        }
         else
-            qDebug() << "Screenshot save FAILED!";
+        {
+            view_->screenshotRetryCount_++;
 
-        view_->screenshotPending_ = false;
+            if (view_->screenshotRetryCount_ <= view_->MAX_RETRY_COUNT)
+            {
+                qDebug() << "Tiles not ready, retry count:" << view_->screenshotRetryCount_;
+                QMetaObject::invokeMethod(view_, "update", Qt::QueuedConnection);
+            }
+            else
+            {
+                qWarning() << "Max retry count reached, skipping screenshot for row="
+                           << view_->currentScreenshotTask_.row
+                           << "col=" << view_->currentScreenshotTask_.col;
+
+                view_->screenshotPending_ = false;
+                view_->screenshotRetryCount_ = 0;
+
+                QMetaObject::invokeMethod(view_, "processNextScreenshotTask", Qt::QueuedConnection);
+            }
+        }
     }
 
-    update(); // 刷新
+
 }
 
 void GraphicsScene3dView::InFboRenderer::synchronize(QQuickFramebufferObject * fbo)
@@ -1326,7 +1578,6 @@ void GraphicsScene3dView::InFboRenderer::synchronize(QQuickFramebufferObject * f
     auto view = qobject_cast<GraphicsScene3dView*>(fbo);
 
     view_ = static_cast<GraphicsScene3dView*>(fbo);
-
 
     if (!view) {
         return;
@@ -1779,10 +2030,8 @@ void GraphicsScene3dView::Camera::zoom(qreal delta)
         distForMapView_ = m_distToFocusPoint;
     }
 
-    bool preIsPersp = {false};
+    bool preIsPersp{ false };
     distToGround_ = std::max(0.0f, std::fabs(-cosf(m_rotAngle.y()) * m_distToFocusPoint));
-    qDebug() << "distToGround_:" << distToGround_ << "     distForMapView_: " << distForMapView_;
-
     float perspEdge = viewPtr_ ? viewPtr_->perspectiveEdge_ : 5000.0f;
     preIsPersp = distToGround_ < perspEdge;
     bool projectionChanged    =  isPerspective_ !=  preIsPersp;
@@ -1964,12 +2213,10 @@ void GraphicsScene3dView::Camera::updateViewMatrix()
     angleToGround_ = 90.f * std::fabs(cu.z());
 
     QMatrix4x4 view;
-    QVector3D eyePosition = cf + m_lookAt;
-    view.lookAt(eyePosition, m_lookAt, cu.normalized());
+    view.lookAt(cf + m_lookAt, m_lookAt, cu.normalized());
     view.scale(1.0f,1.0f,-1.0f);
 
     m_view = std::move(view);
-    m_eye = eyePosition; // 更新相机位置
 }
 
 void GraphicsScene3dView::Camera::checkRotateAngle()

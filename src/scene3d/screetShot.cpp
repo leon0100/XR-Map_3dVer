@@ -471,9 +471,71 @@ void ScreetShot::saveScreetShot()
 //     };
 //     m_future = QtConcurrent::map(m_infos,f);
 //     watcher->setFuture(m_future);
-
-
 }
+
+
+
+qreal ScreetShot::clip(qreal n, qreal min, qreal max)
+{
+    n = qMax(n, min);
+    n = qMin(n, max);
+    return n;
+}
+
+qreal ScreetShot::clipLon(qreal lon)
+{
+    return clip(lon, -180.0, 180);
+}
+
+qreal ScreetShot::clipLat(qreal lat)
+{
+    return clip(lat, -85.05112878, 85.05112878);
+}
+
+uint ScreetShot::mapSize(int level)
+{
+    uint w = MAP_TIlE_SIZE;
+    return (w << level);
+}
+
+//将一个点从纬度/经度WGS-84墨卡托坐标(以度为单位)转换为指定细节级别的像素XY坐标。
+QPoint ScreetShot::latLongToPixelXY(qreal lon, qreal lat, int level)
+{
+    lon = clipLon(lon);
+    lat = clipLat(lat);
+
+    qreal x = (lon + 180) / 360;
+    qreal sinLat = qSin(lat * M_PI / 180);
+    qreal y = 0.5 - qLn((1 + sinLat) / (1 - sinLat)) / (4 * M_PI);
+
+    uint size = mapSize(level);
+    qreal pixelX = x * size + 0.5;
+    pixelX = clip(pixelX, 0, size - 1);
+    qreal pixelY = y * size + 0.5;
+    pixelY = clip(pixelY, 0, size - 1);
+
+    return QPoint(pixelX, pixelY);
+}
+
+
+//将像素从指定细节级别的像素XY坐标转换为经纬度WGS-84坐标(以度为单位)
+void ScreetShot::pixelXYToLatLong(QPoint pos, int level, qreal& lon, qreal& lat)
+{
+    uint size = mapSize(level);
+    qreal x = (clip(pos.x(), 0, size - 1) / size) - 0.5;
+    qreal y = 0.5 - (clip(pos.y(), 0, size - 1) / size);
+    lon = x * 360;
+    lat = 90 - (360 * qAtan(qExp(-y*2*M_PI)) / M_PI);
+}
+void ScreetShot::pixelXYToLatLong(QPointF pos, int level, qreal& lon, qreal& lat)
+{
+    uint size = mapSize(level);
+    qreal x = (clip(pos.x(), 0, size - 1) / size) - 0.5;
+    qreal y = 0.5 - (clip(pos.y(), 0, size - 1) / size);
+    lon = x * 360;
+    lat = 90 - (360 * qAtan(qExp(-y*2*M_PI)) / M_PI);
+}
+
 
 void ScreetShot::resizeMode(QRectF& rect, const QPoint pos)
 {
@@ -720,10 +782,11 @@ bool ScreetShot::createXMAPFile(const QString kmlFilePath, const QString imageFi
         return false;
     }
     QByteArray imageData = imageFile.readAll();
-    if(!imageFile.remove()) {
-        qDebug() << "Failed to delete image file.";
-        return false;
-    }
+    //nie:test
+    // if(!imageFile.remove()) {
+    //     qDebug() << "Failed to delete image file.";
+    //     return false;
+    // }
 
     //3、创建KMZ文件
     outputXMAPPath.replace(".xmap",".kmz");

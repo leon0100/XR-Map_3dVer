@@ -33,9 +33,7 @@ public:
 
         MapViewRenderImplementation();
         virtual void render(QOpenGLFunctions* ctx,
-                            const QMatrix4x4& model,
-                            const QMatrix4x4& view,
-                            const QMatrix4x4& projection,
+                            const QMatrix4x4& model, const QMatrix4x4& view, const QMatrix4x4& projection,
                             const QMap <QString, std::shared_ptr <QOpenGLShaderProgram>>& shaderProgramMap) const override final;
 
         void copyCpuSideFrom(const MapViewRenderImplementation& s); // copy cpu data
@@ -68,16 +66,20 @@ public:
     QVector<map::TileIndex>                    takeDeleteTileTasks();
      bool getTileImage(const map::TileIndex& tileIndx, QImage& out) const;
 
+
+
 public slots:
     void onTileAppend(const map::Tile& tile);
     void onTileDelete(const map::TileIndex& tileIndx);
     void onTileImageUpdated(const map::TileIndex& tileIndx, const QImage& image);
     void onTileVerticesUpdated(const map::TileIndex& tileIndx, const QVector<QVector3D>& vertices);
-    void onClearAppendTasks();//
+    void onClearAppendTasks();
+
 
 signals:
-    void sendTextureId(const map::TileIndex& tileIndx, GLuint textureId);//
-    void deletedFromAppend(const map::TileIndex& tileIndx);//
+    void sendTextureId(const map::TileIndex& tileIndx, GLuint textureId);
+    void deletedFromAppend(const map::TileIndex& tileIndx);
+
 
 private:
     std::unordered_map<map::TileIndex, QImage> appendTasks_;

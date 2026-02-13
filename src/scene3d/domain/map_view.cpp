@@ -96,12 +96,8 @@ bool MapView::getTileImage(const map::TileIndex& tileIndx, QImage& out) const
 {
     qDebug().noquote()
         << QString("[MapView::getTileImage] Looking for TileIndex(x=%1,y=%2,z=%3,provider=%4) hash=%5, total tiles=%6")
-               .arg(tileIndx.x_)
-               .arg(tileIndx.y_)
-               .arg(tileIndx.z_)
-               .arg(tileIndx.providerId_)
-               .arg(std::hash<map::TileIndex>()(tileIndx))
-               .arg(tileImages_.size());
+               .arg(tileIndx.x_).arg(tileIndx.y_).arg(tileIndx.z_).arg(tileIndx.providerId_)
+               .arg(std::hash<map::TileIndex>()(tileIndx)).arg(tileImages_.size());
 
     auto it = tileImages_.find(tileIndx);
     if (it == tileImages_.end() || it->second.isNull()) {
@@ -113,12 +109,8 @@ bool MapView::getTileImage(const map::TileIndex& tileIndx, QImage& out) const
             if (count < 10) {
                 qDebug().noquote()
                     << QString("  [%1] TileIndex(x=%2,y=%3,z=%4,provider=%5) hash=%6")
-                           .arg(count)
-                           .arg(idx.x_)
-                           .arg(idx.y_)
-                           .arg(idx.z_)
-                           .arg(idx.providerId_)
-                           .arg(std::hash<map::TileIndex>()(idx));
+                           .arg(count).arg(idx.x_).arg(idx.y_).arg(idx.z_)
+                           .arg(idx.providerId_).arg(std::hash<map::TileIndex>()(idx));
                 count++;
             }
         }
@@ -134,14 +126,13 @@ bool MapView::getTileImage(const map::TileIndex& tileIndx, QImage& out) const
     return true;
 }
 
-
 void MapView::onTileAppend(const map::Tile &tile)
 {
     auto r = RENDER_IMPL(MapView);
     auto tileIndx = tile.getIndex();
     r->tilesHash_.emplace(tileIndx, tile);
     appendTasks_[tileIndx] = tile.getImage();
-     tileImages_[tileIndx] = tile.getImage();
+    tileImages_[tileIndx] = tile.getImage();
     Q_EMIT changed();
 }
 
@@ -193,7 +184,7 @@ void MapView::onClearAppendTasks()
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+
 // MapViewRenderImplementation
 MapView::MapViewRenderImplementation::MapViewRenderImplementation()
 {}
@@ -342,10 +333,8 @@ void MapView::MapViewRenderImplementation::ensureQuadBuffers(QOpenGLFunctions *g
 
 
 void MapView::MapViewRenderImplementation::render(QOpenGLFunctions *ctx,
-                                                      const QMatrix4x4 &model,
-                                                      const QMatrix4x4 &view,
-                                                      const QMatrix4x4 &projection,
-                                                      const QMap<QString, std::shared_ptr<QOpenGLShaderProgram>> &shaderProgramMap) const
+                            const QMatrix4x4 &model, const QMatrix4x4 &view,  const QMatrix4x4 &projection,
+                            const QMap<QString, std::shared_ptr<QOpenGLShaderProgram>> &shaderProgramMap) const
 {
     if (!m_isVisible || !ctx) {
         return;

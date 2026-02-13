@@ -24,7 +24,7 @@
 
 
 
-
+/*-----------------------------------------------------------------*/
 class Dataset;
 class GraphicsScene3dRenderer;
 class GraphicsScene3dView : public QQuickFramebufferObject
@@ -359,6 +359,57 @@ public:
     bool screenshotPending_ = false;
     QString screenshotPath_ = ".20260211.png";
     QMutex screenshotMutex_;
+    int mapLevel_;
+    QRect targetRect_;
+    int pixel300m_;
+    QString rowStr_,colStr_;
+
+
+signals:
+    void requestRenderUpdate();
+
+
+public slots:
+
+    // 截图任务处理方法
+    void processNextScreenshotTask();
+
+private:
+    // 截图任务队列
+    QQueue<ScreenshotTask> screenshotQueue_;
+    QMutex screenshotQueueMutex_;
+    bool isProcessingScreenshot_ = false;
+
+    // 当前处理的截图任务
+    ScreenshotTask currentScreenshotTask_;
+
+    void startScreenshotTask(const ScreenshotTask& task);
+    bool tilesRenderComplete_ = false; //当前瓦片渲染完成标志
+
+    // 判断瓦片是否渲染完成的完整方法
+    bool isTilesRenderComplete();
+    int screenshotRetryCount_ = 0;
+    static const int MAX_RETRY_COUNT = 100;  // 最大重试次数
+
+
+
+private:
+    QOpenGLFramebufferObject* offscreenFbo_ = nullptr;
+    GLuint offscreenVboPos_ = 0;
+    GLuint offscreenVboUV_ = 0;
+    int offscreenFboWidth_ = 0;
+    int offscreenFboHeight_ = 0;
+
+    bool initOffscreenFbo(int width, int height);
+    void cleanupOffscreenFbo();
+    QImage renderTilesToOffscreenFbo(const QVector<map::TileIndex>& tileIndices,
+        const std::unordered_map<map::TileIndex, QImage>& tileImages,
+        float pixelMinX, float pixelMinY,float pixelMaxX, float pixelMaxY);
+
+public:
+    void saveTilesToOffscreenPng(const QString& filePath,
+        double minLat, double maxLat, double minLon, double maxLon,
+        int mapLevel, int outputWidth = 2048, int outputHeight = 2048);
 
 };
 

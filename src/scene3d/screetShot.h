@@ -16,9 +16,8 @@
 #include <QGraphicsScene>
 
 
-#include  "QtGui/private/qzipreader_p.h"
-#include  "QtGui/private/qzipwriter_p.h"
-
+#include <QtGui/private/qzipreader_p.h>
+#include <QtGui/private/qzipwriter_p.h>
 
 
 
@@ -34,6 +33,35 @@ enum class ResizeMode { None, Move, Top, Bottom, Left, Right, TopLeft, TopRight,
 #ifndef PI
 #define PI (3.1415926535898)
 #endif
+
+
+#define  MAP_TIlE_SIZE   (256)
+
+
+
+
+
+
+
+
+// 截图任务结构体
+struct ScreenshotTask
+{
+    int     row;
+    int     col;
+    int     mapLevel;
+    double  minLat;
+    double  maxLat;
+    double  minLon;
+    double  maxLon;
+    QString outputPath;
+
+    ScreenshotTask() : row(0), col(0), mapLevel(0), minLat(0), maxLat(0), minLon(0), maxLon(0) {}
+
+    ScreenshotTask(int r, int c, int level, double minL, double maxL, double minLn, double maxLn, const QString& path)
+        : row(r), col(c), mapLevel(level),
+        minLat(minL), maxLat(maxL), minLon(minLn), maxLon(maxLn), outputPath(path) {}
+};
 
 
 
@@ -96,6 +124,19 @@ public:
     void resizeMode(QRectF& rect,const QPoint pos);
 
 
+
+    qreal clip(qreal n, qreal min, qreal max);
+    qreal clipLon(qreal lon);   // 裁剪经度范围
+    qreal clipLat(qreal lat);   // 裁剪纬度范围
+    uint  mapSize(int level);   // 根据地图级别计算世界地图总宽高(以像素为单位)
+    QPoint latLongToPixelXY(qreal lon, qreal lat, int level);               // 经纬度转像素 XY坐标
+    void pixelXYToLatLong(QPoint pos, int level, qreal& lon, qreal& lat);   // 像素坐标转WGS-84墨卡托坐标
+    void pixelXYToLatLong(QPointF pos, int level, qreal& lon, qreal& lat);
+
+    bool createKmlFile(QString kmlPath,QString imageName,double north,double south,double east,double west);
+    bool createXMAPFile(const QString kmlFilePath, const QString imageFilePath, QString &outputXMAPPath);
+
+
     Q_INVOKABLE void setToArrowCursor();
     Q_INVOKABLE void setCancelShot();
     Q_INVOKABLE void saveScreetShot();
@@ -111,8 +152,12 @@ private:
     // void httpGetScreen(ImageInfo info);
 
 
-    bool createKmlFile(QString kmlPath,QString imageName,double north,double south,double east,double west);
-    bool createXMAPFile(const QString kmlFilePath, const QString imageFilePath, QString &outputXMAPPath);
+
+
+
+
+
+
 
 
 public:

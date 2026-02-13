@@ -13,7 +13,6 @@
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 
-// #define RENDER_IMPL(Class) ({dynamic_cast<Class##RenderImplementation*>(m_renderImpl);})
 #define RENDER_IMPL(Class) dynamic_cast<Class##RenderImplementation*>(m_renderImpl)
 
 

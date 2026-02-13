@@ -17,7 +17,6 @@ TileGoogleProvider::TileGoogleProvider() :
 int32_t TileGoogleProvider::heightToTileZ(const float height) const
 {
     double z = std::log2(GOOGLE_TILE_CONSTANT / height);
-
     z = std::max(0.0, std::min(z, 21.0));
     return static_cast<int>(z);
 }
