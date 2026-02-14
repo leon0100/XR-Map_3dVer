@@ -126,17 +126,7 @@ QList<DevQProperty *> DeviceManager::getDevList(BoardVersion ver) {
 
 void DeviceManager::frameInput(QUuid uuid, Link* link, Parsers::FrameParser frame)
 {
-//     if (loggingStarted_) {
-//         emit sendFrameInputToLogger(uuid, link, frame);
-//     }
-
     if (frame.isComplete()) {
-//         if (link != NULL) {
-//             if (frame.isProxy() || frame.completeAsKBP()) {
-//                 otherProtocolStat_.remove(uuid);
-//             }
-//         }
-
         if (frame.isProxy()) {
             return; //continue;
         }
@@ -223,7 +213,7 @@ void DeviceManager::frameInput(QUuid uuid, Link* link, Parsers::FrameParser fram
                     QDateTime dt(date, time, QTimeZone::utc());
                     uint32_t unix_time = static_cast<uint32_t>(dt.toSecsSinceEpoch());
 
-                    qDebug() << "if (c == 'A' || c == 'D') ";
+                    qDebug() << "if (c == 'A' || c == 'D')..................";
                     emit positionComplete(lat, lon, unix_time, (uint32_t)ms*1000*1000);
                 }
             }

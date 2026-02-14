@@ -57,7 +57,6 @@ public:
         //void rotate(qreal yaw, qreal pitch); //TODO! Process this method later
         void rotate(const QVector2D& lastMouse, const QVector2D& mousePos);
         void rotate(const QPointF& prevCenter, const QPointF& currCenter, qreal angleDelta, qreal widgetHeight);
-        //void move(const QVector2D& startPos, const QVector2D& endPos);
         void move(const QVector2D &lastMouse, const QVector2D &mousePos);
         void resetZAxis();
         void moveZAxis(float z);
@@ -291,15 +290,15 @@ private:
     std::shared_ptr<RayCaster> m_rayCaster;
     std::shared_ptr<IsobathsView> isobathsView_;
     std::shared_ptr<SurfaceView> surfaceView_;
-    std::shared_ptr<ImageView> imageView_;
-    std::shared_ptr<MapView> mapView_;
+    std::shared_ptr<ImageView> imageView_;//管理和渲染多个瓦片组成地图
+    std::shared_ptr<MapView> mapView_; //渲染单个图片/纹理
     std::shared_ptr<Contacts> contacts_;
     std::shared_ptr<BoatTrack> boatTrack_;
     std::shared_ptr<BottomTrack> m_bottomTrack;
     std::shared_ptr<PolygonGroup> m_polygonGroup;
     std::shared_ptr<PointGroup> m_pointGroup;
     std::shared_ptr<CoordinateAxes> m_coordAxes;
-    std::shared_ptr<PlaneGrid> m_planeGrid;
+    std::shared_ptr<PlaneGrid> m_planeGrid;//辅助网格
     std::shared_ptr<SceneObject> m_vertexSynchroCursour;
     std::shared_ptr<NavigationArrow> navigationArrow_;
     std::shared_ptr<UsblView> usblView_;
@@ -307,7 +306,7 @@ private:
     QMatrix4x4 m_model;
     QMatrix4x4 m_projection;
     Cube m_bounds;
-    ActiveMode m_mode = ActiveMode::BottomTrackVertexSelectionMode;
+    ActiveMode m_mode    = ActiveMode::BottomTrackVertexSelectionMode;
     ActiveMode lastMode_ = ActiveMode::BottomTrackVertexSelectionMode;
     QRect m_comboSelectionRect = { 0, 0, 0, 0 };
     Ray m_ray;
@@ -377,7 +376,7 @@ public slots:
 private:
     // 截图任务队列
     QQueue<ScreenshotTask> screenshotQueue_;
-    QMutex screenshotQueueMutex_;
+    QMutex screenshotQueueMutex_;//要定义为成员变量，而不是局部变量（会导致每个线程都有自己的mutex，没有互斥效果）
     bool isProcessingScreenshot_ = false;
 
     // 当前处理的截图任务
@@ -386,8 +385,6 @@ private:
     void startScreenshotTask(const ScreenshotTask& task);
     bool tilesRenderComplete_ = false; //当前瓦片渲染完成标志
 
-    // 判断瓦片是否渲染完成的完整方法
-    bool isTilesRenderComplete();
     int screenshotRetryCount_ = 0;
     static const int MAX_RETRY_COUNT = 100;  // 最大重试次数
 
@@ -405,6 +402,7 @@ private:
     QImage renderTilesToOffscreenFbo(const QVector<map::TileIndex>& tileIndices,
         const std::unordered_map<map::TileIndex, QImage>& tileImages,
         float pixelMinX, float pixelMinY,float pixelMaxX, float pixelMaxY);
+
 
 public:
     void saveTilesToOffscreenPng(const QString& filePath,

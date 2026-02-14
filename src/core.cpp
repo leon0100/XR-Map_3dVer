@@ -54,7 +54,6 @@ void Core::setEngine(QQmlApplicationEngine *engine)
     qmlAppEnginePtr_ = engine;
     QObject::connect(qmlAppEnginePtr_, &QQmlApplicationEngine::objectCreated, this, &Core::UILoad, Qt::QueuedConnection);
 
-
     qmlAppEnginePtr_->rootContext()->setContextProperty("BoatTrackControlMenuController",       boatTrackControlMenuController_.get());
     qmlAppEnginePtr_->rootContext()->setContextProperty("NavigationArrowControlMenuController", navigationArrowControlMenuController_.get());
     qmlAppEnginePtr_->rootContext()->setContextProperty("BottomTrackControlMenuController",     bottomTrackControlMenuController_.get());
@@ -1132,7 +1131,6 @@ void Core::UILoad(QObject* object, const QUrl& url)
     createMapTileManagerConnections();
     createScene3dConnections();
 
-    qDebug() << "Core::UILoad........................";
     QMetaObject::invokeMethod(dataProcessor_, "setBottomTrackPtr", Qt::QueuedConnection, Q_ARG(BottomTrack*, scene3dViewPtr_->bottomTrack().get()));
     QMetaObject::invokeMethod(deviceManagerWrapperPtr_->getWorker(), "createLocationReader", Qt::QueuedConnection);
 }
@@ -1432,6 +1430,9 @@ void Core::createDeviceManagerConnections()
 
 void Core::createLinkManagerConnections()
 {
+    // qDebug() << "LinkManager thread:" << linkManagerWrapperPtr_->getWorker()->thread();
+    // qDebug() << "DeviceManager thread:" << deviceManagerWrapperPtr_->getWorker()->thread();
+
     Qt::ConnectionType linkManagerConnection = Qt::ConnectionType::AutoConnection;
     linkManagerWrapperConnections_.append(QObject::connect(linkManagerWrapperPtr_->getWorker(), &LinkManager::frameReady,  deviceManagerWrapperPtr_->getWorker(), &DeviceManager::frameInput,     linkManagerConnection));
     linkManagerWrapperConnections_.append(QObject::connect(linkManagerWrapperPtr_->getWorker(), &LinkManager::linkClosed,  deviceManagerWrapperPtr_->getWorker(), &DeviceManager::onLinkClosed,   linkManagerConnection));
@@ -1443,7 +1444,6 @@ void Core::createLinkManagerConnections()
                                                            tryOpenedfilePath_.clear();
 #endif
             datasetPtr_->setState(Dataset::DatasetState::kConnection); }, linkManagerConnection));
-
     linkManagerWrapperConnections_.append(QObject::connect(linkManagerWrapperPtr_->getWorker(), &LinkManager::linkClosed,  this, [this]() {
             if (scene3dViewPtr_) {
                 scene3dViewPtr_->getNavigationArrowPtr()->resetPositionAndAngle();} }, linkManagerConnection));

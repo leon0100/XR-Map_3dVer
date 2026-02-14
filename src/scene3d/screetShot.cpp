@@ -684,7 +684,7 @@ double ScreetShot::getDistance_Haversine(double current_longi, double current_la
     double dLon = (goal_longi - current_longi) * _PI_180;
     double a = pow(sin(dLat/2), 2) + cos(current_lati*_PI_180) * cos(goal_lati*_PI_180) * pow(sin(dLon/2), 2);
     double c = 2 * atan2(sqrt(a), sqrt(1-a));
-    return RE * c;
+    return EARTH_RADIUS * c;
 }
 
 QString ScreetShot::getLengthChEn(double distance,int decimalPlaces)

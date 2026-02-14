@@ -690,7 +690,7 @@ void Link::readyRead()
         QByteArray data = dev->readAll();
         if (!data.isEmpty()) {
             if(attribute_ == LinkAttribute::kLinkAttributeNone) {
-                toParser(data);
+                toParser(data);  //nie:这里是接收数据的地方
             } else {
                 emit dataReady(data);
             }

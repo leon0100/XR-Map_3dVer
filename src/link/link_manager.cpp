@@ -14,6 +14,8 @@ LinkManager::LinkManager(QObject *parent) :
     qRegisterMetaType<ControlType>("ControlType");
     qRegisterMetaType<LinkType>("LinkType");
     qRegisterMetaType<FrameParser>("FrameParser");
+    qRegisterMetaType<Parsers::FrameParser>("Parsers::FrameParser");
+    qRegisterMetaType<Parsers::ProtoBinOut>("Parsers::ProtoBinOut");
 }
 
 QList<QSerialPortInfo> LinkManager::getCurrentSerialList() const

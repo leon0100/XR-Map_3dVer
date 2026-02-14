@@ -566,88 +566,92 @@ void Dataset::addAtt(float yaw, float pitch, float roll)
 
 void Dataset::addPosition(double lat, double lon, uint32_t unix_time, int32_t nanosec)
 {
-    // Epoch* lastEp = last();
-    // if (!lastEp) {
-    //     return;
-    // }
+    Epoch* lastEp = last();
+    if (!lastEp) {
+        return;
+    }
 
-    // Position pos;
-    // pos.lla = LLA(lat, lon);
-    // pos.time = DateTime(unix_time, nanosec);
-    // const bool oneHzNoTimestamp = (unix_time == 0 && nanosec == 0);
+    Position pos;
+    pos.lla = LLA(lat, lon);
+    pos.time = DateTime(unix_time, nanosec);
+    const bool oneHzNoTimestamp = (unix_time == 0 && nanosec == 0);
 
-    // if (pos.lla.isCoordinatesValid()) {
-    //     if (lastEp->getPositionGNSS().lla.isCoordinatesValid()) {
-    //         lastEp = addNewEpoch();
-    //     }
-    //     uint64_t lastIndx = pool_.size() - 1;
-    //     if (!getLlaRef().isInit) {
-    //         LlaRefState llaState = state_ == DatasetState::kUndefined ? LlaRefState::kFile :
-    //                     (state_ == DatasetState::kFile ? LlaRefState::kFile :  LlaRefState::kConnection);
-    //         setLlaRef(LLARef(pos.lla), llaState);
-    //     }
-    //     lastEp->setPositionLLA(pos);
-    //     lastEp->setPositionRef(&_llaRef);
-    //     // qDebug() << "_llaRef: longitude:" << _llaRef.refLla.longitude << "  latitude:" <<
-    //     //     _llaRef.refLla.latitude << "  " << _llaRef.refLla.altitude;
+    if (pos.lla.isCoordinatesValid()) {
+        if (lastEp->getPositionGNSS().lla.isCoordinatesValid()) {
+            lastEp = addNewEpoch();
+        }
+        uint64_t lastIndx = pool_.size() - 1;
+        if (!getLlaRef().isInit) {
+            LlaRefState llaState = state_ == DatasetState::kUndefined ? LlaRefState::kFile :
+                        (state_ == DatasetState::kFile ? LlaRefState::kFile :  LlaRefState::kConnection);
+            setLlaRef(LLARef(pos.lla), llaState);
+        }
+        lastEp->setPositionLLA(pos);
+        lastEp->setPositionRef(&_llaRef);
+        qDebug() << "_llaRef: longitude:" << _llaRef.refLla.longitude << "  latitude:" <<
+            _llaRef.refLla.latitude << "  " << _llaRef.refLla.altitude;
 
-    //     lastEp->setPositionDataType(DataType::kRaw);
-    //     interpolator_.interpolatePos(false);
+        // 在初始化或串口连接时调用
+        QMetaObject::invokeMethod(dataProcessorPtr_, "setUpdateIsobaths",
+                                  Qt::QueuedConnection, Q_ARG(bool, true));
 
-    //     if (Epoch* prevEp = lastlast(); prevEp) {
-    //         const auto& prev = prevEp->getPositionGNSS();
-    //         if (prev.lla.isCoordinatesValid()) {
-    //             const double dist = distanceMetersLLA(prev.lla.latitude, prev.lla.longitude, pos.lla.latitude,  pos.lla.longitude);
+        lastEp->setPositionDataType(DataType::kRaw);
+        interpolator_.interpolatePos(false);
 
-    //             if (oneHzNoTimestamp) {
-    //                 speed_ = (dist / 0.1) * 3.6; // TODO: kostyl
-    //             }
-    //             else {
-    //                 const auto& c = pos.time;
-    //                 const auto& p = prev.time;
+        if (Epoch* prevEp = lastlast(); prevEp) {
+            const auto& prev = prevEp->getPositionGNSS();
+            if (prev.lla.isCoordinatesValid()) {
+                const double dist = distanceMetersLLA(prev.lla.latitude, prev.lla.longitude, pos.lla.latitude,  pos.lla.longitude);
 
-    //                 int64_t dsec  = int64_t(c.sec)     - int64_t(p.sec);
-    //                 int64_t dnano = int64_t(c.nanoSec) - int64_t(p.nanoSec);
-    //                 if (dnano < 0) {
-    //                     dsec -= 1;
-    //                     dnano += 1000000000;
-    //                 }
+                if (oneHzNoTimestamp) {
+                    speed_ = (dist / 0.1) * 3.6; // TODO: kostyl
+                }
+                else {
+                    const auto& c = pos.time;
+                    const auto& p = prev.time;
 
-    //                 double dt = double(dsec) + double(dnano) * 1e-9;
-    //                 if (dt <= 0.0) {
-    //                     dt = 1.0;
-    //                 }
+                    int64_t dsec  = int64_t(c.sec)     - int64_t(p.sec);
+                    int64_t dnano = int64_t(c.nanoSec) - int64_t(p.nanoSec);
+                    if (dnano < 0) {
+                        dsec -= 1;
+                        dnano += 1000000000;
+                    }
 
-    //                 speed_ = (dist / dt) * 3.6;
-    //             }
+                    double dt = double(dsec) + double(dnano) * 1e-9;
+                    if (dt <= 0.0) {
+                        dt = 1.0;
+                    }
 
-    //             emit speedChanged();
-    //         }
-    //     }
+                    speed_ = (dist / dt) * 3.6;
+                }
 
-    //     //qDebug() << "add pos for" << lastIndx;
+                emit speedChanged();
+            }
+        }
 
-    //     boatLatitute_ = pos.lla.latitude;
-    //     boatLongitude_ = pos.lla.longitude;
+        //qDebug() << "add pos for" << lastIndx;
 
-    //     if (isValidActiveContactIndx()) {
-    //         if (auto* ep = fromIndex(activeContactIndx_); ep) {
-    //             const double latTarget = ep->contact_.lat;
-    //             const double lonTarget = ep->contact_.lon;
-    //             const double latBoat   = pos.lla.latitude;
-    //             const double lonBoat   = pos.lla.longitude;
-    //             distToActiveContact_ = distanceMetersLLA(latBoat, lonBoat, latTarget, lonTarget);
+        boatLatitute_ = pos.lla.latitude;
+        boatLongitude_ = pos.lla.longitude;
 
-    //             const double yawDeg = _lastYaw;
-    //             if (qIsFinite(yawDeg)) {
-    //                 angleToActiveContact_ = angleToTargetDeg(latBoat, lonBoat, latTarget, lonTarget, yawDeg);
-    //             }
-    //         }
-    //     }
-    //     emit positionAdded(lastIndx);
-    //     emit dataUpdate();
-    //     emit lastPositionChanged();
-    // }
+        if (isValidActiveContactIndx()) {
+            if (auto* ep = fromIndex(activeContactIndx_); ep) {
+                const double latTarget = ep->contact_.lat;
+                const double lonTarget = ep->contact_.lon;
+                const double latBoat   = pos.lla.latitude;
+                const double lonBoat   = pos.lla.longitude;
+                distToActiveContact_ = distanceMetersLLA(latBoat, lonBoat, latTarget, lonTarget);
+
+                const double yawDeg = _lastYaw;
+                if (qIsFinite(yawDeg)) {
+                    angleToActiveContact_ = angleToTargetDeg(latBoat, lonBoat, latTarget, lonTarget, yawDeg);
+                }
+            }
+        }
+        emit positionAdded(lastIndx);
+        emit dataUpdate();
+        emit lastPositionChanged();
+    }
 }
 
 

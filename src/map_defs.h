@@ -179,7 +179,7 @@ private:
 
 inline float calculateDistance(const LLARef &llaRef1, const LLARef &llaRef2)
 {
-    constexpr double R = 6371000.0;
+    // constexpr double R = 6371000.0;
 
     double lat1 = qDegreesToRadians(llaRef1.refLla.latitude);
     double lon1 = qDegreesToRadians(llaRef1.refLla.longitude);
@@ -191,7 +191,7 @@ inline float calculateDistance(const LLARef &llaRef1, const LLARef &llaRef2)
 
     double a = qPow(qSin(dLat / 2), 2) + qCos(lat1) * qCos(lat2) * qPow(qSin(dLon / 2), 2);
     double c = 2 * qAtan2(qSqrt(a), qSqrt(1 - a));
-    double distance2D = R * c;
+    double distance2D = CONSTANTS_RADIUS_OF_EARTH * c;
 
     double dAlt = 0;
     double distance = qSqrt(qPow(distance2D, 2) + qPow(dAlt, 2));

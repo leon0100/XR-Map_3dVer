@@ -25,8 +25,7 @@ enum class ResizeMode { None, Move, Top, Bottom, Left, Right, TopLeft, TopRight,
 
 #define _180_PI (57.2957795131f)
 #define _PI_180 (0.01745329252f)
-#define RE 6371004
-#define g_EarthRadius 6378137   // 赤道半径
+#define EARTH_RADIUS 6378137   // 赤道半径
 #define POINT_REPEATITIVE 361.0f
 
 
@@ -132,7 +131,7 @@ public:
     QPoint latLongToPixelXY(qreal lon, qreal lat, int level);               // 经纬度转像素 XY坐标
     void pixelXYToLatLong(QPoint pos, int level, qreal& lon, qreal& lat);   // 像素坐标转WGS-84墨卡托坐标
     void pixelXYToLatLong(QPointF pos, int level, qreal& lon, qreal& lat);
-
+    double getDistance_Haversine(double current_longi, double current_lati, double goal_longi, double goal_lati);
     bool createKmlFile(QString kmlPath,QString imageName,double north,double south,double east,double west);
     bool createXMAPFile(const QString kmlFilePath, const QString imageFilePath, QString &outputXMAPPath);
 
@@ -145,7 +144,7 @@ private slots:
     void slot_downloadScreenFinished();
 
 private:
-    double getDistance_Haversine(double current_longi, double current_lati, double goal_longi, double goal_lati);
+
     QString getLengthChEn(double distance,int decimalPlaces = 2);
     void getTitle(QRect rect, int level);
     void getUrl();
