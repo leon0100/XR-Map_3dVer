@@ -29,6 +29,7 @@
 -IG:/SoftWare/QT5.15-2/5.15.2/msvc2019/include/QtSql
 -IG:/SoftWare/QT5.15-2/5.15.2/msvc2019/include/QtConcurrent
 -IG:/SoftWare/QT5.15-2/5.15.2/msvc2019/include/QtPositioning
+-IG:/SoftWare/QT5.15-2/5.15.2/msvc2019/include/QtBluetooth
 -IG:/SoftWare/QT5.15-2/5.15.2/msvc2019/include/QtSerialPort
 -IG:/SoftWare/QT5.15-2/5.15.2/msvc2019/include/QtCore
 -I.

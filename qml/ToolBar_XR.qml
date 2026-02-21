@@ -219,6 +219,44 @@ Rectangle {
             onPressed: itemChangeActive(menuDisplay)
         }
 
+        Item {
+            width: toolBarXR.width - x - 180
+            height: 1
+        }
+
+
+        MenuButton {
+            id: serialPortBtn
+            icon.source: "qrc:/XR/serialPort.png"
+            CMouseOpacityArea {
+                toolTipText: qsTr("SerialPort")
+                onContainsMouseChanged: hoverBackgroundColor
+            }
+            onPressed: itemChangeActive(serialPortBtn)
+        }
+
+        MenuButton {
+            id: blueToothBtn
+            icon.source: "qrc:/XR/bluetooth.png"
+            CMouseOpacityArea {
+                toolTipText: qsTr("Bluetooth")
+                onContainsMouseChanged: hoverBackgroundColor
+            }
+
+            onPressed: itemChangeActive(blueToothBtn)
+        }
+
+        MenuButton {
+            id: toslonBtn
+            icon.source: "qrc:/XR/TOSLON2.png"
+            CMouseOpacityArea {
+                toolTipText: qsTr("TOSLON")
+            }
+            onPressed: itemChangeActive(toslonBtn)
+        }
+
+
+
     }
 
     //（串口连接、文件导入等）
@@ -243,4 +281,5 @@ Rectangle {
 
 
 }
+
 

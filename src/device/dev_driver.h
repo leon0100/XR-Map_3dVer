@@ -8,7 +8,6 @@
 #include "proto_binnary.h"
 #include "id_binnary.h"
 
-
 using namespace Parsers;
 
 class DevDriver : public QObject

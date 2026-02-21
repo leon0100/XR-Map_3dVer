@@ -90,6 +90,9 @@
 	<file>XR/wirelessTrans3232.png</file>
 	<file>XR/cancelshot.png</file>
 	<file>XR/save.png</file>
+	<file>XR/bluetooth.png</file>
+	<file>XR/TOSLON2.png</file>
+	<file>XR/serialPort.png</file>
 
 
     </qresource>

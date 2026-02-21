@@ -7,8 +7,10 @@ HEADERS *= \
 	$$PWD/device_defs.h \
 	$$PWD/device_manager.h \
 	$$PWD/device_manager_wrapper.h \
+	$$PWD/blemanager.h \
 
 SOURCES *= \
     $$PWD/dev_driver.cpp \
 	$$PWD/device_manager.cpp \
-	$$PWD/device_manager_wrapper.cpp
+	$$PWD/device_manager_wrapper.cpp \
+	$$PWD/blemanager.cpp \

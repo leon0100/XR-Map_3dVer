@@ -591,10 +591,6 @@ void Dataset::addPosition(double lat, double lon, uint32_t unix_time, int32_t na
         qDebug() << "_llaRef: longitude:" << _llaRef.refLla.longitude << "  latitude:" <<
             _llaRef.refLla.latitude << "  " << _llaRef.refLla.altitude;
 
-        // 在初始化或串口连接时调用
-        QMetaObject::invokeMethod(dataProcessorPtr_, "setUpdateIsobaths",
-                                  Qt::QueuedConnection, Q_ARG(bool, true));
-
         lastEp->setPositionDataType(DataType::kRaw);
         interpolator_.interpolatePos(false);
 

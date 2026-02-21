@@ -282,6 +282,7 @@ Makefile: ..\..\XR-Map_3dVer.pro ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\m
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Sql.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Concurrent.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Positioning.prl \
+		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Bluetooth.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5SerialPort.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Core.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\qtmain.prl \
@@ -301,6 +302,7 @@ Makefile: ..\..\XR-Map_3dVer.pro ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\m
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Sqld.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Concurrentd.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Positioningd.prl \
+		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Bluetoothd.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5SerialPortd.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Cored.prl \
 		..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\qtmaind.prl
@@ -503,6 +505,7 @@ Makefile: ..\..\XR-Map_3dVer.pro ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\m
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Sql.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Concurrent.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Positioning.prl:
+..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Bluetooth.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5SerialPort.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Core.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\qtmain.prl:
@@ -522,6 +525,7 @@ qml_qml_qmlcache.qrc:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Sqld.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Concurrentd.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Positioningd.prl:
+..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Bluetoothd.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5SerialPortd.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\Qt5Cored.prl:
 ..\..\..\..\SoftWare\QT5.15-2\5.15.2\msvc2019\lib\qtmaind.prl:
